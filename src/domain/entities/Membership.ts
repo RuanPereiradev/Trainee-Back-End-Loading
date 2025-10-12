@@ -28,6 +28,10 @@ export class Membership extends AuditableEntity{
     get id(): string{
         return this._id;
     }
+    
+    get user(): User {
+    return this._user;
+    }
 
     get project(): Project{
         return this._project;
@@ -45,5 +49,12 @@ export class Membership extends AuditableEntity{
             throw new Error("O usuário já está participando desse projeto")
         }
         this._leftAt = new Date();
+    }
+    rejoinProject(): void{
+        if(this._leftAt){
+            throw new Error("O usuário já está participando deste projeto");
+        }
+        this._leftAt = null;
+        this._joinedAt = new Date();
     }
 }
