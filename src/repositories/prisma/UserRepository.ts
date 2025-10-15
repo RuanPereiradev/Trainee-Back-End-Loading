@@ -4,6 +4,7 @@ import { IUserRepository } from "../interfaces/IUserRepository";
 import { Result } from "../../env/Result";
 
 export class UserRepository implements IUserRepository{
+    
     private users: User[] = [];
 
     async save(user: User): Promise<Result<User>>{
@@ -16,15 +17,16 @@ export class UserRepository implements IUserRepository{
         return user|| null;
     }
 
-   async findByEmail(email: string): Promise<Result<User>> {
+    async findByEmail(email: string): Promise<Result<User>> {
         const user = this.users.find((u) => u.email.value === email);
-    if(!user){
+        if(!user){
         return Result.fail<User>("Usuário nao encontrado");
     }
     return Result.ok<User>(user);
     }
 
     async findAll(): Promise<Result<User[]>> {
+
         if(this.users.length === 0){
             return Result.fail<User[]>("Nenhum usuário encontrado");
         }
@@ -37,6 +39,7 @@ export class UserRepository implements IUserRepository{
         if(index === -1){
             return Result.fail<User>("Usuário não encontrado")
         }
+        
         this.users[index] = user;
         return Result.ok<User>(user);
     }

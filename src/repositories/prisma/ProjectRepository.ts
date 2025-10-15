@@ -3,10 +3,13 @@ import { Result } from "../../env/Result";
 import { IProjectRepository } from "../interfaces/IProjectRepository";
 
 export class ProjectRepository implements IProjectRepository{
+
     private projects: Project[] = [];
 
     async findById(id: string): Promise<Result<Project>> {
+
         const project = this.projects.find(p=> p.id === id);
+
         if(!project){
             return Result.fail<Project>("Projeto nao encontrado");
         }
@@ -25,9 +28,11 @@ export class ProjectRepository implements IProjectRepository{
 
          this.projects.push(project);
          return Result.ok<Project>(project); 
+
         }
 
     async update(project: Project): Promise<Result<Project>> {
+
         const index = this.projects.findIndex(p=> p.id === project.id);
 
         if(index === -1){
@@ -38,7 +43,9 @@ export class ProjectRepository implements IProjectRepository{
     }
     
     async delete(id: string): Promise<Result<void>> {
+
         const index = this.projects.findIndex(p=> p.id === id);
+        
         if(index === -1){
             return Result.fail<void>("Projeto nao encontrado")
         }

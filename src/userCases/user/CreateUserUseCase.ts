@@ -4,6 +4,7 @@ import { Password } from "../../domain/value-objects/Password";
 import { Result } from "../../env/Result";
 import { IUserRepository } from "../../repositories/interfaces/IUserRepository";
 import { User } from "../../domain/entities/User";
+
 interface CreateUserRequest{
     name: string;
     email: string;

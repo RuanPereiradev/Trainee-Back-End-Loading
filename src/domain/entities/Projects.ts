@@ -23,6 +23,8 @@ export class Project extends AuditableEntity{
   get name(): string { return this._name; }
   get description(): string { return this._description; }
   get sector(): Sectors { return this._sector; }
+
+  
 //   get isActive(): boolean { return this._isActive; }
 //   get deletedAt(): Date | null { return this._deletedAt; }
 
