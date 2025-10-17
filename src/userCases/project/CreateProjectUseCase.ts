@@ -1,4 +1,4 @@
-import { Project } from "../../domain/entities/Projects";
+    import { Project } from "../../domain/entities/Projects";
 import { Sectors } from "../../domain/entities/Sectors";
 import { Result } from "../../env/Result";
 import { IProjectRepository } from "../../repositories/interfaces/IProjectRepository";

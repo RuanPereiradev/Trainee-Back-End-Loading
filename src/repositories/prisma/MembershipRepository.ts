@@ -30,6 +30,25 @@ export class MembershipRepository implements IMembershipRepository{
         return Result.ok<Membership>(membership);
     }
 
+    async findByUserId(userId: string): Promise<Result<Membership[]>> {
+    try {
+        const memberships = this.membership.filter(m => m.user.id === userId);
+
+        if (memberships.length === 0) {
+            return Result.fail<Membership[]>("Nenhuma membership encontrada para este usuário");
+        }
+
+        return Result.ok<Membership[]>(memberships);
+
+    } catch (error) {
+        if (error instanceof Error) {
+            return Result.fail<Membership[]>(error.message);
+        }
+        return Result.fail<Membership[]>("Erro desconhecido ao buscar memberships por usuário");
+    }
+}
+
+
     async findAll(): Promise<Result<Membership[]>> {
         return Result.ok<Membership[]>(this.membership);
     }

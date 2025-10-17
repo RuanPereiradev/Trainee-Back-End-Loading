@@ -6,7 +6,7 @@ import { IMembershipRepository } from "../../repositories/interfaces/IMembership
 export class FindProjectsByUserUseCase {
     constructor(private membershipRepo: IMembershipRepository) {}
 
-    async execute(userId: string): Promise<Result<Project[]>> {
+    async execute(id: string): Promise<Result<Project[]>> {
         try {
             const allMembershipsResult = await this.membershipRepo.findAll();
             if (allMembershipsResult.isFailure) {
@@ -14,10 +14,11 @@ export class FindProjectsByUserUseCase {
             }
 
             const projects = allMembershipsResult.getValue()
-                .filter((m) => m.user.id === userId && !m.leftAt)
+                .filter((m) => m.user.id === id && !m.leftAt)
                 .map((m) => m.project);
 
             return Result.ok(projects);
+            
         } catch (error) {
             if (error instanceof Error) {
                 return Result.fail<Project[]>(error.message);

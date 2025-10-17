@@ -3,7 +3,7 @@ import { Project } from "../../domain/entities/Projects";
 import { Sectors } from "../../domain/entities/Sectors";
 import { Membership } from "../../domain/entities/Membership";
 import { MembershipRepository } from "../../repositories/prisma/MembershipRepository";
-import { FindProjectsByUserUseCase } from "../../userCases/project/FindProjectsByUserUseCase";
+import { FindProjectsByUserUseCase } from "../../userCases/membership/FindProjectsByUserUseCase";
 import { Email } from "../../domain/value-objects/Email";
 import { Password } from "../../domain/value-objects/Password";
 import { UserRole } from "../enums/UserRole";
@@ -18,11 +18,6 @@ async function runFindProjectsByUserTest() {
 
     // Criar setores e projetos
     const setor = new Sectors("Tecnologia", "Dev");
-
-
-
-
-
     
     const project1 = Project.create("Projeto Alpha", setor, "Descrição do projeto");
 
@@ -41,13 +36,6 @@ async function runFindProjectsByUserTest() {
     }
 
     const projectUser2 = project2.getValue();
-
-
-
-
-
-
-
 
     // Criar memberships
     const membership1 = new Membership(user, projectUser1);
