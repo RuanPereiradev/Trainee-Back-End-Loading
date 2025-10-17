@@ -100,10 +100,10 @@ export class UserController{
 
     async deleteUser (request: FastifyRequest, reply: FastifyReply){
         try{
-            const {id} = request.params as any;
+            const {id} = request.params as {id: string};
 
             const useCase = new DeleteUserUseCase(this.userRepository);
-            const result = await useCase.execute(id);
+            const result = await useCase.execute({id});
 
             if(result.isFailure){
                 return reply.status(400).send({error: result.getError()})

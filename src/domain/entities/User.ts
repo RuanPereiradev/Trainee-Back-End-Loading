@@ -51,7 +51,7 @@ export class User extends AuditableEntity{
         }
 
         this._role=newRole;
-        this.touch;
+        this.touch();
     }
 
     changePassword(newPassword: Password): void{
@@ -59,7 +59,7 @@ export class User extends AuditableEntity{
              throw new Error("a senha não pode ser nulo")
         }
         this._password = newPassword;
-        this.touch;
+        this.touch();
     }
 
     changeEmail(newEmail: Email): void{
@@ -67,7 +67,7 @@ export class User extends AuditableEntity{
              throw new Error("a senha não pode ser nulo")
         }
         this._email = newEmail;
-        this.touch;
+        this.touch();
     }
     // desactivate(){
     //     this._isActive = false;
