@@ -1,12 +1,15 @@
     import { Project } from "../../domain/entities/Projects";
 import { Sectors } from "../../domain/entities/Sectors";
+import { ProjectStatus } from "../../domain/enums/ProjectStatus";
 import { Result } from "../../env/Result";
 import { IProjectRepository } from "../../repositories/interfaces/IProjectRepository";
 
 interface CreateProjectRequest{
     name: string;
-    description: string;
     sector: Sectors;
+    status: ProjectStatus;
+    description: string;
+  
 }
 
 export class CreateProjectUseCase{
@@ -15,7 +18,7 @@ export class CreateProjectUseCase{
     async execute(request: CreateProjectRequest): Promise<Result<Project>>{
         try {
 
-            const {name, description, sector} = request;
+            const {name, sector, status, description} = request;
 
             if(!name || name.trim().length<3){
                 return Result.fail<Project>("O nome do projeto deve ter pelo menos 3 caracteres")
@@ -24,8 +27,12 @@ export class CreateProjectUseCase{
             if(!sector){
                 return Result.fail<Project>("Setor é obrigatório")
             }
+            if(!status){
+                return Result.fail<Project>("Status é obrigatório")
+ 
+            }
 
-            const projectResult = Project.create(name,sector,description);
+            const projectResult = Project.create(name,sector, status, description);
 
             if(projectResult.isFailure){
                 return Result.fail<Project>(projectResult.getError());

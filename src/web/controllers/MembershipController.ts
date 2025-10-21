@@ -20,6 +20,7 @@ export class MembershipController{
     }
 
     async createMembership(request: FastifyRequest, reply: FastifyReply){
+
         try{
             const {user, project} = request.body as{
                 user: User;
@@ -39,7 +40,9 @@ export class MembershipController{
             return reply.status(500).send({error: "Erro ao criar relacionamento"})
         }
     }
+    
     async updateMembership(request: FastifyRequest, reply: FastifyReply){
+
         try{
             const {id} = request.params as{
                 id: string;
@@ -66,6 +69,7 @@ export class MembershipController{
     }
 
     async deleteMembership(request: FastifyRequest, reply: FastifyReply){
+
         try{
             const {id} = request.params as{ 
                 id: string;
@@ -84,7 +88,9 @@ export class MembershipController{
             return reply.status(500).send({error: "Erro ao deletar relacionamento"});
         }
     }
+
     async findMembershipByProject(request: FastifyRequest, reply: FastifyReply){
+
         try{
             const{projectId} = request.params as{
                 projectId: string;
@@ -104,6 +110,7 @@ export class MembershipController{
     }
 
     async findProjectByUser(request: FastifyRequest, reply: FastifyReply){
+
         try{
             const {userId} = request.params as{
                 userId: string;
@@ -127,7 +134,9 @@ export class MembershipController{
             return reply.status(500).send({error: "Erro interno ao buscar projeto do usuário"})
         }
     }
+
     async findMembershipByUser(request: FastifyRequest ,reply: FastifyReply){
+        
         try{
             const {userId} = request.params as {userId: string};
 

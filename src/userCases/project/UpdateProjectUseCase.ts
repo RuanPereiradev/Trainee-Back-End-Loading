@@ -3,12 +3,14 @@ import { Project } from "../../domain/entities/Projects";
 import { Sectors } from "../../domain/entities/Sectors";
 import { Result } from "../../env/Result";
 import { IProjectRepository } from "../../repositories/interfaces/IProjectRepository";
+import { ProjectStatus } from "../../domain/enums/ProjectStatus";
 
 interface UpdateProjectRequest{
     id: string;
     name?: string;
-    description?: string;
     sector?: Sectors;
+    status?: ProjectStatus;
+    description?: string;
 }
 
 export class UpdateProjectUseCase{
@@ -17,7 +19,7 @@ export class UpdateProjectUseCase{
 
     async execute(request: UpdateProjectRequest): Promise<Result<Project>>{
         try{
-            const {id, name, description, sector} = request;
+            const {id, name, sector, status, description} = request;
 
             const projectResult = await this.projectRepo.findById(id);
             if(projectResult.isFailure){
@@ -33,12 +35,16 @@ export class UpdateProjectUseCase{
                 }
             }
 
-            if(description){
-                project.changeDescription(description);
+             if(sector){
+                project.changeSector(sector);
             }
 
-            if(sector){
-                project.changeSector(sector);
+            if(status){
+                project.changeStatus(status);
+            }
+
+            if(description){
+                project.changeDescription(description);
             }
 
             const updateResult = await this.projectRepo.update(project);

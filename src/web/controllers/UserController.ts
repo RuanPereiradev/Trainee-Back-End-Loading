@@ -5,7 +5,6 @@ import { CreateUserUseCase } from "../../userCases/user/CreateUserUseCase";
 import { FindAllUserUseCase } from "../../userCases/user/FindAllUsersUseCase";
 import { FindUserByIdUseCase } from "../../userCases/user/FindUserByIdUseCase";
 import { UpdateUserUseCase } from "../../userCases/user/UpdateUserUseCase";
-import { userRoutes } from "../routes/ProjectRoutes";
 import { DeleteUserUseCase } from "../../userCases/user/DeleteUserUseCase";
 import { error } from "console";
 import { resolveObjectURL } from "buffer";
@@ -41,6 +40,7 @@ export class UserController{
             return reply.status(500).send({error: "Erro ao criar usuário"})
         }
     }
+
     async findAll(request:FastifyRequest, reply: FastifyReply){
         try{
             const useCase = new FindAllUserUseCase(this.userRepository);
@@ -59,10 +59,12 @@ export class UserController{
     }
 
     async findById(request: FastifyRequest, reply: FastifyReply){
+
         try{
             const{id} = request.params as{
                 id: string;
             }
+            
             const useCase = new FindUserByIdUseCase(this.userRepository);
             const result = await useCase.execute({id});
 
@@ -79,6 +81,7 @@ export class UserController{
     }
 
     async updateUser(request: FastifyRequest, reply: FastifyReply) {
+        
         try {
         const { id } = request.params as { id: string };
         const {name, email, password,role} = request.body as any;

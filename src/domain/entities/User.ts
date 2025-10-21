@@ -37,37 +37,37 @@ export class User extends AuditableEntity{
 
     // get isActive() { return this._isActive; }
 
-    changeName(newName:string): void{
+    changeName(newName:string): Result<void>{
         if(!newName.trim()){
-            throw new Error("O nome não pode ser vazio")
+            return Result.fail("O nome não pode ser vazio");
         }
         this._name = newName.trim();
-        this.touch();
+        return Result.ok();
     }
 
-    changeRole(newRole: UserRole): void{
+    changeRole(newRole: UserRole): Result<void>{
         if(!newRole){
-            throw new Error("O cargo não pode ser nulo")
+            return Result.fail("O cargo não pode ser nulo");
         }
 
         this._role=newRole;
-        this.touch();
+        return Result.ok();
     }
 
-    changePassword(newPassword: Password): void{
+    changePassword(newPassword: Password): Result<void>{
         if(!newPassword){
-             throw new Error("a senha não pode ser nulo")
+            return Result.fail("A senha não pode ser nula");
         }
         this._password = newPassword;
-        this.touch();
+        return Result.ok();
     }
 
-    changeEmail(newEmail: Email): void{
+    changeEmail(newEmail: Email): Result<void>{
          if(!newEmail){
-             throw new Error("a senha não pode ser nulo")
+            return Result.fail("O email não pode ser nulo");
         }
         this._email = newEmail;
-        this.touch();
+        return Result.ok();
     }
     // desactivate(){
     //     this._isActive = false;
