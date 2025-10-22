@@ -1,81 +1,35 @@
-import { MemoryMeasurement } from "vm";
+// src/repositories/InMemoryMembershipRepository.ts
 import { Membership } from "../../domain/entities/Membership";
-import { Result } from "../../env/Result";
 import { IMembershipRepository } from "../interfaces/IMembershipRepository";
+import { Result } from "../../env/Result";
+export class MembershipRepository implements IMembershipRepository {
+    private memberships: Membership[] = [];
 
-export class MembershipRepository implements IMembershipRepository{
-    
-    private membership: Membership[] = [];
-
-    async save(membership: Membership): Promise<Result<Membership>>{
-
-        const exists = this.membership.find(m => m.id === membership.id);
-
-        if(exists){
-            return Result.fail<Membership>("Membership já existe");
-        }
-
-        this.membership.push(membership);
-        return Result.ok<Membership>(membership);
-
+    async create(membership: Membership): Promise<Result<Membership>> {
+        this.memberships.push(membership);
+        return Result.ok(membership);
     }
 
-    async findById(id: string): Promise<Result<Membership>> {
-
-        const membership = this.membership.find(m => m.id === id);
-
-        if(!membership){
-            return Result.fail<Membership>("Membership não encontrada")
-        }
-        return Result.ok<Membership>(membership);
+    async findById(id: string): Promise<Membership | null> {
+        return this.memberships.find(m => m.id === id) ?? null;
     }
 
-    async findByUserId(userId: string): Promise<Result<Membership[]>> {
-    try {
-        const memberships = this.membership.filter(m => m.user.id === userId);
-
-        if (memberships.length === 0) {
-            return Result.fail<Membership[]>("Nenhuma membership encontrada para este usuário");
-        }
-
-        return Result.ok<Membership[]>(memberships);
-
-    } catch (error) {
-        if (error instanceof Error) {
-            return Result.fail<Membership[]>(error.message);
-        }
-        return Result.fail<Membership[]>("Erro desconhecido ao buscar memberships por usuário");
-    }
-}
-
-
-    async findAll(): Promise<Result<Membership[]>> {
-        return Result.ok<Membership[]>(this.membership);
+    async findByUserAndProject(userId: string, projectId: string): Promise<Membership | null> {
+        return this.memberships.find(
+            m => m.user.id === userId && m.project.id === projectId && !m.leftAt
+        ) ?? null;
     }
 
-    async update(membership: Membership): Promise<Result<Membership>> {
-
-        const index = this.membership.findIndex(m => m.id === membership.id);
-
-        if(index === -1){
-            return Result.fail<Membership>("Membership não encontrada");
-        }
-
-        this.membership[index] = membership;
-        return Result.ok<Membership>(membership);
-
+    async save(membership: Membership): Promise<void> {
+        const index = this.memberships.findIndex(m => m.id === membership.id);
+        if(index !== -1) this.memberships[index] = membership;
     }
 
-    async delete(id: string): Promise<Result<void>> {
+    async listByProject(projectId: string): Promise<Membership[]> {
+        return this.memberships.filter(m => m.project.id === projectId && !m.leftAt);
+    }
 
-        const index = this.membership.findIndex(m => m.id === id);
-
-        if(index === -1){
-            return Result.fail<void>("Membership nao encontrada")
-        }
-
-        this.membership.splice(index, 1)
-        return Result.ok<void>();
-
+    async listByUser(userId: string): Promise<Membership[]> {
+        return this.memberships.filter(m => m.user.id === userId && !m.leftAt);
     }
 }

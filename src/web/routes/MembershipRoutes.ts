@@ -1,15 +1,36 @@
+// src/routes/membershipRoutes.ts
 import { FastifyInstance } from "fastify";
 import { MembershipController } from "../controllers/MembershipController";
+import { CreateMembershipRequest, CreateMembershipUseCase } from "../../userCases/membership/CreateMembershipUseCase";
+import { LeaveProjectRequest, LeaveProjectUseCase } from "../../userCases/membership/LeaveProjectUseCase";
+import { ListMembershipsByProjectRequest, ListMembershipsByProjectUseCase } from "../../userCases/membership/ListMembershipByProjectUseCase";
+import { MembershipRepository } from "../../repositories/prisma/MembershipRepository";
+
+// instâncias
+const membershipRepository = new MembershipRepository();
+const createMembershipUseCase = new CreateMembershipUseCase(membershipRepository);
+const leaveProjectUseCase = new LeaveProjectUseCase(membershipRepository);
+const listMembershipsUseCase = new ListMembershipsByProjectUseCase(membershipRepository);
+
+const membershipController = new MembershipController(
+    createMembershipUseCase,
+    leaveProjectUseCase,
+    listMembershipsUseCase
+);
 
 export async function membershipRoutes(app: FastifyInstance) {
-    const membershipController = new MembershipController();
-    
-  app.get('/ping', async (req, reply) => reply.send({ message: 'pong' }));
-  app.post("/membership", (request, reply) => membershipController.createMembership(request, reply));
-  app.get("/membership/:id", (request, reply) => membershipController.findMembershipByProject(request, reply));
-  app.get("/membership/:id", (request, reply) => membershipController.findMembershipByUser(request, reply));
-  app.get("/membership/:id", (request, reply) => membershipController.findProjectByUser(request, reply));
-  app.put("/membership/:id", (request, reply) => membershipController.updateMembership(request, reply));
-  app.delete("/membership/:id", (request, reply) => membershipController.deleteMembership(request, reply));
+    app.post<{ Body: CreateMembershipRequest }>(
+        "/memberships/join",
+        (request, reply) => membershipController.joinProject(request, reply)
+    );
 
+    app.post<{ Params: LeaveProjectRequest }>(
+        "/memberships/leave/:membershipId",
+        (request, reply) => membershipController.leaveProject(request, reply)
+    );
+
+    app.get<{ Params: ListMembershipsByProjectRequest }>(
+        "/memberships/project/:projectId",
+        (request, reply) => membershipController.listProjectMembers(request, reply)
+    );
 }

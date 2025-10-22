@@ -1,12 +1,11 @@
 import { Membership } from "../../domain/entities/Membership";
 import { Result } from "../../env/Result";
 
-export interface IMembershipRepository{
-    findById(id: string): Promise<Result<Membership>>;
-    findByUserId(userId: string): Promise<Result<Membership[]>>;
-    findAll(): Promise<Result<Membership[]>>;
-    save(membership: Membership): Promise<Result<Membership>>;
-    delete(id: string): Promise<Result<void>>;
-    update(membership: Membership): Promise<Result<Membership>>;
-
+export interface IMembershipRepository {
+    create(membership: Membership): Promise<Result<Membership>>;
+    findById(id: string): Promise<Membership | null>;
+    findByUserAndProject(userId: string, projectId: string): Promise<Membership | null>;
+    save(membership: Membership): Promise<void>;
+    listByProject(projectId: string): Promise<Membership[]>;
+    listByUser(userId: string): Promise<Membership[]>;
 }

@@ -10,7 +10,6 @@ const app = Fastify({
 // registra as rotas do usuário
 app.register(userRoutes);
 app.register(projectRoutes);
-// app.register(membershipRoutes);
-app.get('/ping', async () => ({ message: 'pong' }));
+app.register(membershipRoutes);
 
 export default app;
