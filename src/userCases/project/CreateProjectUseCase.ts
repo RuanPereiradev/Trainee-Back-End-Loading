@@ -20,6 +20,11 @@ export class CreateProjectUseCase{
 
             const {name, sector, status, description} = request;
 
+            const existingProject = await this.projectRepo.findByName(request.name);
+            if(existingProject.isSuccess){
+                return Result.fail<Project>("Name already in use");
+            }
+            
             if(!name || name.trim().length<3){
                 return Result.fail<Project>("O nome do projeto deve ter pelo menos 3 caracteres")
             }

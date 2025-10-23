@@ -54,4 +54,8 @@ export class UserRepository implements IUserRepository{
     this.users.splice(index, 1);
     return Result.ok<void>();
     }
+
+    
+
+
 }

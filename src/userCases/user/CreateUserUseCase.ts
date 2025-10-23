@@ -17,6 +17,10 @@ export class CreateUserUseCase{
 
     async execute(request: CreateUserRequest): Promise<Result<User>>{
         try{
+            const emailResult = await this.userRepository.findByEmail(request.email);
+            if(emailResult.isSuccess){
+                return Result.fail<User>("Email already in use");
+            }
             //cria email e password
             const email = new Email(request.email);
             const password = new Password(request.password);

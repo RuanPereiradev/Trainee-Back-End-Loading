@@ -3,8 +3,18 @@ import { Result } from "../../env/Result";
 import { IProjectRepository } from "../interfaces/IProjectRepository";
 
 export class ProjectRepository implements IProjectRepository{
-
+    
     private projects: Project[] = [];
+
+    async findByName(name: string): Promise<Result<Project>> {
+
+        const project = this.projects.find(p => p.name === name);
+        
+        if(!project){
+            return Result.fail<Project>("Projeto nao encontrado por nome");
+        }
+        return Result.ok<Project>(project);
+    }
 
     async findById(id: string): Promise<Result<Project>> {
 
