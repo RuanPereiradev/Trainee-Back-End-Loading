@@ -1,6 +1,6 @@
-import { CreateMembershipUseCase } from "../../userCases/membership/CreateMembershipUseCase";
-import { DeleteMembershipUseCase } from "../../userCases/membership/DeleteMembershipUseCase";
-import { UpdateMembershipUseCase } from "../../userCases/membership/UpdateMembershipUseCase";
+import { CreateMembershipUseCase } from "../../useCases/membership/CreateMembershipUseCase";
+import { DeleteMembershipUseCase } from "../../useCases/membership/DeleteMembershipUseCase";
+import { UpdateMembershipUseCase } from "../../useCases/membership/UpdateMembershipUseCase";
 import { MembershipRepository } from "../../repositories/prisma/MembershipRepository";
 import { User } from "../../domain/entities/User";
 import { Project } from "../../domain/entities/Projects";

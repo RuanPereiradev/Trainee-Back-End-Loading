@@ -1,5 +1,5 @@
 import { UserRepository } from "../../repositories/prisma/UserRepository";
-import { CreateUserUseCase } from "../../userCases/user/CreateUserUseCase";
+import { CreateUserUseCase } from "../../useCases/user/CreateUserUseCase";
 import { RoleType } from "../enums/RoleType";
 import { UserRole } from "../enums/UserRole";
 

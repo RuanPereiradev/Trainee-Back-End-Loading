@@ -11,6 +11,7 @@ interface UpdateProjectRequest{
     sector?: Sectors;
     status?: ProjectStatus;
     description?: string;
+    goals?: string;
 }
 
 export class UpdateProjectUseCase{
@@ -19,9 +20,10 @@ export class UpdateProjectUseCase{
 
     async execute(request: UpdateProjectRequest): Promise<Result<Project>>{
         try{
-            const {id, name, sector, status, description} = request;
+            const {id, name, sector, status, description, goals} = request;
 
             const projectResult = await this.projectRepo.findById(id);
+
             if(projectResult.isFailure){
                 return Result.fail<Project>(projectResult.getError());
             }
@@ -47,6 +49,10 @@ export class UpdateProjectUseCase{
                 project.changeDescription(description);
             }
 
+            if(goals){
+                project.changeGoals(goals);
+            }
+            
             const updateResult = await this.projectRepo.update(project);
 
             if(updateResult.isFailure){

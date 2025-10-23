@@ -10,18 +10,19 @@ export class Project extends AuditableEntity{
   private _description: string;
   private _sector: Sectors;
   private _status: ProjectStatus;
+  private _goals: string;
 
 //   private _isActive: boolean = true;
 //   private _deletedAt: Date | null = null;
 
-  private constructor(name: string,  sector: Sectors,status: ProjectStatus, description?: string, id?: string) {
+  private constructor(name: string,  sector: Sectors,status: ProjectStatus, goals: string, description?: string, id?: string) {
     super();
     this._id = id ?? uuidv4();
     this._name = name;
     this._sector = sector;
     this._description = description ?? "";
     this._status = status;
-    
+    this._goals = goals; 
   }
 
   get id(): string { return this._id; }
@@ -29,15 +30,16 @@ export class Project extends AuditableEntity{
   get description(): string { return this._description; }
   get sector(): Sectors { return this._sector; }
   get status(): ProjectStatus{return this.status}
+  get goals(): string{return this.goals}
   
 //   get isActive(): boolean { return this._isActive; }
 //   get deletedAt(): Date | null { return this._deletedAt; }
 
-  public static create(name: string, sector: Sectors,status: ProjectStatus, description?: string, id?: string): Result<Project> {
+  public static create(name: string, sector: Sectors,status: ProjectStatus,goals: string, description?: string, id?: string): Result<Project> {
     if (!name.trim()) {
       return Result.fail<Project>("O nome do projeto não pode ser vazio.");
     }
-    return Result.ok<Project>(new Project(name.trim(),sector, status, description?.trim(), id));
+    return Result.ok<Project>(new Project(name.trim(),sector, status, goals, description?.trim(), id));
   }
 
   changeName(newName: string): Result<void> {
@@ -62,6 +64,9 @@ export class Project extends AuditableEntity{
 
   changeSector(newSector: Sectors): void {
     this._sector = newSector;
+  }
+  changeGoals(newGoal: string): void {
+    this._goals = newGoal;
   }
 
 //   deactivate(): void {

@@ -1,9 +1,9 @@
 // src/routes/membershipRoutes.ts
 import { FastifyInstance } from "fastify";
 import { MembershipController } from "../controllers/MembershipController";
-import { CreateMembershipRequest, CreateMembershipUseCase } from "../../userCases/membership/CreateMembershipUseCase";
-import { LeaveProjectRequest, LeaveProjectUseCase } from "../../userCases/membership/LeaveProjectUseCase";
-import { ListMembershipsByProjectRequest, ListMembershipsByProjectUseCase } from "../../userCases/membership/ListMembershipByProjectUseCase";
+import { CreateMembershipRequest, CreateMembershipUseCase } from "../../useCases/membership/CreateMembershipUseCase";
+import { LeaveProjectRequest, LeaveProjectUseCase } from "../../useCases/membership/LeaveProjectUseCase";
+import { ListMembershipsByProjectRequest, ListMembershipsByProjectUseCase } from "../../useCases/membership/ListMembershipByProjectUseCase";
 import { MembershipRepository } from "../../repositories/prisma/MembershipRepository";
 
 // instâncias

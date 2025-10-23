@@ -1,11 +1,11 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { ProjectRepository } from "../../repositories/prisma/ProjectRepository";
 import { Sectors } from "../../domain/entities/Sectors";
-import { CreateProjectUseCase } from "../../userCases/project/CreateProjectUseCase";
-import { FindAllProjectUseCase } from "../../userCases/project/FindAllProjectUseCase";
-import { UpdateProjectUseCase } from "../../userCases/project/UpdateProjectUseCase";
-import { DeleteProjectUseCase } from "../../userCases/project/DeleteProjectUseCase";
-import { FindByIdProjectUseCase } from "../../userCases/project/FindByIdProjectUseCase";
+import { CreateProjectUseCase } from "../../useCases/project/CreateProjectUseCase";
+import { FindAllProjectUseCase } from "../../useCases/project/FindAllProjectUseCase";
+import { UpdateProjectUseCase } from "../../useCases/project/UpdateProjectUseCase";
+import { DeleteProjectUseCase } from "../../useCases/project/DeleteProjectUseCase";
+import { FindByIdProjectUseCase } from "../../useCases/project/FindByIdProjectUseCase";
 import { ProjectStatus } from "../../domain/enums/ProjectStatus";
 
 export class ProjectController{
@@ -19,15 +19,16 @@ export class ProjectController{
     async createProject(request: FastifyRequest, reply: FastifyReply){
 
         try{
-            const {name,sector,status, description} = request.body as{
+            const {name,sector,status, description, goals} = request.body as{
                 name: string;
                 sector: Sectors;
                 status: ProjectStatus;
                 description: string;
+                goals: string;
             }
             const useCase = new CreateProjectUseCase(this.projectRepository);
 
-            const result = await useCase.execute({name, sector, status, description});
+            const result = await useCase.execute({name, sector, status, description, goals});
 
             if(result.isFailure){
                 return reply.status(400).send({error: result.getError()})
@@ -83,10 +84,10 @@ export class ProjectController{
 
         try{
             const {id} = request.params as { id: string; }
-            const {name,sector,status,description} = request.body as any;
+            const {name,sector,status,description, goals} = request.body as any;
 
             const useCase = new UpdateProjectUseCase(this.projectRepository);
-            const result = await useCase.execute({id,name,sector,status,description})
+            const result = await useCase.execute({id,name,sector,status,description, goals})
 
             if(result.isFailure){
                 return reply.status(400).send({ error: result.getError() });

@@ -1,11 +1,11 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { UserRepository } from "../../repositories/prisma/UserRepository";
 import { UserRole } from "../../domain/enums/UserRole";
-import { CreateUserUseCase } from "../../userCases/user/CreateUserUseCase";
-import { FindAllUserUseCase } from "../../userCases/user/FindAllUsersUseCase";
-import { FindUserByIdUseCase } from "../../userCases/user/FindUserByIdUseCase";
-import { UpdateUserUseCase } from "../../userCases/user/UpdateUserUseCase";
-import { DeleteUserUseCase } from "../../userCases/user/DeleteUserUseCase";
+import { CreateUserUseCase } from "../../useCases/user/CreateUserUseCase";
+import { FindAllUserUseCase } from "../../useCases/user/FindAllUsersUseCase";
+import { FindUserByIdUseCase } from "../../useCases/user/FindUserByIdUseCase";
+import { UpdateUserUseCase } from "../../useCases/user/UpdateUserUseCase";
+import { DeleteUserUseCase } from "../../useCases/user/DeleteUserUseCase";
 import { error } from "console";
 import { resolveObjectURL } from "buffer";
 

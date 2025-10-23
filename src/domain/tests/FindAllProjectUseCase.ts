@@ -1,6 +1,6 @@
 import { ProjectRepository } from "../../repositories/prisma/ProjectRepository";
-import { CreateProjectUseCase } from "../../userCases/project/CreateProjectUseCase";
-import { FindAllProjectUseCase } from "../../userCases/project/FindAllProjectUseCase";
+import { CreateProjectUseCase } from "../../useCases/project/CreateProjectUseCase";
+import { FindAllProjectUseCase } from "../../useCases/project/FindAllProjectUseCase";
 import { Sectors } from "../../domain/entities/Sectors";
 
 async function runFindAllProjectTest() {

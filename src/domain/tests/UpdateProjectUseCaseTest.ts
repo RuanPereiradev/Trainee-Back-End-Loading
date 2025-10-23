@@ -1,6 +1,6 @@
 import { ProjectRepository } from "../../repositories/prisma/ProjectRepository";
-import { CreateProjectUseCase } from "../../userCases/project/CreateProjectUseCase";
-import { UpdateProjectUseCase } from "../../userCases/project/UpdateProjectUseCase";
+import { CreateProjectUseCase } from "../../useCases/project/CreateProjectUseCase";
+import { UpdateProjectUseCase } from "../../useCases/project/UpdateProjectUseCase";
 import { Sectors } from "../../domain/entities/Sectors";
 
 async function runUpdateProjectTest() {

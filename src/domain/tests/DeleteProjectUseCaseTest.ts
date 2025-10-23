@@ -1,8 +1,8 @@
 import { Sectors } from "../../domain/entities/Sectors";
 import { Project } from "../../domain/entities/Projects";
 import { ProjectRepository } from "../../repositories/prisma/ProjectRepository";
-import { CreateProjectUseCase } from "../../userCases/project/CreateProjectUseCase";
-import { DeleteProjectUseCase } from "../../userCases/project/DeleteProjectUseCase";
+import { CreateProjectUseCase } from "../../useCases/project/CreateProjectUseCase";
+import { DeleteProjectUseCase } from "../../useCases/project/DeleteProjectUseCase";
 
 async function testDeleteProjectUseCase() {
   // Instanciando repositório e casos de uso

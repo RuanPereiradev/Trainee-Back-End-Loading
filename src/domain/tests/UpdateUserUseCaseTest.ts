@@ -1,6 +1,6 @@
 // src/domain/tests/UpdateUserUseCaseTest.ts
 import { UserRepository } from "../../repositories/prisma/UserRepository";
-import { UpdateUserUseCase } from "../../userCases/user/UpdateUserUseCase";
+import { UpdateUserUseCase } from "../../useCases/user/UpdateUserUseCase";
 import { User } from "../entities/User";
 import { RoleType } from "../enums/RoleType";
 import { UserRole } from "../enums/UserRole";

@@ -3,7 +3,7 @@ import { Project } from "../../domain/entities/Projects";
 import { Sectors } from "../../domain/entities/Sectors";
 import { Membership } from "../../domain/entities/Membership";
 import { MembershipRepository } from "../../repositories/prisma/MembershipRepository";
-import { FindMembersByProjectUseCase } from "../../userCases/membership/FindMembersByProjectUseCase";
+import { FindMembersByProjectUseCase } from "../../useCases/membership/FindMembersByProjectUseCase";
 import { Email } from "../../domain/value-objects/Email";
 import { Password } from "../../domain/value-objects/Password";
 import { UserRole } from "../enums/UserRole";

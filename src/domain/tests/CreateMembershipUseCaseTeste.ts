@@ -3,7 +3,7 @@ import { User } from "../../domain/entities/User";
 import { Project } from "../../domain/entities/Projects";
 import { Sectors } from "../../domain/entities/Sectors";
 import { MembershipRepository } from "../../repositories/prisma/MembershipRepository";
-import { CreateMembershipUseCase } from "../../userCases/membership/CreateMembershipUseCase";
+import { CreateMembershipUseCase } from "../../useCases/membership/CreateMembershipUseCase";
 import { Result } from "../../env/Result";
 import { UserRole } from "../enums/UserRole";
 import { RoleType } from "../enums/RoleType";

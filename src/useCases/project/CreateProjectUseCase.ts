@@ -9,6 +9,7 @@ interface CreateProjectRequest{
     sector: Sectors;
     status: ProjectStatus;
     description: string;
+    goals: string;
   
 }
 
@@ -18,9 +19,10 @@ export class CreateProjectUseCase{
     async execute(request: CreateProjectRequest): Promise<Result<Project>>{
         try {
 
-            const {name, sector, status, description} = request;
+            const {name, sector, status, description, goals} = request;
 
             const existingProject = await this.projectRepo.findByName(request.name);
+
             if(existingProject.isSuccess){
                 return Result.fail<Project>("Name already in use");
             }
@@ -36,8 +38,14 @@ export class CreateProjectUseCase{
                 return Result.fail<Project>("Status é obrigatório")
  
             }
+             if(!description){
+                return Result.fail<Project>("Descrição é obrigatório")
+            }
+            if(!goals){
+                return Result.fail<Project>("Metas é obrigatório")
+            }
 
-            const projectResult = Project.create(name,sector, status, description);
+            const projectResult = Project.create(name,sector, status, description, goals);
 
             if(projectResult.isFailure){
                 return Result.fail<Project>(projectResult.getError());

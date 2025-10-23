@@ -21,6 +21,7 @@ export class CreateUserUseCase{
             if(emailResult.isSuccess){
                 return Result.fail<User>("Email already in use");
             }
+            
             //cria email e password
             const email = new Email(request.email);
             const password = new Password(request.password);

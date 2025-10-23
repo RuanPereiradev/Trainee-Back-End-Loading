@@ -1,9 +1,9 @@
 // src/controllers/MembershipController.ts
 import { FastifyReply, FastifyRequest } from "fastify";
-import { CreateMembershipRequest, CreateMembershipUseCase } from "../../userCases/membership/CreateMembershipUseCase";
-import { LeaveProjectRequest, LeaveProjectUseCase } from "../../userCases/membership/LeaveProjectUseCase";
+import { CreateMembershipRequest, CreateMembershipUseCase } from "../../useCases/membership/CreateMembershipUseCase";
+import { LeaveProjectRequest, LeaveProjectUseCase } from "../../useCases/membership/LeaveProjectUseCase";
 import { Result } from "../../env/Result";
-import { ListMembershipsByProjectRequest, ListMembershipsByProjectUseCase } from "../../userCases/membership/ListMembershipByProjectUseCase";
+import { ListMembershipsByProjectRequest, ListMembershipsByProjectUseCase } from "../../useCases/membership/ListMembershipByProjectUseCase";
 export class MembershipController {
     constructor(
         private createMembershipUseCase: CreateMembershipUseCase,

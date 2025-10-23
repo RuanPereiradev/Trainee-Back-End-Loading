@@ -1,5 +1,5 @@
 import { ProjectRepository } from "../../repositories/prisma/ProjectRepository";
-import { CreateProjectUseCase } from "../../userCases/project/CreateProjectUseCase";
+import { CreateProjectUseCase } from "../../useCases/project/CreateProjectUseCase";
 import { Sectors } from "../../domain/entities/Sectors";
 
 async function testCreateProjectUseCase() {

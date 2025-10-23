@@ -5,7 +5,7 @@
 // import { UserRole } from "../enums/UserRole";
 
 import { UserRepository } from "../../repositories/prisma/UserRepository";
-import { FindAllUserUseCase } from "../../userCases/user/FindAllUsersUseCase";
+import { FindAllUserUseCase } from "../../useCases/user/FindAllUsersUseCase";
 import { RoleType } from "../enums/RoleType";
 import { Email } from "../value-objects/Email";
 import { Password } from "../value-objects/Password";

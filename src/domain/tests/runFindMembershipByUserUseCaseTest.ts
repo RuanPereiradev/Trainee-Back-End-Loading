@@ -2,7 +2,7 @@ import { User } from "../../domain/entities/User";
 import { Project } from "../../domain/entities/Projects";
 import { Membership } from "../../domain/entities/Membership";
 import { MembershipRepository } from "../../repositories/prisma/MembershipRepository";
-import { FindMembershipsByUserUseCase } from "../../userCases/membership/FindMembershipByUseCase";
+import { FindMembershipsByUserUseCase } from "../../useCases/membership/FindMembershipByUseCase";
 import { Email } from "../../domain/value-objects/Email";
 import { Password } from "../../domain/value-objects/Password";
 import { UserRole } from "../../domain/enums/UserRole";

@@ -1,5 +1,5 @@
 import { UserRepository } from "../../repositories/prisma/UserRepository";
-import { FindUserByIdUseCase } from "../../userCases/user/FindUserByIdUseCase";
+import { FindUserByIdUseCase } from "../../useCases/user/FindUserByIdUseCase";
 import { User } from "../entities/User";
 import { Email } from "../value-objects/Email";
 import { Password } from "../value-objects/Password";
