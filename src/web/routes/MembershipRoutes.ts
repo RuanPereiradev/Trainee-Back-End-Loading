@@ -5,17 +5,20 @@ import { CreateMembershipRequest, CreateMembershipUseCase } from "../../useCases
 import { LeaveProjectRequest, LeaveProjectUseCase } from "../../useCases/membership/LeaveProjectUseCase";
 import { ListMembershipsByProjectRequest, ListMembershipsByProjectUseCase } from "../../useCases/membership/ListMembershipByProjectUseCase";
 import { MembershipRepository } from "../../repositories/prisma/MembershipRepository";
+import { ApiResponseValidationFilter } from "../Filters/ApiResponseValidationFilter";
 
 // instâncias
 const membershipRepository = new MembershipRepository();
 const createMembershipUseCase = new CreateMembershipUseCase(membershipRepository);
 const leaveProjectUseCase = new LeaveProjectUseCase(membershipRepository);
 const listMembershipsUseCase = new ListMembershipsByProjectUseCase(membershipRepository);
+const responseFilter = new ApiResponseValidationFilter();
 
 const membershipController = new MembershipController(
     createMembershipUseCase,
     leaveProjectUseCase,
-    listMembershipsUseCase
+    listMembershipsUseCase,
+    responseFilter
 );
 
 export async function membershipRoutes(app: FastifyInstance) {

@@ -13,7 +13,7 @@
 
 ---
 
-##  FASE 1 — Configuração do Servidor Fastify
+##  FASE 1 — Configuração do Servidor Fastify(parcial)
 
  **Objetivo:** Subir o servidor e preparar estrutura para as rotas.
 
@@ -28,7 +28,7 @@
 
 ---
 
-## 🧑‍💻 FASE 2 — Controllers e Rotas de Usuário
+## 🧑‍💻 FASE 2 — Controllers e Rotas de Usuário(feito)
 
  **Objetivo:** Expor os *use cases* já criados (`CreateUser`, `FindAllUser`, `FindUserById`) via rotas Fastify.
 
@@ -44,8 +44,8 @@
 - [ ] Registrar `userRoutes` no `app.ts`
 
  **Requisitos Implementados:**
-- RF-A03 (parcial — cadastro de usuários)
-- RF-A05 (listar usuários)
+- RF-A03 (parcial — cadastro de usuários)(feito)
+- RF-A05 (listar usuários)(feito)
 
 📘 **Saída esperada:**  
 Rotas de usuário acessíveis via Postman/Insomnia.
@@ -89,7 +89,7 @@ Usuário faz login, recebe JWT, e só acessa rotas protegidas se autenticado.
 - [ ] Criar controllers e rotas para ambos
 
  **Requisitos Implementados:**
-- RF-B01 — CRUD de Setores
+- RF-B01 — CRUD de Setores (Feito)
 - RF-B02 — CRUD de Projetos
 - RF-C01 — Descrição e metas de Projeto
 - RF-C02 — Status de Projeto (`enum`)

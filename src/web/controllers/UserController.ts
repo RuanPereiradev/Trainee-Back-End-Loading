@@ -8,13 +8,18 @@ import { UpdateUserUseCase } from "../../useCases/user/UpdateUserUseCase";
 import { DeleteUserUseCase } from "../../useCases/user/DeleteUserUseCase";
 import { error } from "console";
 import { resolveObjectURL } from "buffer";
+import { ApiResponseValidationFilter } from "../Filters/ApiResponseValidationFilter";
+import { ApiResponse } from "../Wrappers/ApiResponse";
 
 export class UserController{
     private userRepository: UserRepository;
+    private responseFilter: ApiResponseValidationFilter;
 
     constructor(){
         this.userRepository = new UserRepository();
+        this.responseFilter = new ApiResponseValidationFilter();
     }
+
 
     async createUser(request: FastifyRequest, reply: FastifyReply){
         try{
@@ -29,15 +34,19 @@ export class UserController{
 
             const result = await useCase.execute({name, email, password, role});
 
-            if(result.isFailure){
-                return reply.status(400).send({error: result.getError()});
-            }
+            // if(result.isFailure){
+            //     return reply.status(400).send({error: result.getError()});
+            // }
+            const response = this.responseFilter.handleResponse(result);
 
-            return reply.status(201).send(result.getValue());
+            return reply.status(response.success ? 201:400).send(response);
 
         }catch(error){
             console.error(error);
-            return reply.status(500).send({error: "Erro ao criar usuário"})
+            const response = this.responseFilter.handleResponse(
+                ApiResponse.fail(["Erro ao criar usuário"])
+            )
+            return reply.status(500).send(response);
         }
     }
 
@@ -46,15 +55,20 @@ export class UserController{
             const useCase = new FindAllUserUseCase(this.userRepository);
             const result = await useCase.execute();
 
-            if(result.isFailure){
-                return reply.status(400).send({error: result.getError()})   
-            }
+            // if(result.isFailure){
+            //     return reply.status(400).send({error: result.getError()})   
+            // }
 
-            return reply.status(201).send(result.getValue());
+            const response = this.responseFilter.handleResponse(result);
+
+            return reply.status(response.success? 201:400).send(response);
 
         }catch(error){
             console.error(error);
-            return reply.status(500).send({error: "Erro interno ao retornar todos os usuários"})
+            const response = this.responseFilter.handleResponse(
+                ApiResponse.fail(["Erro ao retornar todos os usuários"])
+            )
+            return reply.status(500).send(response)
         }
     }
 
@@ -68,15 +82,20 @@ export class UserController{
             const useCase = new FindUserByIdUseCase(this.userRepository);
             const result = await useCase.execute({id});
 
-            if(result.isFailure){
-                return reply.status(400).send({error: result.getError()})
-            }
+            // if(result.isFailure){
+            //     return reply.status(400).send({error: result.getError()})
+            // }
 
-            return reply.status(201).send(result.getValue());
+            const response = this.responseFilter.handleResponse(result)
+    
+            return reply.status(response.success? 201:400).send(response);
 
         }catch(error){
-            console.log(error);
-            return reply.status(500).send({error: "Erro interno ao por retornar id"})
+            console.error(error);
+            const response = this.responseFilter.handleResponse(
+                ApiResponse.fail(["Erro ao retornar os usuários por id"])
+            )
+            return reply.status(500).send(response)
         }
     }
 
@@ -89,15 +108,20 @@ export class UserController{
         const useCase = new UpdateUserUseCase(this.userRepository);
         const result = await useCase.execute({id,name, email, password, role});
 
-        if (result.isFailure) {
-            return reply.status(400).send({ error: result.getError() });
-        }
+        // if (result.isFailure) {
+        //     return reply.status(400).send({ error: result.getError() });
+        // }
 
-        return reply.status(201).send(result.getValue());
+        const response = this.responseFilter.handleResponse(result)
+    
+        return reply.status(response.success? 201:400).send(response);
 
         } catch (error) {
-        console.error(error);
-        return reply.status(500).send({ error: "Erro ao atualizar usuário" });
+            console.error(error);
+            const response = this.responseFilter.handleResponse(
+                ApiResponse.fail(["Erro ao retornar os usuários por id"])
+            )
+            return reply.status(500).send(response)
     }
   }
 
@@ -108,15 +132,21 @@ export class UserController{
             const useCase = new DeleteUserUseCase(this.userRepository);
             const result = await useCase.execute({id});
 
-            if(result.isFailure){
-                return reply.status(400).send({error: result.getError()})
-            }
+            // if(result.isFailure){
+            //     return reply.status(400).send({error: result.getError()})
+            // }
 
-            return reply.status(200).send(result.getValue());
+        const response = this.responseFilter.handleResponse(result)
+    
+        return reply.status(response.success? 201:400).send(response);
+
 
         }catch(error){
             console.error(error);
-            return reply.status(500).send({error: "Erro ao atualizar usuário"})
+            const response = this.responseFilter.handleResponse(
+                ApiResponse.fail(["Erro ao retornar os usuários por id"])
+            )
+            return reply.status(500).send(response)
         }
     }
 

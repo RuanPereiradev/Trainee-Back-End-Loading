@@ -7,13 +7,17 @@ import { UpdateProjectUseCase } from "../../useCases/project/UpdateProjectUseCas
 import { DeleteProjectUseCase } from "../../useCases/project/DeleteProjectUseCase";
 import { FindByIdProjectUseCase } from "../../useCases/project/FindByIdProjectUseCase";
 import { ProjectStatus } from "../../domain/enums/ProjectStatus";
+import { ApiResponseValidationFilter } from "../Filters/ApiResponseValidationFilter";
+import { ApiResponse } from "../Wrappers/ApiResponse";
 
 export class ProjectController{
 
     private projectRepository: ProjectRepository;
+    private responseFilter: ApiResponseValidationFilter;
 
     constructor(){
         this.projectRepository = new ProjectRepository();
+        this.responseFilter = new ApiResponseValidationFilter();
     }
 
     async createProject(request: FastifyRequest, reply: FastifyReply){
@@ -30,15 +34,21 @@ export class ProjectController{
 
             const result = await useCase.execute({name, sector, status, description, goals});
 
-            if(result.isFailure){
-                return reply.status(400).send({error: result.getError()})
-            }
+            // if(result.isFailure){
+            //     return reply.status(400).send({error: result.getError()})
+            // }
 
-            return reply.status(201).send(result.getValue());
+            const response = this.responseFilter.handleResponse(result);
+
+            return reply.status(response.success ? 201:400).send(response);
+
 
         }catch(error){
-            console.error(error);
-            return reply.status(500).send({error: "Erro ao criar projeto"})
+                    console.error(error);
+                    const response = this.responseFilter.handleResponse(
+                        ApiResponse.fail(["Erro ao criar Projeto"])
+                    )
+                    return reply.status(500).send(response);
         }
     }
 
@@ -47,15 +57,20 @@ export class ProjectController{
             const useCase = new FindAllProjectUseCase(this.projectRepository);
             const result = await useCase.execute();
 
-            if(result.isFailure){
-                return reply.status(400).send({error: result.getError()});
-            }
+            // if(result.isFailure){
+            //     return reply.status(400).send({error: result.getError()});
+            // }
 
-            return reply.status(201).send(result.getValue());
+            const response = this.responseFilter.handleResponse(result);
+
+            return reply.status(response.success ? 201:400).send(response);
 
         }catch(error){
             console.error(error);
-            return reply.status(500).send({error: "erro interno ao retornar todos os projetos"})
+            const response = this.responseFilter.handleResponse(
+                ApiResponse.fail(["Erro ao retornar todos os Projetos"])
+            )
+                return reply.status(500).send(response);
         }
     }
 
@@ -68,15 +83,21 @@ export class ProjectController{
             const useCase = new FindByIdProjectUseCase(this.projectRepository);
             const result = await useCase.execute({id});
 
-            if(result.isFailure){
-                return reply.status(400).send({error: result.getError()})
-            }
+            // if(result.isFailure){
+            //     return reply.status(400).send({error: result.getError()})
+            // }
 
-            return reply.status(201).send(result.getValue());
+            const response = this.responseFilter.handleResponse(result);
+
+            return reply.status(response.success ? 201:400).send(response);
+
 
         }catch(error){
-            console.log(error);
-            return reply.status(500).send({error: "Erro interno ao por retornar id"})
+            console.error(error);
+            const response = this.responseFilter.handleResponse(
+                ApiResponse.fail(["Erro ao buscar Projeto por id"])
+            )
+                return reply.status(500).send(response);
         }
     }
 
@@ -89,15 +110,22 @@ export class ProjectController{
             const useCase = new UpdateProjectUseCase(this.projectRepository);
             const result = await useCase.execute({id,name,sector,status,description, goals})
 
-            if(result.isFailure){
-                return reply.status(400).send({ error: result.getError() });
-            }
+            // if(result.isFailure){
+            //     return reply.status(400).send({ error: result.getError() });
+            // }
 
-            return reply.status(201).send(result.getValue());
+            
+             const response = this.responseFilter.handleResponse(result);
+
+            return reply.status(response.success ? 201:400).send(response);
+
 
         }catch(error){
             console.error(error);
-            return reply.status(500).send({error: "Erro ao atualizar o projeto"})
+            const response = this.responseFilter.handleResponse(
+                ApiResponse.fail(["Erro ao atualizar projeto"])
+            )
+                return reply.status(500).send(response);
         }
     }
 
@@ -109,15 +137,21 @@ export class ProjectController{
            const useCase = new DeleteProjectUseCase(this.projectRepository);
            const result = await useCase.execute({id});
 
-           if(result.isFailure){
-            return reply.status(400).send({error: result.getValue()});
-           }
+        //    if(result.isFailure){
+        //     return reply.status(400).send({error: result.getValue()});
+        //    }
 
-           return reply.status(201).send(result.getValue());
+            const response = this.responseFilter.handleResponse(result);
+
+            return reply.status(response.success ? 201:400).send(response);
+
 
         }catch(error){
             console.error(error);
-            return reply.status(500).send({error: "Erro ao excluir projeto"})
+            const response = this.responseFilter.handleResponse(
+                ApiResponse.fail(["Erro ao buscar Projeto por id"])
+            )
+                return reply.status(500).send(response);
         }
     }
 }

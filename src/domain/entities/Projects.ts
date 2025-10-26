@@ -32,8 +32,6 @@ export class Project extends AuditableEntity{
   get status(): ProjectStatus{return this.status}
   get goals(): string{return this.goals}
   
-//   get isActive(): boolean { return this._isActive; }
-//   get deletedAt(): Date | null { return this._deletedAt; }
 
   public static create(name: string, sector: Sectors,status: ProjectStatus,goals: string, description?: string, id?: string): Result<Project> {
     if (!name.trim()) {
@@ -69,13 +67,4 @@ export class Project extends AuditableEntity{
     this._goals = newGoal;
   }
 
-//   deactivate(): void {
-//     this._isActive = false;
-//     this._deletedAt = new Date();
-//   }
-
-//   reactivate(): void {
-//     this._isActive = true;
-//     this._deletedAt = null;
-//   }
 }
