@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: fastify_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: ruan
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: agenda_db
+    ports:
+      - "5654:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

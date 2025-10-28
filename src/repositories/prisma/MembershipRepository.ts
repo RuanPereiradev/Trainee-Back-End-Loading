@@ -3,6 +3,7 @@ import { Membership } from "../../domain/entities/Membership";
 import { IMembershipRepository } from "../interfaces/IMembershipRepository";
 import { Result } from "../../env/Result";
 export class MembershipRepository implements IMembershipRepository {
+    
     private memberships: Membership[] = [];
 
     async create(membership: Membership): Promise<Result<Membership>> {

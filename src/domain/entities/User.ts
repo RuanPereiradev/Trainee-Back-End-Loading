@@ -35,8 +35,6 @@ export class User extends AuditableEntity{
 
     get password (){return this._password}
 
-    // get isActive() { return this._isActive; }
-
     changeName(newName:string): Result<void>{
         if(!newName.trim()){
             return Result.fail("O nome não pode ser vazio");
@@ -69,8 +67,5 @@ export class User extends AuditableEntity{
         this._email = newEmail;
         return Result.ok();
     }
-    // desactivate(){
-    //     this._isActive = false;
-    //     this._deletedAt = new Date();
-    // }
+    
 }
