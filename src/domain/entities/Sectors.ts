@@ -2,19 +2,17 @@ import { v4 as uuidv4 } from "uuid";
 import { AuditableEntity } from "../common/AuditableEntity";
 
 export class Sectors extends AuditableEntity{
-    private readonly _id: string;
+    private  _id: string;
     private _name: string;
     private _description: string;
-    // private _isActive: boolean = true;
-    // private _deletedAt: Date | null = null;
 
-    constructor(name: string,description: string, id?: string){
+    constructor(name: string,description: string, id: string){
         super();
         if(!name.trim()){
-            throw new Error("O nome do setor não pode ser vázio.")
+            throw new Error("O nome do setor não pode ser vázio, escolha um setor entre = Engenharia, RH, TI, Desenvolvimento de Sofware,Vendas, MKT, Logistica,.")
         }
 
-        this._id = id ?? uuidv4();
+        this._id = id;
         this._name = name.trim();
         this._description = description?.trim();
     }
@@ -24,6 +22,9 @@ export class Sectors extends AuditableEntity{
     }
     get name(): string{
         return this._name
+    }
+    get description(): string{
+        return this._description
     }
     get isActive(): boolean{
         return this._isActive;
@@ -38,16 +39,5 @@ export class Sectors extends AuditableEntity{
         }
         this._name = newName.trim();
     }
-
-    // desactivate(): void{
-    //     this._isActive = false;
-    //     this._deletedAt = new Date();
-    // }
-
-    // reactivate(): void{
-    //     this._isActive = true;
-    //     this._deletedAt = null;
-
-    // }
 
 }

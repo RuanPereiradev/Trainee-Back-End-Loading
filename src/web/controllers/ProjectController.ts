@@ -34,10 +34,6 @@ export class ProjectController{
 
             const result = await useCase.execute({name, sector, status, description, goals});
 
-            // if(result.isFailure){
-            //     return reply.status(400).send({error: result.getError()})
-            // }
-
             const response = this.responseFilter.handleResponse(result);
 
             return reply.status(response.success ? 201:400).send(response);
@@ -55,11 +51,8 @@ export class ProjectController{
     async findAll(request: FastifyRequest, reply: FastifyReply){
         try{
             const useCase = new FindAllProjectUseCase(this.projectRepository);
-            const result = await useCase.execute();
 
-            // if(result.isFailure){
-            //     return reply.status(400).send({error: result.getError()});
-            // }
+            const result = await useCase.execute();
 
             const response = this.responseFilter.handleResponse(result);
 
@@ -81,11 +74,8 @@ export class ProjectController{
             }
 
             const useCase = new FindByIdProjectUseCase(this.projectRepository);
-            const result = await useCase.execute({id});
 
-            // if(result.isFailure){
-            //     return reply.status(400).send({error: result.getError()})
-            // }
+            const result = await useCase.execute({id});
 
             const response = this.responseFilter.handleResponse(result);
 
@@ -108,13 +98,9 @@ export class ProjectController{
             const {name,sector,status,description, goals} = request.body as any;
 
             const useCase = new UpdateProjectUseCase(this.projectRepository);
+
             const result = await useCase.execute({id,name,sector,status,description, goals})
 
-            // if(result.isFailure){
-            //     return reply.status(400).send({ error: result.getError() });
-            // }
-
-            
              const response = this.responseFilter.handleResponse(result);
 
             return reply.status(response.success ? 201:400).send(response);
@@ -135,11 +121,8 @@ export class ProjectController{
            const {id} = request.params as {id: string};
            
            const useCase = new DeleteProjectUseCase(this.projectRepository);
-           const result = await useCase.execute({id});
 
-        //    if(result.isFailure){
-        //     return reply.status(400).send({error: result.getValue()});
-        //    }
+           const result = await useCase.execute({id});
 
             const response = this.responseFilter.handleResponse(result);
 

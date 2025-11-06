@@ -1,17 +1,17 @@
-import { UserRole } from "../../domain/enums/UserRole";
 import { Password } from "../../domain/value-objects/Password";
 import { IUserRepository } from "../../repositories/interfaces/IUserRepository";
 import { Email } from "../../domain/value-objects/Email";
 import { User } from "../../domain/entities/User";
 import { Result } from "../../env/Result";
 import { asyncWrapProviders } from "async_hooks";
+import { RoleType } from "@prisma/client";
 
 interface UpdateUserRequest{
     id: string;
     name: string;
     email: string;
     password:string;
-    role: UserRole;
+    role: RoleType;
 }
 
 export class UpdateUserUseCase{
@@ -19,11 +19,13 @@ export class UpdateUserUseCase{
 
     async execute(request: UpdateUserRequest): Promise<Result<User>>{
         try{
-            const existingUser = await this.userRepository.findById(request.id);
+            const userResult = await this.userRepository.findById(request.id);
 
-            if(!existingUser){
+            if(userResult.isFailure){
                 return Result.fail<User>("Usuário não encontrado");
             }
+
+            const existingUser = userResult.getValue();        
 
             existingUser.changeName(request.name);
             existingUser.changeRole(request.role);

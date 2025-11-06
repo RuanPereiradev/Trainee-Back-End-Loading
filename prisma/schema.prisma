@@ -1,12 +1,5 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
-  output   = "../generated/prisma"
 }
 
 datasource db {
@@ -14,65 +7,58 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User{
-  id String @id @default(uuid())
-  name String 
-  email String @unique
-  password String
-  role RoleType  
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  membership Membership[]
+model User {
+  id          String       @id @default(uuid())
+  name        String
+  email       String       @unique
+  password    String
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  role        RoleType
+  membership  Membership[]
 }
 
-enum RoleType{
+model Membership {
+  id         String    @id @default(uuid())
+  userId     String
+  projectId  String
+  joinedAt   DateTime  @default(now())
+  leftAt     DateTime?
+  project    Project   @relation(fields: [projectId], references: [id])
+  user       User      @relation(fields: [userId], references: [id])
+}
+
+model Sector {
+  id          Int       @id @default(autoincrement())
+  name        String    @unique
+  description String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  projects    Project[]
+}
+
+model Project {
+  id          String            @id @default(uuid())
+  name        String
+  description String
+  goals       String
+  status      ProjectStatusType
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+  sectorId    Int               // <--- Corrigido: mesmo tipo do ID do Sector
+  membership  Membership[]
+  sector      Sector            @relation(fields: [sectorId], references: [id])
+}
+
+enum RoleType {
   DIRETOR
   COORDENADOR
   MEMBRO
 }
 
-model Membership{
-  id String @id @default(uuid())
-  userId String
-  projectId String
-  joinedAt DateTime @default(now())
-  leftAt DateTime?
-
-  user User @relation(fields: [userId], references: [id])
-  project Project @relation(fields: [projectId], references: [id])
-
-}
-
-model Sector{
-  id String @id @default(uuid())
-  name String
-  description String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  projects Project[]
-}
-
-model Project{
-  id String @id @default(uuid())
-  name String
-  description String
-  goals String
-  status ProjectStatusType
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  sectorId String
-  sector Sector @relation(fields: [sectorId], references: [id])
-
-  membership Membership[]
-}
-
-enum ProjectStatusType{
+enum ProjectStatusType {
   PLANEJADO
   EM_ANDAMENTO
   PAUSADO
   CONCLUIDO
 }
-

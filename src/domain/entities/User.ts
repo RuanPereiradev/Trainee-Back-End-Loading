@@ -1,20 +1,18 @@
 import { v4 as uuidv4 } from "uuid";
 import{ Email } from "../value-objects/Email";
 import { Password } from "../value-objects/Password";
-import { UserRole } from "../enums/UserRole";
 import { AuditableEntity } from "../common/AuditableEntity";
 import { Result } from "../../env/Result";
+import { RoleType } from "@prisma/client";
 
 export class User extends AuditableEntity{
     private _id: string;
     private _name:string;
     private _email: Email;
     private _password: Password;
-    private _role: UserRole;
-    // private _isActive: boolean = true;
-    // private _deletedAt?: Date;
-
-    constructor( name: string, email: Email, password: Password, role: UserRole){
+    private _role: RoleType;
+    
+    constructor( name: string, email: Email, password: Password, role: RoleType){
         super();
         if(!name.trim()) throw new Error("O nome não pode ser vazio")
         this._id = uuidv4();
@@ -43,7 +41,7 @@ export class User extends AuditableEntity{
         return Result.ok();
     }
 
-    changeRole(newRole: UserRole): Result<void>{
+    changeRole(newRole: RoleType): Result<void>{
         if(!newRole){
             return Result.fail("O cargo não pode ser nulo");
         }

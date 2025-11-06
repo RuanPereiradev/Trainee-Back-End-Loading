@@ -10,12 +10,14 @@ export class DeleteUserUseCase{
 
     async execute(request: DeleteUserRequest): Promise<Result<void>>{
         try{
-            const existingUser = await this.userRepository.findById(request.id);
+            const userResult = await this.userRepository.findById(request.id);
 
-            if(!existingUser){
+            if(!userResult){
                 return Result.fail<void>("Usuário não encontrado");
             }
-            await this.userRepository.delete(existingUser.id);
+
+            const existingUser = userResult.getValue();
+            await this.userRepository.hardDelete(existingUser.id);
             return Result.ok<void>();
 
         }catch(error: any){

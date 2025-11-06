@@ -1,5 +1,5 @@
 export enum RoleType{
-    DIRETOR = "Diretor",
-    COORDENADOR = "Coordenador",
-    MEMBRO = "Membro"
+    DIRETOR = "DIRETOR",
+    COORDENADOR = "COORDENADOR",
+    MEMBRO = "MEMBRO"
 }

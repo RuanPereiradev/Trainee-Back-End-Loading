@@ -16,7 +16,7 @@ export class FindUserByIdUseCase{
                 return Result.fail<User>("Usuário não encontrado");
             }
 
-            return Result.ok<User>(user);
+            return Result.ok<User>();
 
         }catch (error){
 

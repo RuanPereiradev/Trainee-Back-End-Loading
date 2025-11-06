@@ -12,10 +12,7 @@ export class Project extends AuditableEntity{
   private _status: ProjectStatus;
   private _goals: string;
 
-//   private _isActive: boolean = true;
-//   private _deletedAt: Date | null = null;
-
-  private constructor(name: string,  sector: Sectors,status: ProjectStatus, goals: string, description?: string, id?: string) {
+   constructor(name: string,  sector: Sectors,status: ProjectStatus, goals: string, description?: string, id?: string) {
     super();
     this._id = id ?? uuidv4();
     this._name = name;

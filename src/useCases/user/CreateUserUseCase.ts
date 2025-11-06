@@ -1,15 +1,15 @@
-import { UserRole } from "../../domain/enums/UserRole";
 import { Email } from "../../domain/value-objects/Email";
 import { Password } from "../../domain/value-objects/Password";
 import { Result } from "../../env/Result";
 import { IUserRepository } from "../../repositories/interfaces/IUserRepository";
 import { User } from "../../domain/entities/User";
+import { RoleType } from "@prisma/client";
 
 interface CreateUserRequest{
     name: string;
     email: string;
     password: string;
-    role: UserRole;
+    role: RoleType;
 }
 
 export class CreateUserUseCase{

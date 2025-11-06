@@ -1,0 +1,52 @@
+### Criar usuário
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+  "name": "joao Pereira",
+  "email": "joao.top@example.com",
+  "password": "senha12356786",
+  "role": "MEMBRO"
+}
+
+#cria usuário
+GET http://localhost:3000/users
+
+# ### 🧱 Criar um novo projeto
+# POST http://localhost:3000/projects
+# Content-Type: application/json
+
+# {
+#   "name": "Sistema de Agendamento",
+#   "description": "Projeto para permitir que usuários agendem compromissos online",
+#   "goals": "Desenvolver API, autenticação e dashboard para usuários",
+#   "status": "EM_ANDAMENTO",
+#   "sectorId": "Engenharia"
+# }
+
+# ###
+
+# ### Criar novo setor
+# POST http://localhost:3000/sectors
+# Content-Type: application/json
+
+# {
+#   "name": "Engenharia",
+#   "description": "Setor responsável pelos projetos de desenvolvimento e inovação."
+# }
+# ### Criar um projeto
+# POST http://localhost:3000/projects
+# Content-Type: application/json
+
+# {
+#   "name": "Projeto Alpha",
+#   "sector": {
+#     "id": "25e1f2ad-23e0-49a0-9230-9036d92a7d80", 
+#     "name": "Engenharia"
+#   },
+#   "status": {
+#     "status": "PLANEJADO"
+#   },
+#   "description": "Projeto de desenvolvimento de um novo produto",
+#   "goals": "Entregar MVP em 3 meses"
+# }
