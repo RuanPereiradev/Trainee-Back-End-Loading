@@ -1,4 +1,3 @@
-// src/repositories/InMemoryMembershipRepository.ts
 import { Membership } from "../../domain/entities/Membership";
 import { IMembershipRepository } from "../interfaces/IMembershipRepository";
 import { Result } from "../../env/Result";

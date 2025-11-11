@@ -6,7 +6,6 @@ export interface ISectorRepository{
     findById(id: number): Promise<Result<Sectors>>;
     findAll(): Promise<Result<Sectors[]>>;
     findByName(name: string): Promise<Result<Sectors | null>>;
-    // findProjectBySector(id: number): Promise<Result<Sectors[]>>
     save(sector: Sectors): Promise<Result<Sectors>>;
     delete(id: number): Promise<Result<void>>;
     update(sector: Sectors): Promise<Result<Sectors>>;

@@ -49,7 +49,8 @@ export class UserRepository implements IUserRepository {
           found.name,
           new Email(found.email),
           new Password(found.password),
-          found.role
+          found.role,
+          found.id
          );
          return Result.ok<User>(user);
       }catch(error: any){
@@ -68,7 +69,8 @@ export class UserRepository implements IUserRepository {
           u.name,
             new Email(u.email),
             new Password(u.password),
-            u.role
+            u.role,
+            u.id
           )
       );
       

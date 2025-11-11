@@ -12,10 +12,10 @@ export class User extends AuditableEntity{
     private _password: Password;
     private _role: RoleType;
     
-    constructor( name: string, email: Email, password: Password, role: RoleType){
+    constructor( name: string, email: Email, password: Password, role: RoleType, id?: string ){
         super();
         if(!name.trim()) throw new Error("O nome não pode ser vazio")
-        this._id = uuidv4();
+        this._id = id ?? uuidv4();
         this._name = name;
         this._email = email;
         this._password = password;

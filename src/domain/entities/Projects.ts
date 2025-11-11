@@ -1,8 +1,9 @@
-  import { v4 as uuidv4 } from "uuid";
-  import { Sectors } from "./Sectors";
-  import { Result } from "../../env/Result";
-  import { AuditableEntity } from "../common/AuditableEntity";
+import { v4 as uuidv4 } from "uuid";
+import { Sectors } from "./Sectors";
+import { Result } from "../../env/Result";
+import { AuditableEntity } from "../common/AuditableEntity";
 import { ProjectStatusType } from "@prisma/client";
+
   export class Project extends AuditableEntity{
     private readonly _id: string;
     private _name: string;

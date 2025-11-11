@@ -11,4 +11,5 @@ export async function projectRoutes(app:FastifyInstance) {
     app.get("/projects/sector/:sectorId", (request, reply) => projectController.findProjectBySector(request, reply));
     app.put("/projects/:id",(request, reply) => projectController.updateProject(request, reply));
     app.delete("/projects/:id",(request, reply) => projectController.deleteProject(request, reply));
+    
 }

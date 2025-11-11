@@ -1,10 +1,11 @@
-# ### Criar usuário
+## Testes de rotas UserRoutes {
+# Criar usuário
 # POST http://localhost:3000/users
 # Content-Type: application/json
 
 # {
-#   "name": "Felipe rodrigues",
-#   "email": "rodrigo.top@example.com",
+#   "name": "Testezinho topzin",
+#   "email": "nometeste.topzin@example.com",
 #   "password": "senha12356786",
 #   "role": "MEMBRO"
 # }
@@ -12,17 +13,24 @@
 # #cria usuário
 # GET http://localhost:3000/users
 
-# ### Criar um novo projeto
-# POST http://localhost:3000/projects
+# Retorna Usuário por id
+# GET http://localhost:3000/users/4a903605-f604-4518-8e5a-51431a987992
+
+#Metodo update user
+# PUT http://localhost:3000/users/4a903605-f604-4518-8e5a-51431a987992
 # Content-Type: application/json
 
 # {
-#   "name": "Sistema de Monitoramento",
-#   "sector": "TI",
-#   "status": "PLANEJADO",
-#   "goals": "Desenvolver dashboard de desempenho dos setores",
-#   "description": "Projeto para acompanhar indicadores de produtividade."
+#   "name": "Ruan Pereira updated",
+#   "email": "ruan.top@example.com",
+#   "password": "senha12356786",
+#   "role": "MEMBRO"
 # }
+
+# DELETE http://localhost:3000/users/4a903605-f604-4518-8e5a-51431a987992
+
+# }
+
 # ### Criar novo setor
 # POST http://localhost:3000/sectors
 # Content-Type: application/json
@@ -34,14 +42,25 @@
 
 # # ###
 
-# # ### Criar novo setor
-# # POST http://localhost:3000/sectors
-# # Content-Type: application/json
+# # Criar novo setor
+# POST http://localhost:3000/sectors
+# Content-Type: application/json
 
-# # {
-# #   "name": "Engenharia",
-# #   "description": "Setor responsável pelos projetos de desenvolvimento e inovação."
-# # }
+# {
+#   "name": "Outros",
+#   "description": "Outros Projetos"
+# }
+
+# PUT http://localhost:3000/sectors/10
+# Content-Type: application/json
+
+# {
+#   "name": "Outros",
+#   "description": "Outros Setores"
+# }
+
+# GET http://localhost:3000/sectors
+
 # ### Criar um projeto
 # POST http://localhost:3000/projects
 # Content-Type: application/json
@@ -58,13 +77,13 @@
 # Content-Type: application/json
 
 # {
-#   "name": "tiotiotiotio",
-#   "sectorId": 3,
+#   "name": "Placas Solares",
+#   "sectorId": 1,
 #   "status": "EM_ANDAMENTO",
 #   "description": "Projeto voltado ao controle e análise de indicadores de qualidade.",
 #   "goals": "Implementar métricas automáticas e relatórios semanais para o setor de desenvolvimento."
 # }
 
-GET http://localhost:3000/projects/sector/3
+# GET http://localhost:3000/projects/sector/3
 
 #  GET http://localhost:3000/projects

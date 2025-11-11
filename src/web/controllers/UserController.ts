@@ -60,7 +60,7 @@ export class UserController{
 
             const response = this.responseFilter.handleResponse(result);
 
-            return reply.status(response.success? 201:400).send(response);
+            return reply.status(response.success? 200:400).send(response);
 
         }catch(error){
             console.error(error);
@@ -84,7 +84,7 @@ export class UserController{
 
             const response = this.responseFilter.handleResponse(result);
     
-            return reply.status(response.success? 201:400).send(response);
+            return reply.status(response.success? 200:400).send(response);
 
         }catch(error){
             console.error(error);
