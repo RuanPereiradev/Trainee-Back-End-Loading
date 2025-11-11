@@ -1,0 +1,3 @@
+interface FindProjectBySectorRequest{
+    id: number
+}

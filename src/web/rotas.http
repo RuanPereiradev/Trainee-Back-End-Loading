@@ -1,52 +1,70 @@
-### Criar usuário
-POST http://localhost:3000/users
-Content-Type: application/json
+# ### Criar usuário
+# POST http://localhost:3000/users
+# Content-Type: application/json
 
-{
-  "name": "joao Pereira",
-  "email": "joao.top@example.com",
-  "password": "senha12356786",
-  "role": "MEMBRO"
-}
+# {
+#   "name": "Felipe rodrigues",
+#   "email": "rodrigo.top@example.com",
+#   "password": "senha12356786",
+#   "role": "MEMBRO"
+# }
 
-#cria usuário
-GET http://localhost:3000/users
+# #cria usuário
+# GET http://localhost:3000/users
 
-# ### 🧱 Criar um novo projeto
+# ### Criar um novo projeto
 # POST http://localhost:3000/projects
 # Content-Type: application/json
 
 # {
-#   "name": "Sistema de Agendamento",
-#   "description": "Projeto para permitir que usuários agendem compromissos online",
-#   "goals": "Desenvolver API, autenticação e dashboard para usuários",
-#   "status": "EM_ANDAMENTO",
-#   "sectorId": "Engenharia"
+#   "name": "Sistema de Monitoramento",
+#   "sector": "TI",
+#   "status": "PLANEJADO",
+#   "goals": "Desenvolver dashboard de desempenho dos setores",
+#   "description": "Projeto para acompanhar indicadores de produtividade."
 # }
-
-# ###
-
 # ### Criar novo setor
 # POST http://localhost:3000/sectors
 # Content-Type: application/json
 
 # {
-#   "name": "Engenharia",
-#   "description": "Setor responsável pelos projetos de desenvolvimento e inovação."
+#   "name": "JOGOS",
+#   "description": "Setor responsável pelos projetos de JOGOS"
 # }
+
+# # ###
+
+# # ### Criar novo setor
+# # POST http://localhost:3000/sectors
+# # Content-Type: application/json
+
+# # {
+# #   "name": "Engenharia",
+# #   "description": "Setor responsável pelos projetos de desenvolvimento e inovação."
+# # }
 # ### Criar um projeto
 # POST http://localhost:3000/projects
 # Content-Type: application/json
 
 # {
-#   "name": "Projeto Alpha",
-#   "sector": {
-#     "id": "25e1f2ad-23e0-49a0-9230-9036d92a7d80", 
-#     "name": "Engenharia"
-#   },
-#   "status": {
-#     "status": "PLANEJADO"
-#   },
-#   "description": "Projeto de desenvolvimento de um novo produto",
-#   "goals": "Entregar MVP em 3 meses"
+#   "name": "Sistema de Gestão Interna",
+#   "sectorId": 3,
+#   "status": "PLANEJADO",
+#   "description": "Projeto para gerenciar os processos internos da empresa",
+#   "goals": "Automatizar tarefas e melhorar produtividade"
 # }
+
+# POST http://localhost:3000/projects
+# Content-Type: application/json
+
+# {
+#   "name": "tiotiotiotio",
+#   "sectorId": 3,
+#   "status": "EM_ANDAMENTO",
+#   "description": "Projeto voltado ao controle e análise de indicadores de qualidade.",
+#   "goals": "Implementar métricas automáticas e relatórios semanais para o setor de desenvolvimento."
+# }
+
+GET http://localhost:3000/projects/sector/3
+
+#  GET http://localhost:3000/projects

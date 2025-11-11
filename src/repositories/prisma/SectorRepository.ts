@@ -1,78 +1,115 @@
-// import { Sectors } from "../../domain/entities/Sectors";
-// import { Result } from "../../env/Result";
-// import { ISectorRepository } from "../interfaces/ISectorRepository";
-// import { Prisma, PrismaClient } from "@prisma/client";
+import { Project } from "../../domain/entities/Projects";
+import { Sectors } from "../../domain/entities/Sectors";
+import { Result } from "../../env/Result";
+import { ISectorRepository } from "../interfaces/ISectorRepository";
+import { Prisma, PrismaClient, Sector } from "@prisma/client";
 
-// const prisma = new PrismaClient();
+const prisma = new PrismaClient();
 
-// export class SectorRepository implements ISectorRepository{
-//     findById(id: string): Promise<Result<Sectors>> {
-//         throw new Error("Method not implemented.");
-//     }
-//     findAll(): Promise<Result<Sectors[]>> {
-//         throw new Error("Method not implemented.");
-//     }
-//     delete(sector: Sectors): Promise<Result<Sectors>> {
-//         throw new Error("Method not implemented.");
-//     }
-//     update(sector: Sectors): Promise<Result<Sectors>> {
-//         throw new Error("Method not implemented.");
-//     }
+export class SectorRepository implements ISectorRepository{
     
-//     async save(sector: Sectors): Promise<Result<Sectors>>{
-//         try{
-//             await prisma.sector.create({
-//                 data: {
-//                     id: sector.id,
-//                     name: sector.name,
-//                     description: sector.description
-//                 },
-//             });
+    async findByName(name: string): Promise<Result<Sectors | null>> {
+        try {
+            const found = await prisma.sector.findUnique({
+                where: {name},
+            });
+            if(!found){
+                return Result.ok<Sectors | null>(null);
+            }
 
-//         return Result.ok<Sectors>(sector)
-//         }catch(error: any){
-//             return Result.fail<Sectors>(error.message);
-//         }
-//     }
+            const sector = new Sectors(found.name, found.description ?? "", found.id);
+            return Result.ok<Sectors | null>(sector);
+            
+        } catch (error:any) {
+            return Result.fail<Sectors | null>(`Erro`)
+        }
+    }
 
-//     // async findById(id: string): Promise<Result<Sectors>> {
-//     //     const sector = this.sectors.find((u)=> u.id === id);
-//     //     if(!sector){
-//     //         return Result.ok<Sectors>(sector);
-//     //     }
-//     //     return Result.ok<Sectors>(sector);
-//     // }
+   async findById(id: number): Promise<Result<Sectors>> {
+        try {
+            const found = await prisma.sector.findUnique({
+                where:{id},
+            });
+            if(!found){
+                return Result.fail<Sectors>("Sector not found");
+            }
+            const sector = new Sectors(
+                found.name,
+                found.description ?? "",
+                found.id,
+            );
+            return Result.ok<Sectors>(sector);
 
-//     // async findAll(): Promise<Result<Sectors[]>> {
-        
-//     //     if(this.sectors.length === 0){
-//     //         return Result.fail<Sectors[]>("nenhum setor encontrado");
-//     //     }
-//     //     return Result.ok<Sectors[]>(this.sectors);
-//     // }
+        } catch (error: any) {
+            return Result.fail<Sectors>(error.message)
+        }
+    }
+    async findAll(): Promise<Result<Sectors[]>> {
+        try {
+          const sector = await prisma.sector.findMany();
 
-//     // async update(sector: Sectors): Promise<Result<Sectors>> {
+          const sectorEntity = sector.map(
+            (u) => 
+             new Sectors(
+             u.name,
+             u.description ?? "",
+             u.id
+            )
+          );
 
-//     //     const index = this.sectors.findIndex((u)=> u.id === sector.id);
+          return Result.ok<Sectors[]>(sectorEntity);
 
-//     //     if(index === -1){
-//     //         return Result.fail<Sectors>("Setor não encontrado")
-//     //     }
+        } catch (error: any) {
+          return Result.fail<Sectors[]>(error.message);
+        }
+    }
 
-//     //     this.sectors[index] = sector;
-//     //     return Result.ok<Sectors>(sector);
-//     // }
+    async delete(id: number): Promise<Result<void>> {
+        try {
 
-//     // async delete(sector: Sectors): Promise<Result<Sectors>> {
+          await prisma.sector.delete({where:{id}});
+          return Result.ok<void>();
 
-//     //     const index = this.sectors.findIndex((u)=> u.id === sector.id);
+        } catch (error: any) {
+            return Result.fail<void>(error.message)
+        }
+    }
+    async update(sector: Sectors): Promise<Result<Sectors>> {
+        try {
+          const update = await prisma.sector.update({
+            where: {id: sector.id!},
+            data: {
+                name: sector.name,
+                description: sector.description,
+            }
+          });
 
-//     //     if(index === -1){
-//     //         return Result.fail<Sectors>("Usuário não encontrado");
-//     //     }
+          const sectorEntity = new Sectors(
+            update.name,
+            update.description!,
+            update.id
+          );
+          return Result.ok<Sectors>(sectorEntity);
+        } catch (error: any) {
+          return Result.fail<Sectors>(error.message)
+        }    }
+    
+    async save(sector: Sectors): Promise<Result<Sectors>>{
+        try{
+        const saved =  await prisma.sector.create({
+                data: {
+                    name: sector.name,
+                    description: sector.description
+                },
+            });
 
-//     //     this.sectors.splice(index, 1);
-//     //    return  Result.ok<Sectors>();
+        const newSector = new Sectors(saved.name, saved.description ?? "", saved.id)
+        return Result.ok<Sectors>(newSector);
 
-//     // }
-// }
+        }catch(error: any){
+            return Result.fail<Sectors>(error.message);
+        }
+    }
+
+    
+}

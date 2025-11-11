@@ -6,9 +6,7 @@ export class FindAllUserUseCase{
     constructor(private userRepository: IUserRepository){}
 
     async execute(): Promise<Result<User[]>>{
-
         try {
-            
             const user = await this.userRepository.findAll();
 
             if(user.isFailure){

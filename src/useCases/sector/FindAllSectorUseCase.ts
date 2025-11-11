@@ -2,7 +2,7 @@ import { Sectors } from "../../domain/entities/Sectors";
 import { Result } from "../../env/Result";
 import { ISectorRepository } from "../../repositories/interfaces/ISectorRepository";
 
-export class FindAllSectorRequest{
+export class FindAllSectorUseCase{
     constructor(private sectorRepository: ISectorRepository){}
 
     async execute(): Promise<Result<Sectors[]>>{

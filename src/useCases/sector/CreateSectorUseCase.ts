@@ -1,12 +1,12 @@
-import { SectorRepository } from "../../repositories/prisma/SectorRepository";
 import { Sectors } from "../../domain/entities/Sectors";
 import { ISectorRepository } from "../../repositories/interfaces/ISectorRepository";
 import { Result } from "../../env/Result";
 import { Project } from "../../domain/entities/Projects";
 
 interface CreateSectorRequest{
+    id?: number,
     name: string,
-    description: string
+    description?: string
 }
 
 export class CreateSectorUseCase{
@@ -14,11 +14,16 @@ export class CreateSectorUseCase{
 
     async execute(request: CreateSectorRequest): Promise<Result<Sectors>>{
         try{
-            const sector = new Sectors(request.name, request.description);
+          const nameSector = await this.sectorRepository.findByName(request.name);
+          if(nameSector.isSuccess && nameSector.getValue() !== null){
+            return Result.fail<Sectors>("Name already in use");
+          }
 
-            const saved = await this.sectorRepository.save(sector);
+          const sector = new Sectors(request.name, request.description);
 
-            return saved;
+          const saved = await this.sectorRepository.save(sector);
+          
+          return saved;
 
         }catch(error: any){
             return Result.fail<Sectors>(error.message)

@@ -3,7 +3,7 @@ import { Sectors } from "../../domain/entities/Sectors";
 import { Result } from "../../env/Result";
 
 interface FindSectorByIdRequest{
-    id: string
+    id: number
 }
 
 export class FindSectorByIdUseCase{
@@ -17,7 +17,7 @@ export class FindSectorByIdUseCase{
                 return Result.fail<Sectors>("setor nao encontrado")
             }
 
-                return Result.ok<Sectors>();
+            return Result.ok<Sectors>();
                 
         }catch(error){
             if(error instanceof Error){

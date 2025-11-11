@@ -45,7 +45,7 @@ model Project {
   status      ProjectStatusType
   createdAt   DateTime          @default(now())
   updatedAt   DateTime          @updatedAt
-  sectorId    Int               // <--- Corrigido: mesmo tipo do ID do Sector
+  sectorId    Int               
   membership  Membership[]
   sector      Sector            @relation(fields: [sectorId], references: [id])
 }

@@ -6,33 +6,38 @@ import { FindAllProjectUseCase } from "../../useCases/project/FindAllProjectUseC
 import { UpdateProjectUseCase } from "../../useCases/project/UpdateProjectUseCase";
 import { DeleteProjectUseCase } from "../../useCases/project/DeleteProjectUseCase";
 import { FindByIdProjectUseCase } from "../../useCases/project/FindByIdProjectUseCase";
-import { ProjectStatus } from "../../domain/enums/ProjectStatus";
 import { ApiResponseValidationFilter } from "../Filters/ApiResponseValidationFilter";
 import { ApiResponse } from "../Wrappers/ApiResponse";
+import { ProjectStatusType } from "@prisma/client";
+import { SectorRepository } from "../../repositories/prisma/SectorRepository";
+import { FindProjectBySectorUsecase } from "../../useCases/project/FindProjectBySectorUseCase";
+// import { FindProjectBySectorUsecase } from "../../useCases/project/FindProjectBySectorUseCase";
 
 export class ProjectController{
 
     private projectRepository: ProjectRepository;
     private responseFilter: ApiResponseValidationFilter;
+    private sectorRepository: SectorRepository;
 
     constructor(){
         this.projectRepository = new ProjectRepository();
         this.responseFilter = new ApiResponseValidationFilter();
+        this.sectorRepository = new SectorRepository();
     }
 
     async createProject(request: FastifyRequest, reply: FastifyReply){
 
         try{
-            const {name,sector,status, description, goals} = request.body as{
+            const {name,sectorId,status, description, goals} = request.body as{
                 name: string;
-                sector: Sectors;
-                status: ProjectStatus;
+                sectorId: number;
+                status: ProjectStatusType;
                 description: string;
                 goals: string;
             }
-            const useCase = new CreateProjectUseCase(this.projectRepository);
+            const useCase = new CreateProjectUseCase(this.projectRepository, this.sectorRepository);
 
-            const result = await useCase.execute({name, sector, status, description, goals});
+            const result = await useCase.execute({name,sectorId, status,description, goals});
 
             const response = this.responseFilter.handleResponse(result);
 
@@ -40,11 +45,11 @@ export class ProjectController{
 
 
         }catch(error){
-                    console.error(error);
-                    const response = this.responseFilter.handleResponse(
-                        ApiResponse.fail(["Erro ao criar Projeto"])
-                    )
-                    return reply.status(500).send(response);
+            console.error(error);
+            const response = this.responseFilter.handleResponse(
+                ApiResponse.fail(["Erro ao criar Projeto"])
+            )
+            return reply.status(500).send(response);
         }
     }
 
@@ -64,6 +69,31 @@ export class ProjectController{
                 ApiResponse.fail(["Erro ao retornar todos os Projetos"])
             )
                 return reply.status(500).send(response);
+        }
+    }
+
+    async findProjectBySector(request: FastifyRequest, reply: FastifyReply){
+        try {
+            const {sectorId} = request.params as{
+                sectorId:string
+            };
+
+            const numberSectorId = Number(sectorId)
+            
+            const useCase = new FindProjectBySectorUsecase(this.projectRepository);
+
+            const result = await useCase.execute({sectorId: numberSectorId});
+
+            const response = this.responseFilter.handleResponse(result);
+
+            return reply.status(response.success ? 201:400).send(response);
+
+        } catch (error: any) {
+            console.error(error);
+            const response = this.responseFilter.handleResponse(
+                ApiResponse.fail(["Erro ao buscar projeto por setor"])
+            )
+            return reply.status(500).send(response);
         }
     }
 

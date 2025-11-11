@@ -29,10 +29,9 @@ export class UserController{
             name: string;
             email: string;
             password: string;
-            role: RoleType; // vindo do request como string
+            role: RoleType; 
         };
 
-        // Converte a string do request em UserRole do domínio
         const useCase = new CreateUserUseCase(this.userRepository);
 
         const result = await useCase.execute({
@@ -83,7 +82,7 @@ export class UserController{
 
             const result = await useCase.execute({id});
 
-            const response = this.responseFilter.handleResponse(result)
+            const response = this.responseFilter.handleResponse(result);
     
             return reply.status(response.success? 201:400).send(response);
 
@@ -97,7 +96,6 @@ export class UserController{
     }
 
     async updateUser(request: FastifyRequest, reply: FastifyReply) {
-        
         try {
         const { id } = request.params as { id: string };
 
@@ -114,7 +112,7 @@ export class UserController{
         } catch (error) {
             console.error(error);
             const response = this.responseFilter.handleResponse(
-                ApiResponse.fail(["Erro ao retornar os usuários por id"])
+                ApiResponse.fail(["Erro ao atualizar os usuários por id"])
             )
             return reply.status(500).send(response)
     }

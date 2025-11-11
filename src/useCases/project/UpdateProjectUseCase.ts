@@ -3,13 +3,13 @@ import { Project } from "../../domain/entities/Projects";
 import { Sectors } from "../../domain/entities/Sectors";
 import { Result } from "../../env/Result";
 import { IProjectRepository } from "../../repositories/interfaces/IProjectRepository";
-import { ProjectStatus } from "../../domain/enums/ProjectStatus";
+import { ProjectStatusType } from "@prisma/client";
 
 interface UpdateProjectRequest{
     id: string;
     name?: string;
     sector?: Sectors;
-    status?: ProjectStatus;
+    status?: ProjectStatusType;
     description?: string;
     goals?: string;
 }

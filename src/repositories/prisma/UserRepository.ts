@@ -4,62 +4,13 @@ import { IUserRepository } from "../interfaces/IUserRepository";
 import { Result } from "../../env/Result";
 import { Email } from "../../domain/value-objects/Email";
 import { Password } from "../../domain/value-objects/Password";
-import { RoleType } from "../../domain/enums/RoleType";
-import { userRoutes } from "../../web/routes/UserRoutes"
+
 
 const prisma = new PrismaClient();
 
 export class UserRepository implements IUserRepository {
  
-  
- async hardDelete(id: string): Promise<Result<void>> {
-  try{
-    await prisma.user.delete({where:{id}});
-    return Result.ok<void>();
-
-  }catch(error: any){
-    return Result.fail<void>(error.message);
-  }
-}
-  async findById(id: string): Promise<Result<User>> {
-      try{
-        const found = await prisma.user.findUnique({ 
-          where: {id}
-         });
-         if(!found){
-          return Result.fail<User>("User not found")
-         }
-         const user = new User(
-          found.name,
-          new Email(found.email),
-          new Password(found.password),
-          found.role
-         );
-         return Result.ok<User>(user);
-      }catch(error: any){
-        return Result.fail<User>(error.message)
-      }
-    }
-   async findAll(): Promise<Result<User[]>> {
-    try{
-      const users = await prisma.user.findMany();
-
-      const userEntity = users.map(
-        (u) =>
-          new User(
-            u.name,
-            new Email(u.email),
-            new Password(u.password),
-            u.role
-          )
-      );
-      
-      return Result.ok<User[]>(userEntity);
-    }catch(error: any){
-      return Result.fail<User[]>(error.message);
-    }
-  }
-  // Criação de usuário
+   // Criação de usuário
   async save(user: User): Promise<Result<User>> {
     try{
       const created = await prisma.user.create({
@@ -85,6 +36,48 @@ export class UserRepository implements IUserRepository {
     }
   }
 
+  //buscar por id
+  async findById(id: string): Promise<Result<User>> {
+      try{
+        const found = await prisma.user.findUnique({ 
+          where: {id}
+         });
+         if(!found){
+          return Result.fail<User>("User not found")
+         }
+         const user = new User(
+          found.name,
+          new Email(found.email),
+          new Password(found.password),
+          found.role
+         );
+         return Result.ok<User>(user);
+      }catch(error: any){
+        return Result.fail<User>(error.message);
+      }
+    }
+
+    //buscar todos
+   async findAll(): Promise<Result<User[]>> {
+    try{
+      const users = await prisma.user.findMany();
+
+      const userEntity = users.map(
+        (u) =>
+          new User(
+          u.name,
+            new Email(u.email),
+            new Password(u.password),
+            u.role
+          )
+      );
+      
+      return Result.ok<User[]>(userEntity);
+    }catch(error: any){
+      return Result.fail<User[]>(error.message);
+    }
+  }
+ 
   // 🔍 Busca por e-mail
   async findByEmail(email: string): Promise<Result<User>> {
     try {
@@ -112,7 +105,7 @@ export class UserRepository implements IUserRepository {
       const update =  await prisma.user.update({
         where: {id: user.id},
         data: {
-          name: user.id,
+          name: user.name,
           email: user.email.value,
           password: user.password.value,
           role: user.role,
@@ -130,6 +123,16 @@ export class UserRepository implements IUserRepository {
       return Result.ok<User>(userEntity)
     }catch(error: any){
       return Result.fail<User>(error.message);
+    }
+  } 
+
+  async hardDelete(id: string): Promise<Result<void>> {
+    try{
+      await prisma.user.delete({where:{id}});
+      return Result.ok<void>();
+
+    }catch(error: any){
+      return Result.fail<void>(error.message);
     }
   }
 }

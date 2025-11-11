@@ -1,28 +1,39 @@
-    import { Project } from "../../domain/entities/Projects";
+import { ProjectStatusType } from "@prisma/client";
+import { Project } from "../../domain/entities/Projects";
 import { Sectors } from "../../domain/entities/Sectors";
-import { ProjectStatus } from "../../domain/enums/ProjectStatus";
 import { Result } from "../../env/Result";
 import { IProjectRepository } from "../../repositories/interfaces/IProjectRepository";
+import { ISectorRepository } from "../../repositories/interfaces/ISectorRepository";
 
 interface CreateProjectRequest{
     name: string;
-    sector: Sectors;
-    status: ProjectStatus;
+    sectorId: number;
+    status: ProjectStatusType;
     description: string;
     goals: string;
   
 }
 
 export class CreateProjectUseCase{
-    constructor(private projectRepo: IProjectRepository){}
+    constructor(
+        private projectRepo: IProjectRepository,
+        private sectorRepository: ISectorRepository
+    ){}
 
     async execute(request: CreateProjectRequest): Promise<Result<Project>>{
         try {
 
-            const {name, sector, status, description, goals} = request;
+            const sectorResult = await this.sectorRepository.findById(request.sectorId);
+            if(sectorResult.isFailure){
+                return Result.fail<Project>("Setor não encontrado.");
+            }
+            const sector = sectorResult.getValue()
+
+            
+            const {name, sectorId, status, description, goals} = request;
 
             const existingProject = await this.projectRepo.findByName(request.name);
-
+            
             if(existingProject.isSuccess){
                 return Result.fail<Project>("Name already in use");
             }
@@ -31,7 +42,7 @@ export class CreateProjectUseCase{
                 return Result.fail<Project>("O nome do projeto deve ter pelo menos 3 caracteres")
             }
 
-            if(!sector){
+            if(!sectorId){
                 return Result.fail<Project>("Setor é obrigatório")
             }
             if(!status){
@@ -45,19 +56,10 @@ export class CreateProjectUseCase{
                 return Result.fail<Project>("Metas é obrigatório")
             }
 
-            const projectResult = Project.create(name,sector, status, description, goals);
+            const projectOrError = Project.create(request.name, sector,request.status,request.description, request.goals)
+            const project = projectOrError.getValue();
 
-            if(projectResult.isFailure){
-                return Result.fail<Project>(projectResult.getError());
-            }
-
-            const project = projectResult.getValue();
-
-            const saveResult =  await this.projectRepo.save(project);
-
-            if(saveResult.isFailure){
-                return Result.fail<Project>(saveResult.getError())
-            }
+           const saveResult = await this.projectRepo.save(project);
 
             return Result.ok<Project>(saveResult.getValue());
             
