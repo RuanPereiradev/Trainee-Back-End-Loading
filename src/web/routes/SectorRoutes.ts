@@ -6,7 +6,7 @@ export async function SectorRoutes(app:FastifyInstance) {
 
     app.post("/sectors", (request, reply) => sectorController.createSector(request, reply));
     app.get("/sectors", (request, reply) => sectorController.findAll(request, reply));
-    app.get("/sectors/sectorId", (request, reply) => sectorController.findSectorById(request, reply));
-    app.put("/sectors/sectorId", (request, reply) => sectorController.updateSector(request, reply));
+    app.get("/sectors/:id", (request, reply) => sectorController.findSectorById(request, reply));
+    app.put("/sectors/:id", (request, reply) => sectorController.updateSector(request, reply));
        
 }

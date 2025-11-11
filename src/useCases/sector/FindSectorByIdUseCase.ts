@@ -13,11 +13,11 @@ export class FindSectorByIdUseCase{
         try{
             const sector = await this.sectorRepository.findById(request.id);
 
-            if(!sector){
-                return Result.fail<Sectors>("setor nao encontrado")
+            if(sector.isFailure){
+                return Result.fail<Sectors>(sector.getError())
             }
 
-            return Result.ok<Sectors>();
+            return Result.ok<Sectors>(sector.getValue());
                 
         }catch(error){
             if(error instanceof Error){

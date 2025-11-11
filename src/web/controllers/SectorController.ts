@@ -43,16 +43,18 @@ export class SectorController{
     async findSectorById(request: FastifyRequest, reply: FastifyReply){
         try {
             const {id} = request.params as{
-                id: number;
+                id: string;
             }
+
+            const numberId = Number(id);
 
             const useCase = new FindSectorByIdUseCase(this.sectorRepository);
 
-            const result = await useCase.execute({id});
+            const result = await useCase.execute({id: numberId});
 
             const response  = this.responseFilter.handleResponse(result);
 
-            return reply.status(response.success? 201:400).send(response);
+            return reply.status(response.success? 200:400).send(response);
             
         } catch (error) {
             console.error(error);
@@ -72,7 +74,7 @@ export class SectorController{
 
             const response = this.responseFilter.handleResponse(result);
 
-            return reply.status(response.success ? 201:400).send(response);
+            return reply.status(response.success ? 200:400).send(response);
         } catch (error) {
             console.error(error);
             const response = this.responseFilter.handleResponse(
@@ -89,7 +91,7 @@ export class SectorController{
 
             const response = this.responseFilter.handleResponse(result);
 
-            return reply.status(response.success? 201:400).send(response);
+            return reply.status(response.success? 200:400).send(response);
 
         } catch (error) {
             console.error(error);

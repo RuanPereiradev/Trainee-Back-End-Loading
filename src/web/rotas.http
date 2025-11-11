@@ -31,7 +31,7 @@
 
 # }
 
-# ### Criar novo setor
+### Criar novo setor
 # POST http://localhost:3000/sectors
 # Content-Type: application/json
 
@@ -40,26 +40,20 @@
 #   "description": "Setor responsável pelos projetos de JOGOS"
 # }
 
-# # ###
-
-# # Criar novo setor
-# POST http://localhost:3000/sectors
-# Content-Type: application/json
-
-# {
-#   "name": "Outros",
-#   "description": "Outros Projetos"
-# }
-
-# PUT http://localhost:3000/sectors/10
-# Content-Type: application/json
-
-# {
-#   "name": "Outros",
-#   "description": "Outros Setores"
-# }
-
+## Retorna todos os setores
 # GET http://localhost:3000/sectors
+
+## Retorna os setores por id
+GET http://localhost:3000/sectors/1
+
+# PUT http://localhost:3000/sectors/1
+# Content-Type: application/json
+
+# {
+#   "name": "TESTES",
+#   "description": "Setor responsavel por testes"
+# }
+
 
 # ### Criar um projeto
 # POST http://localhost:3000/projects
