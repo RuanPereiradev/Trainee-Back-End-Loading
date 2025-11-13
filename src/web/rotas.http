@@ -41,18 +41,18 @@
 # }
 
 ## Retorna todos os setores
-# GET http://localhost:3000/sectors
+GET http://localhost:3000/sectors
 
 ## Retorna os setores por id
-# GET http://localhost:3000/sectors/1
+DELETE  http://localhost:3000/sectors/9
 
-PUT http://localhost:3000/sectors/1
-Content-Type: application/json
+# PUT http://localhost:3000/sectors/1
+# Content-Type: application/json
 
-{
-  "name": "TESTES de quinta feira",
-  "description": "Setor responsavel teste quinta"
-}
+# {
+#   "name": "TESTES de quinta feira",
+#   "description": "Setor responsavel teste quinta"
+# }
 
 
 # ### Criar um projeto
