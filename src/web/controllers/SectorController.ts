@@ -104,18 +104,18 @@ export class SectorController{
     async updateSector(request: FastifyRequest, reply: FastifyReply){
         try {
             const {id} = request.params as{
-                id: number
+                id: string
             }
-
+            const numberId = Number(id)
             const {name, description} = request.body as any;
 
             const useCase = new UpdateSetorUseCase(this.sectorRepository);
             
-            const result = await useCase.execute({id, name, description});
+            const result = await useCase.execute({id:numberId, name, description});
 
             const response = this.responseFilter.handleResponse(result);
 
-            return reply.status(response.success? 201:400).send(response);
+            return reply.status(response.success? 200:400).send(response);
 
         } catch (error) {
             console.error(error);

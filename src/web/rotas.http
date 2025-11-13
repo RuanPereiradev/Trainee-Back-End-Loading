@@ -1,11 +1,11 @@
 ## Testes de rotas UserRoutes {
-# Criar usuário
+# # Criar usuário
 # POST http://localhost:3000/users
 # Content-Type: application/json
 
 # {
-#   "name": "Testezinho topzin",
-#   "email": "nometeste.topzin@example.com",
+#   "name": "aiaiai topzin",
+#   "email": "tastandonovamente.topzin@example.com",
 #   "password": "senha12356786",
 #   "role": "MEMBRO"
 # }
@@ -44,15 +44,15 @@
 # GET http://localhost:3000/sectors
 
 ## Retorna os setores por id
-GET http://localhost:3000/sectors/1
+# GET http://localhost:3000/sectors/1
 
-# PUT http://localhost:3000/sectors/1
-# Content-Type: application/json
+PUT http://localhost:3000/sectors/1
+Content-Type: application/json
 
-# {
-#   "name": "TESTES",
-#   "description": "Setor responsavel por testes"
-# }
+{
+  "name": "TESTES de quinta feira",
+  "description": "Setor responsavel teste quinta"
+}
 
 
 # ### Criar um projeto
@@ -71,13 +71,13 @@ GET http://localhost:3000/sectors/1
 # Content-Type: application/json
 
 # {
-#   "name": "Placas Solares",
+#   "name": "xereca",
 #   "sectorId": 1,
 #   "status": "EM_ANDAMENTO",
-#   "description": "Projeto voltado ao controle e análise de indicadores de qualidade.",
-#   "goals": "Implementar métricas automáticas e relatórios semanais para o setor de desenvolvimento."
+#   "description": "aiaiai.",
+#   "goals": " oioioi"
 # }
 
-# GET http://localhost:3000/projects/sector/3
+# GET http://localhost:3000/projects/sector/1
 
 #  GET http://localhost:3000/projects
