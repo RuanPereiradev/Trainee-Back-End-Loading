@@ -137,17 +137,27 @@ async findById(id: string): Promise<Result<Project>> {
 
 async findAll(): Promise<Result<Project[]>> {
     try {
-    const found = await prisma.project.findMany();
+    const found = await prisma.project.findMany({
+        include: {sector:true}
+    });
 
-    const project = found.map(
-        (u: any) => new Project(
-            u.name,
-            u.sector,
-            u.description,
-            u.status,
-            u.goals
-        )
-    );
+    
+        const project = found.map(u => {
+            const sector = new Sectors(
+                u.sector.name,
+                u.sector.description ?? "",
+                u.sector.id
+            );
+
+            return new Project(
+                u.name,
+                sector,
+                u.status,
+                u.goals,
+                u.description,
+                u.id
+            );
+        });
     return Result.ok<Project[]>(project)
     } catch (error: any) {
         return Result.fail<Project[]>(error.message)

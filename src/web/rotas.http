@@ -41,10 +41,10 @@
 # }
 
 ## Retorna todos os setores
-GET http://localhost:3000/sectors
+# GET http://localhost:3000/sectors
 
 ## Retorna os setores por id
-DELETE  http://localhost:3000/sectors/9
+# DELETE  http://localhost:3000/sectors/9
 
 # PUT http://localhost:3000/sectors/1
 # Content-Type: application/json
@@ -80,4 +80,12 @@ DELETE  http://localhost:3000/sectors/9
 
 # GET http://localhost:3000/projects/sector/1
 
-#  GET http://localhost:3000/projects
+#  GET http://localhost:3000/projects/e6d30fce-276d-4677-9e5c-701e2aa343d1
+### Criar Membership (Join Project)
+POST http://localhost:3000/memberships/join
+Content-Type: application/json
+
+{
+  "userId": "3b35f71a-997e-463a-a191-8b858d2cc189",
+  "projectId": "e6d30fce-276d-4677-9e5c-701e2aa343d1"
+}

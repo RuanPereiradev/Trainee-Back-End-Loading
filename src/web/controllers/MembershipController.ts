@@ -1,39 +1,71 @@
 // src/controllers/MembershipController.ts
 import { FastifyReply, FastifyRequest } from "fastify";
-import { CreateMembershipRequest, CreateMembershipUseCase } from "../../useCases/membership/CreateMembershipUseCase";
-import { LeaveProjectRequest, LeaveProjectUseCase } from "../../useCases/membership/LeaveProjectUseCase";
+import {  CreateMembershipUseCase } from "../../useCases/membership/CreateMembershipUseCase";
+// import { LeaveProjectRequest, LeaveProjectUseCase } from "../../useCases/membership/LeaveProjectUseCase";
 import { Result } from "../../env/Result";
-import { ListMembershipsByProjectRequest, ListMembershipsByProjectUseCase } from "../../useCases/membership/ListMembershipByProjectUseCase";
+// import { ListMembershipsByProjectRequest, ListMembershipsByProjectUseCase } from "../../useCases/membership/ListMembershipByProjectUseCase";
 import { ApiResponseValidationFilter } from "../Filters/ApiResponseValidationFilter";
+import { MembershipRepository } from "../../repositories/prisma/MembershipRepository";
+import { ProjectRepository } from "../../repositories/prisma/ProjectRepository";
+import { UserRepository } from "../../repositories/prisma/UserRepository";
+import { ApiResponse } from "../Wrappers/ApiResponse";
 
 export class MembershipController {
-    constructor(
-        private createMembershipUseCase: CreateMembershipUseCase,
-        private leaveProjectUseCase: LeaveProjectUseCase,
-        private listMembershipsUseCase: ListMembershipsByProjectUseCase,
-        private responseFilter: ApiResponseValidationFilter
-    ) {}
 
-    async joinProject(request: FastifyRequest<{ Body: CreateMembershipRequest }>, reply: FastifyReply) {
-        const result = await this.createMembershipUseCase.execute(request.body);
+        private membershipRepository: MembershipRepository;
+        private projectRepository: ProjectRepository;
+        private userRepository: UserRepository;
+        // private createMembershipUseCase: CreateMembershipUseCase;
+        // private leaveProjectUseCase: LeaveProjectUseCase;
+        // private listMembershipsUseCase: ListMembershipsByProjectUseCase;
+        private responseFilter: ApiResponseValidationFilter;
 
-            const response = this.responseFilter.handleResponse(result);
+    constructor() {
+        this.membershipRepository = new MembershipRepository();
+        this.projectRepository = new ProjectRepository();
+        this.userRepository = new UserRepository();
+        this.responseFilter = new ApiResponseValidationFilter();
 
-            return reply.status(response.success ? 201:400).send(response);   
+    }
+
+async joinProject(request: FastifyRequest, reply: FastifyReply) {
+
+    try {
+        const {userId, projectId} = request.body as
+        {
+            userId: string,
+            projectId: string
         }
+        const useCase = new CreateMembershipUseCase(this.membershipRepository, this.projectRepository, this.userRepository);
 
-    async leaveProject(request: FastifyRequest<{ Params: LeaveProjectRequest }>, reply: FastifyReply) {
-        const result = await this.leaveProjectUseCase.execute(request.params);
+        const result = await useCase.execute({userId, projectId});
+
+        const response = this.responseFilter.handleResponse(result);
+
+        return reply.status(response.success ? 201:400).send(response);
+
+    } catch (error: any) {
+        console.error(error);
+        const response = this.responseFilter.handleResponse(
+            ApiResponse.fail(["Erro ao criar projeto"])
+        )
+        return reply.status(500).send(response)
+    }
         
-            const response = this.responseFilter.handleResponse(result);
+}
 
-            return reply.status(response.success ? 201:400).send(response);    }
+// async leaveProject(request: FastifyRequest<{ Params: LeaveProjectRequest }>, reply: FastifyReply) {
+//         const result = await this.leaveProjectUseCase.execute(request.params);
+        
+//             const response = this.responseFilter.handleResponse(result);
 
-    async listProjectMembers(request: FastifyRequest<{ Params: ListMembershipsByProjectRequest }>, reply: FastifyReply){
-        const members = await this.listMembershipsUseCase.execute(request.params);
-        const response = this.responseFilter.handleResponse(members);
+//             return reply.status(response.success ? 201:400).send(response);    }
 
-            return reply.status(response.success ? 201:400).send(response);    
-        }
+//     async listProjectMembers(request: FastifyRequest, reply: FastifyReply){
+//         const members = await this.listMembershipsUseCase.execute(request.params);
+//         const response = this.responseFilter.handleResponse(members);
+
+//             return reply.status(response.success ? 201:400).send(response);    
+//         }
     }
 

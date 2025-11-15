@@ -5,7 +5,7 @@ import { AuditableEntity } from "../common/AuditableEntity";
 
 
 export class Membership extends AuditableEntity{
-    private readonly _id: string;
+    private _id: string;
     private _user: User;
     private _project: Project;
     private _joinedAt: Date;
