@@ -82,11 +82,14 @@
 
 #  GET http://localhost:3000/projects/e6d30fce-276d-4677-9e5c-701e2aa343d1
 ### Criar Membership (Join Project)
-# POST http://localhost:3000/memberships/join
-# Content-Type: application/json
 
-# {
-#   "userId": "bae6096c-380b-454a-8365-1910fabe05e4",
-#   "projectId": "e6d30fce-276d-4677-9e5c-701e2aa343d1"
-# }
-GET http://localhost:3000/memberships
+POST http://localhost:3000/memberships/rejoin
+Content-Type: application/json
+
+{
+  "userId": "bae6096c-380b-454a-8365-1910fabe05e4",
+  "projectId": "e6d30fce-276d-4677-9e5c-701e2aa343d1"
+}
+
+# GET http://localhost:3000/memberships/afa82774-ed64-40d8-9580-5621db47a085
+

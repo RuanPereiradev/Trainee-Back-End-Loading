@@ -46,12 +46,12 @@ export class Membership extends AuditableEntity{
 
     leaveProject(): void{
         if(this._leftAt !== null){
-            throw new Error("O usuário já está participando desse projeto")
+            throw new Error("O usuário já saiu desse projeto")
         }
         this._leftAt = new Date();
     }
     rejoinProject(): void{
-        if(this._leftAt){
+        if(this._leftAt=== null){
             throw new Error("O usuário já está participando deste projeto");
         }
         this._leftAt = null;

@@ -5,6 +5,7 @@ export interface IMembershipRepository {
     create(membership: Membership): Promise<Result<Membership>>;
     findById(id: string): Promise<Result<Membership | null>>;
     findAll(): Promise<Result<Membership[]>>;
+    update(membership: Membership): Promise<Result<Membership>>
     findByUserAndProject(userId: string, projectId: string): Promise<Result<Membership | null>>;
     listByProject(projectId: string): Promise<Result<Membership[]>>;
     listByUser(userId: string): Promise<Membership[]>;

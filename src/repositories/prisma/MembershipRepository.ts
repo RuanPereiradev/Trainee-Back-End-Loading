@@ -23,48 +23,62 @@ export class MembershipRepository implements IMembershipRepository {
         this.sectorRepository = new SectorRepository();
         this.userRepository = new UserRepository()
     }
-
-async findAll(): Promise<Result<Membership[]>> {
+    async  update(membership: Membership): Promise<Result<Membership>> {
         try {
-        const found = await prisma.membership.findMany({
-                include: {user: true, 
-                    project: {
-                    include:{ sector:true }
+            const update = await prisma.membership.update({
+                where:{id: membership.id},
+                data: {
+                    joinedAt:membership.joinedAt,
+                    leftAt: membership.leftAt
                 }
-            }
-        });
-        const membership = found.map(u=> {
-            const user = new User(
-                u.user.name,
-                new Email(u.user.email),
-                new Password(u.user.password),
-                u.user.role,
-                u.user.id
-            );
-            const sector = new Sectors(
-                u.project.sector.name,
-                u.project.sector.description ?? "",
-                u.project.sector.id
-            );
-            const project = new Project(
-                u.project.name,
-                sector,
-                u.project.status,
-                u.project.description,
-                u.project.id
-            );
-            return new Membership(
-                user,
-                project,
-                u.id,
-                u.joinedAt
-            );
-        });
-        return Result.ok<Membership[]>(membership) 
-        } catch (error: any) {
-            return Result.fail<Membership[]>(error.message)
+            })
+            return Result.ok<Membership>()
+        } catch (error:any) {
+            return Result.fail<Membership>(error.message)
         }
     }
+
+    async findAll(): Promise<Result<Membership[]>> {
+            try {
+            const found = await prisma.membership.findMany({
+                    include: {user: true, 
+                        project: {
+                        include:{ sector:true }
+                    }
+                }
+            });
+            const membership = found.map(u=> {
+                const user = new User(
+                    u.user.name,
+                    new Email(u.user.email),
+                    new Password(u.user.password),
+                    u.user.role,
+                    u.user.id
+                );
+                const sector = new Sectors(
+                    u.project.sector.name,
+                    u.project.sector.description ?? "",
+                    u.project.sector.id
+                );
+                const project = new Project(
+                    u.project.name,
+                    sector,
+                    u.project.status,
+                    u.project.description,
+                    u.project.id
+                );
+                return new Membership(
+                    user,
+                    project,
+                    u.id,
+                    u.joinedAt
+                );
+            });
+            return Result.ok<Membership[]>(membership) 
+            } catch (error: any) {
+                return Result.fail<Membership[]>(error.message)
+            }
+        }
 
     leaveProject(id: string): Promise<Result<Membership>> {
         throw new Error("Method not implemented.");
@@ -212,6 +226,10 @@ async findAll(): Promise<Result<Membership[]>> {
                 found.id, 
                 found.joinedAt
             );
+
+            if(found.leftAt){
+               ( membership as any)._leftAt = found.leftAt
+            }
 
             return Result.ok(membership);
 
