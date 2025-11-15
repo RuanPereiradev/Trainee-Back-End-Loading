@@ -9,6 +9,8 @@ import { MembershipRepository } from "../../repositories/prisma/MembershipReposi
 import { ProjectRepository } from "../../repositories/prisma/ProjectRepository";
 import { UserRepository } from "../../repositories/prisma/UserRepository";
 import { ApiResponse } from "../Wrappers/ApiResponse";
+import { FindMembersByProjectUseCase } from "../../useCases/membership/FindMembersByProjectUseCase";
+import { FindAllMembershipUseCase } from "../../useCases/membership/FindAllMembershipsUseCase";
 
 export class MembershipController {
 
@@ -42,7 +44,7 @@ async joinProject(request: FastifyRequest, reply: FastifyReply) {
 
         const response = this.responseFilter.handleResponse(result);
 
-        return reply.status(response.success ? 201:400).send(response);
+        return reply.status(response.success ? 200:400).send(response);
 
     } catch (error: any) {
         console.error(error);
@@ -52,6 +54,47 @@ async joinProject(request: FastifyRequest, reply: FastifyReply) {
         return reply.status(500).send(response)
     }
         
+}
+
+async listByProject(request: FastifyRequest, reply: FastifyReply){
+    try {
+        const {projectId} = request.body as
+        {
+            projectId: string
+        }
+        const useCase = new FindMembersByProjectUseCase(this.membershipRepository);
+        
+        const result = await useCase.execute({projectId});
+
+        const response = this.responseFilter.handleResponse(result);
+
+        return reply.status(response.success ? 200:400).send(response);
+        
+    } catch (error: any) {
+        console.error(error);
+        const response = this.responseFilter.handleResponse(
+            ApiResponse.fail(["Erro retornar projeto"])
+        )
+        return reply.status(500).send(response)
+    }
+}
+
+async findAllMembership(request: FastifyRequest, reply: FastifyReply){
+    try {
+        const useCase = new FindAllMembershipUseCase(this.membershipRepository);
+
+        const result = await useCase.execute();
+        
+        const response = this.responseFilter.handleResponse(result);
+
+        return reply.status(response.success ? 200:400).send(response);
+    } catch (error: any) {
+        console.error(error);
+        const response = this.responseFilter.handleResponse(
+            ApiResponse.fail(["Erro ao retornar todos os Projetos"])
+        )
+            return reply.status(500).send(response);
+    }
 }
 
 // async leaveProject(request: FastifyRequest<{ Params: LeaveProjectRequest }>, reply: FastifyReply) {
@@ -67,5 +110,5 @@ async joinProject(request: FastifyRequest, reply: FastifyReply) {
 
 //             return reply.status(response.success ? 201:400).send(response);    
 //         }
-    }
+}
 

@@ -9,6 +9,17 @@ import { Password } from "../../domain/value-objects/Password";
 const prisma = new PrismaClient();
 
 export class UserRepository implements IUserRepository {
+
+// async  findByProjectId(projectId: string): Promise<Result<User[]>> {
+//     try {
+//       const found = await prisma.user.findMany({
+//         where:{projectId},
+//         include: {user:true}
+//       })
+//     } catch (error) {
+      
+//     }
+//   }
  
    // Criação de usuário
   async save(user: User): Promise<Result<User>> {

@@ -21,16 +21,10 @@ export class CreateMembershipUseCase {
         try {
             const { userId, projectId } = request;
 
-            // ------------------------------
-            // 1. VALIDAÇÃO INICIAL
-            // ------------------------------
             if (!userId || !projectId) {
                 return Result.fail<Membership>("userId e projectId são obrigatórios");
             }
 
-            // ------------------------------
-            // 2. BUSCAR USUÁRIO
-            // ------------------------------
             const userResult = await this.userRepository.findById(userId);
 
             if (userResult.isFailure || !userResult.getValue()) {
@@ -39,9 +33,6 @@ export class CreateMembershipUseCase {
 
             const user = userResult.getValue();
 
-            // ------------------------------
-            // 3. BUSCAR PROJETO
-            // ------------------------------
             const projectResult = await this.projectRepository.findById(projectId);
 
             if (projectResult.isFailure || !projectResult.getValue()) {
@@ -50,9 +41,6 @@ export class CreateMembershipUseCase {
 
             const project = projectResult.getValue();
 
-            // ------------------------------
-            // 4. VERIFICAR SE JÁ EXISTE MEMBERSHIP
-            // ------------------------------
             const existingMembershipResult =
                 await this.membershipRepository.findByUserAndProject(userId, projectId);
 
@@ -62,9 +50,6 @@ export class CreateMembershipUseCase {
                 return Result.fail<Membership>("Usuário já participa do projeto");
             }
 
-            // ------------------------------
-            // 5. CRIAR MEMBERSHIP
-            // ------------------------------
             const membership = new Membership(user, project);
 
             const saveResult = await this.membershipRepository.create(membership);

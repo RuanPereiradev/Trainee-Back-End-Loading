@@ -1,4 +1,5 @@
 import { Membership } from "../../domain/entities/Membership";
+import { User } from "../../domain/entities/User";
 import { Result } from "../../env/Result";
 import { IMembershipRepository } from "../../repositories/interfaces/IMembershipRepository";
 
@@ -7,33 +8,34 @@ interface FindMembersByProjectRequest {
 }
 
 export class FindMembersByProjectUseCase {
-  constructor(private membershipRepo: IMembershipRepository) {}
+  constructor(private membershipRepo: IMembershipRepository
+    
+  ) {}
 
-  async execute(request: FindMembersByProjectRequest): Promise<Result<Membership[]>> {
+  async execute(request: FindMembersByProjectRequest): Promise<Result<User[]>> {
     try {
       const { projectId } = request;
 
       if (!projectId) {
-        return Result.fail<Membership[]>("ID do projeto é obrigatório");
+        return Result.fail<User[]>("ID do projeto é obrigatório");
       }
 
-      const allMembershipsResult = await this.membershipRepo.findAll();
+      const allMembershipsResult = await this.membershipRepo.listByProject(projectId);
       if (allMembershipsResult.isFailure) {
-        return Result.fail<Membership[]>(allMembershipsResult.getError());
+        return Result.fail<User[]>(allMembershipsResult.getError());
       }
 
       const allMemberships = allMembershipsResult.getValue();
 
-      const projectMembers = allMemberships.filter(
-        (m) => m.project.id === projectId && !m.leftAt
-      );
+      const users = allMemberships.map(m => m.user);
 
-      return Result.ok<Membership[]>(projectMembers);
+      return Result.ok<User[]>(users);
+
     } catch (error) {
       if (error instanceof Error) {
-        return Result.fail<Membership[]>(error.message);
+        return Result.fail<User[]>(error.message);
       }
-      return Result.fail<Membership[]>("Erro desconhecido ao buscar membros do projeto");
+      return Result.fail<User[]>("Erro desconhecido ao buscar membros do projeto");
     }
   }
 }

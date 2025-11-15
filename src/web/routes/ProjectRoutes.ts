@@ -1,6 +1,5 @@
 import { FastifyInstance } from "fastify";
 import { ProjectController } from "../controllers/ProjectController";
-import { request } from "http";
 
 export async function projectRoutes(app:FastifyInstance) {
     const projectController = new ProjectController();

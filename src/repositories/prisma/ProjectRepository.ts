@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { Membership, PrismaClient } from "@prisma/client";
 import { Project } from "../../domain/entities/Projects";
 import { Result } from "../../env/Result";
 import { IProjectRepository } from "../interfaces/IProjectRepository";
@@ -8,7 +8,8 @@ const prisma = new PrismaClient();
 
 export class ProjectRepository implements IProjectRepository{
 
-    
+
+
 async save(project: Project): Promise<Result<Project>> {
     try {
       const created =  await prisma.project.create({
@@ -142,22 +143,22 @@ async findAll(): Promise<Result<Project[]>> {
     });
 
     
-        const project = found.map(u => {
-            const sector = new Sectors(
-                u.sector.name,
-                u.sector.description ?? "",
-                u.sector.id
-            );
+    const project = found.map(u => {
+        const sector = new Sectors(
+            u.sector.name,
+            u.sector.description ?? "",
+            u.sector.id
+        );
 
-            return new Project(
-                u.name,
-                sector,
-                u.status,
-                u.goals,
-                u.description,
-                u.id
-            );
-        });
+        return new Project(
+            u.name,
+            sector,
+            u.status,
+            u.goals,
+            u.description,
+            u.id
+        );
+    });
     return Result.ok<Project[]>(project)
     } catch (error: any) {
         return Result.fail<Project[]>(error.message)

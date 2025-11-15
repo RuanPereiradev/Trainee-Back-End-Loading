@@ -61,7 +61,7 @@ export class ProjectController{
 
             const response = this.responseFilter.handleResponse(result);
 
-            return reply.status(response.success ? 201:400).send(response);
+            return reply.status(response.success ? 200:400).send(response);
 
         }catch(error){
             console.error(error);
@@ -86,7 +86,7 @@ export class ProjectController{
 
             const response = this.responseFilter.handleResponse(result);
 
-            return reply.status(response.success ? 201:400).send(response);
+            return reply.status(response.success ? 200:400).send(response);
 
         } catch (error: any) {
             console.error(error);
@@ -109,7 +109,7 @@ export class ProjectController{
 
             const response = this.responseFilter.handleResponse(result);
 
-            return reply.status(response.success ? 201:400).send(response);
+            return reply.status(response.success ? 200:400).send(response);
 
 
         }catch(error){
@@ -133,7 +133,7 @@ export class ProjectController{
 
              const response = this.responseFilter.handleResponse(result);
 
-            return reply.status(response.success ? 201:400).send(response);
+            return reply.status(response.success ? 200:400).send(response);
 
 
         }catch(error){
@@ -156,7 +156,7 @@ export class ProjectController{
 
             const response = this.responseFilter.handleResponse(result);
 
-            return reply.status(response.success ? 201:400).send(response);
+            return reply.status(response.success ? 200:400).send(response);
 
 
         }catch(error){
