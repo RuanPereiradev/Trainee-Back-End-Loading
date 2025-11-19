@@ -72,8 +72,11 @@ export class SectorRepository implements ISectorRepository{
     }
     async findAll(): Promise<Result<Sectors[]>> {
         try {
-          const sector = await prisma.sector.findMany();
+          const sector = await prisma.sector.findMany({
+            where: {deletedAt:null}
+          });
           const sectorEntity = sector.map(
+            
             (u) => 
              new Sectors(
              u.name,
