@@ -11,6 +11,7 @@ import { SectorController } from "../../web/controllers/SectorController";
 import { SectorRepository } from "./SectorRepository";
 import { Sectors } from "../../domain/entities/Sectors";
 import { UserRepository } from "./UserRepository";
+import { PaginationResult } from "../../web/Wrappers/Pagination";
 
 const prisma = new PrismaClient();
 
@@ -23,6 +24,7 @@ export class MembershipRepository implements IMembershipRepository {
         this.sectorRepository = new SectorRepository();
         this.userRepository = new UserRepository()
     }
+    
     async  update(membership: Membership): Promise<Result<Membership>> {
         try {
             const update = await prisma.membership.update({
@@ -79,6 +81,63 @@ export class MembershipRepository implements IMembershipRepository {
                 return Result.fail<Membership[]>(error.message)
             }
         }
+    async listPaginated(page: number, pageSize: number): Promise<PaginationResult<Membership>> {
+        const skip = (page-1) * pageSize;
+
+        const [items, total] = await Promise.all([
+            prisma.membership.findMany({
+                where:{leftAt: null},
+                skip,
+                take: pageSize,
+                include:{
+                    user: true,
+                    project:{
+                        include: {
+                            sector: true
+                        }
+                    }
+                }
+            }),
+            prisma.membership.count({
+                where: {leftAt:null}
+            })
+        ]);
+        const membership = items.map(u=> {
+            const user = new User(
+                u.user.name,
+                new Email(u.user.email),
+                new Password(u.user.password),
+                u.user.role,
+                u.user.id
+            );
+            const sector = new Sectors(
+                u.project.sector.name,
+                u.project.sector.description ?? "",
+                u.project.sector.id
+            );
+            const project = new Project(
+                u.project.name,
+                sector,
+                u.project.status,
+                u.project.description,
+                u.project.id
+            );
+            return new Membership(
+                user,
+                project,
+                u.id,
+                u.joinedAt
+            );
+        });
+
+        return {
+            data: membership,
+            page,
+            pageSize,
+            total, 
+            totalPages: Math.ceil(total/pageSize)
+        }
+    }
 
     leaveProject(id: string): Promise<Result<Membership>> {
         throw new Error("Method not implemented.");

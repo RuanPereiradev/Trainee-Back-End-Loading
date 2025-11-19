@@ -6,6 +6,7 @@ export async function userRoutes(app: FastifyInstance) {
 
   app.post("/users", (request, reply) => userController.createUser(request, reply));
   app.get("/users", (request, reply) => userController.findAll(request, reply));
+  app.get("/users/pagination", (request, reply) => userController.listPagineted(request, reply));
   app.get("/users/:id", (request, reply) => userController.findById(request, reply));
   app.put("/users/:id", (request, reply) => userController.updateUser(request, reply));
   app.delete("/users/:id", (request, reply) => userController.softDelete(request, reply));

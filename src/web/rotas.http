@@ -5,8 +5,8 @@
 # Content-Type: application/json
 
 # {
-#   "name": "Arlindo cruz Filho do Mato",
-#   "email": "arlindo.cruz@example.com",
+#   "name": "xerox xerolayne",
+#   "email": "xerox.cruz@example.com",
 #   "password": "senha12356786",
 #   "role": "MEMBRO"
 # }
@@ -15,7 +15,7 @@
 # PATCH  http://localhost:3000/users/eb4dd2cf-8aa2-4b37-8b86-1a6da9b03525/restore
 
 # Retorna Usuário por id
-# GET http://localhost:3000/users/eb4dd2cf-8aa2-4b37-8b86-1a6da9b03525
+# GET http://localhost:3000/users/pagination?page=1&pageSize=4
 
 ## Metodo update user
 # PUT http://localhost:3000/users/4a903605-f604-4518-8e5a-51431a987992
@@ -72,7 +72,7 @@
 # }
 
 ## Get Project by id
-GET http://localhost:3000/projects/pagination?page=1&pageSize=4
+# GET http://localhost:3000/projects/pagination?page=1&pageSize=4
 
 #Delete Project
 # DELETE http://localhost:3000/projects/02d084ca-e5db-4f99-adba-6251f7b4ffdb
@@ -93,6 +93,6 @@ GET http://localhost:3000/projects/pagination?page=1&pageSize=4
 # }
 
 # Membership por id
-# GET http://localhost:3000/memberships/9ed6a92b-daa4-429c-9e5d-b9a72c38f2dc
+GET http://localhost:3000/memberships/pagination?page=1&pageSize=1
 
 # }

@@ -9,6 +9,7 @@ import { ApiResponseValidationFilter } from "../Filters/ApiResponseValidationFil
 import { ApiResponse } from "../Wrappers/ApiResponse";
 import { RoleType } from "@prisma/client";
 import { RestoreUserUseCase } from "../../useCases/user/RestoreUserUseCase";
+import { ListUserPaginatedUseCase } from "../../useCases/user/ListUserPaginationUseCase";
 
 export class UserController{
     private userRepository: UserRepository;
@@ -69,6 +70,28 @@ export class UserController{
             }
         }
 
+    async listPagineted(request: FastifyRequest, reply: FastifyReply){
+        try {
+            const {page = 1, pageSize = 10} = request.query as any;
+
+            const useCase = new ListUserPaginatedUseCase(this.userRepository);
+
+            const result = await useCase.execute({
+                page: Number(page),
+                pageSize: Number(pageSize)
+            });
+
+            const response = this.responseFilter.handleResponse(result);
+
+            return reply.status(response.success? 200:400).send(response);
+        } catch (error: any) {
+            console.error(error);
+            const response = this.responseFilter.handleResponse(
+                ApiResponse.fail(["Erro ao buscar os User(pagination)"])
+            )
+            return reply.status(500).send(response)
+        }
+    }
     async findById(request: FastifyRequest, reply: FastifyReply){
 
         try{

@@ -1,5 +1,6 @@
 import { User } from "../../domain/entities/User";
 import { Result } from "../../env/Result";
+import { PaginationResult } from "../../web/Wrappers/Pagination";
 
 export interface IUserRepository{
     findById(id: string): Promise<Result<User>>;
@@ -9,6 +10,7 @@ export interface IUserRepository{
     save(user: User): Promise<Result<User>>;
     update(user:User): Promise<Result<User>>;
     softDelete(id: string): Promise<Result<void>>;
-    restore(id: string): Promise<Result<void>>
-    findByIdAny(id: string): Promise<Result<User>>
+    restore(id: string): Promise<Result<void>>;
+    findByIdAny(id: string): Promise<Result<User>>;
+    listPaginated(page: number, pageSize:number): Promise<PaginationResult<User>>
 }

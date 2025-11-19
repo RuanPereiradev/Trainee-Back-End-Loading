@@ -1,5 +1,6 @@
 import { Membership } from "../../domain/entities/Membership";
 import { Result } from "../../env/Result";
+import { PaginationResult } from "../../web/Wrappers/Pagination";
 
 export interface IMembershipRepository {
     create(membership: Membership): Promise<Result<Membership>>;
@@ -10,5 +11,5 @@ export interface IMembershipRepository {
     listByProject(projectId: string): Promise<Result<Membership[]>>;
     listByUser(userId: string): Promise<Membership[]>;
     leaveProject(id: string): Promise<Result<Membership>>;
-
+    listPaginated(page: number, pageSize:number): Promise<PaginationResult<Membership>>;
 }

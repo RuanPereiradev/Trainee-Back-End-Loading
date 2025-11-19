@@ -4,6 +4,7 @@ import { IUserRepository } from "../interfaces/IUserRepository";
 import { Result } from "../../env/Result";
 import { Email } from "../../domain/value-objects/Email";
 import { Password } from "../../domain/value-objects/Password";
+import { PaginationResult } from "../../web/Wrappers/Pagination";
 
 
 const prisma = new PrismaClient();
@@ -87,6 +88,41 @@ export class UserRepository implements IUserRepository {
         } catch (error: any) {
           return Result.fail<User>(error.message)
       }
+    }
+
+    async listPaginated(page: number, pageSize: number): Promise<PaginationResult<User>> {
+      const skip = (page-1) * pageSize;
+
+      const [items, total] = await Promise.all([
+        prisma.user.findMany({
+          where:{deletedAt: null},
+          skip,
+          take:pageSize,
+        }),
+        prisma.user.count({
+          where:{deletedAt:null}
+        })
+      ]);
+
+      const userEntity = items.map(
+        (u) =>
+          new User(
+          u.name,
+            new Email(u.email),
+            new Password(u.password),
+            u.role,
+            u.id
+          )
+        );
+
+      return {
+        data: userEntity,
+        total,
+        page,
+        pageSize,
+        totalPages: Math.ceil(total/pageSize)
+      };
+
     }
 
     //buscar todos

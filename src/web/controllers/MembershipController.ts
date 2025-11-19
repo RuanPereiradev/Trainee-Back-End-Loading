@@ -14,6 +14,7 @@ import { FindAllMembershipUseCase } from "../../useCases/membership/FindAllMembe
 import { LeaveProjectUseCase } from "../../useCases/membership/LeaveProjectUseCase";
 import { RejoinProjectUseCase } from "../../useCases/membership/RejoinProjectUseCase";
 import { FindByIdMembershipUseCase } from "../../useCases/membership/FindByIdMembershipUseCase";
+import { ListMembershipPaginationUseCase } from "../../useCases/membership/ListMembershipPaginationUseCase";
 
 export class MembershipController {
 
@@ -119,6 +120,28 @@ export class MembershipController {
                 ApiResponse.fail(["Erro ao retornar todos os Projetos"])
             )
                 return reply.status(500).send(response);
+        }
+    }
+    async listPagineted(request: FastifyRequest, reply: FastifyReply){
+        try {
+            const {page = 1, pageSize = 10} = request.query as any;
+    
+            const useCase = new ListMembershipPaginationUseCase(this.membershipRepository);
+    
+            const result = await useCase.execute({
+                page: Number(page),
+                pageSize: Number(pageSize)
+            });
+    
+            const response = this.responseFilter.handleResponse(result);
+    
+            return reply.status(response.success? 200:400).send(response);
+        } catch (error: any) {
+            console.error(error);
+            const response = this.responseFilter.handleResponse(
+                ApiResponse.fail(["Erro ao buscar os User(pagination)"])
+            )
+            return reply.status(500).send(response)
         }
     }
 

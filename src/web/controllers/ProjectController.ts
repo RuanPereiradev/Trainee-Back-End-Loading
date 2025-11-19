@@ -141,7 +141,7 @@ export class ProjectController{
         } catch (error:any) {
             console.error(error);
             const response = this.responseFilter.handleResponse(
-                ApiResponse.fail(["Erro ao buscar todos os projetos"])
+                ApiResponse.fail(["Erro ao buscar os projetos(pagination)"])
             )
             return reply.status(500).send(response)
         }
