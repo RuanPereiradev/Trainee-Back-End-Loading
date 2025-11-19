@@ -36,15 +36,15 @@
 # Content-Type: application/json
 
 # {
-#   "name": "ENEGENHARIA",
-#   "description": "Setor responsável pelos projetos de ENGENHARIA"
+#   "name": "DESENVOLVIMENTO",
+#   "description": "Setor responsável pelos projetos de SOFTWARE"
 # }
 
 ## Retorna todos os setores ou por id
-GET http://localhost:3000/sectors
+# GET http://localhost:3000/sectors
 
 ## Retorna os setores por id
-# DELETE  http://localhost:3000/sectors/2
+# DELETE  http://localhost:3000/sectors/1
 
 ##Restore sectors
 # PATCH   http://localhost:3000/sectors/2
@@ -72,10 +72,10 @@ GET http://localhost:3000/sectors
 # }
 
 ## Get Project by id
-# GET http://localhost:3000/projects/3ba16688-6047-4a0f-9360-d37451422713
+# GET http://localhost:3000/projects
 
 #Delete Project
-# DELETE http://localhost:3000/projects/3ba16688-6047-4a0f-9360-d37451422713
+# DELETE http://localhost:3000/projects/02d084ca-e5db-4f99-adba-6251f7b4ffdb
 
 ## Restore Project
 # PACH http://localhost:3000/projects/projectId/restore
@@ -83,13 +83,13 @@ GET http://localhost:3000/sectors
 ## Get Project By Sector
 # GET http://localhost:3000/projects/sector/1
 
-## Criar Membership (Join Project)
-# POST http://localhost:3000/memberships/rejoin
+# Criar Membership (Join Project)
+# POST http://localhost:3000/memberships/join
 # Content-Type: application/json
 
 # {
-#   "userId": "bae6096c-380b-454a-8365-1910fabe05e4",
-#   "projectId": "e6d30fce-276d-4677-9e5c-701e2aa343d1"
+#   "userId": "03b55595-158c-42ec-b1dd-51ea48477e04",
+#   "projectId": "02d084ca-e5db-4f99-adba-6251f7b4ffdb"
 # }
 
 # Membership por id

@@ -93,6 +93,7 @@ export class UserRepository implements IUserRepository {
    async findAll(): Promise<Result<User[]>> {
     try{
       const users = await prisma.user.findMany({
+        where:{deletedAt:null}
       });
 
       const userEntity = users.map(

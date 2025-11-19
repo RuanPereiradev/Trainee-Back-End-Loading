@@ -94,7 +94,18 @@ export class SectorRepository implements ISectorRepository{
 
     async delete(id: number): Promise<Result<void>> {
         try {
-          await prisma.sector.update({where:{id}, data:{deletedAt: new Date()}
+            const projectCount = await prisma.project.count({
+                where:{
+                    sectorId: id,
+                    deletedAt: null
+                }
+            });
+            if(projectCount>0){
+                return Result.fail<void>("Não é possivel excluir setor com projetos ativos")
+            }
+            await prisma.sector.update({
+                where:{id},
+                data:{deletedAt: new Date()}
         });
           return Result.ok<void>();
 

@@ -12,14 +12,19 @@ export class DeleteSectorUseCase{
         try {
             const sectorResult = await this.sectorRepository.findById(request.id);
 
-            if(!sectorResult){
+            if(sectorResult.isFailure || !sectorResult.getValue()){
                 return Result.fail<void>("Setor nao encontrado")
             }
 
             const existingSector = sectorResult.getValue();
-            await this.sectorRepository.delete(existingSector.id!);
-            return Result.ok<void>();
 
+            const deleteResult =  await this.sectorRepository.delete(existingSector.id!);
+
+            if(deleteResult.isFailure){
+                return Result.fail<void>(deleteResult.getError())
+            }
+
+            return Result.ok<void>();
         } catch (error: any) {
             return Result.fail<void>(error.message);
         }

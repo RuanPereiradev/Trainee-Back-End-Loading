@@ -16,7 +16,7 @@ export class DeleteProjectUseCase {
 
       const projectResult = await this.projectRepo.findById(id);
 
-      if (projectResult.isFailure) {
+      if (projectResult.isFailure || !projectResult.getValue()) {
         return Result.fail<void>(projectResult.getError());
       }
 

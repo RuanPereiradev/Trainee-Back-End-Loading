@@ -171,9 +171,9 @@ export class ProjectRepository implements IProjectRepository{
     async findAll(): Promise<Result<Project[]>> {
         try {
         const found = await prisma.project.findMany({
+            where:{deletedAt:null},
             include: {sector:true}
         });
-
         
         const project = found.map(u => {
             const sector = new Sectors(
@@ -196,7 +196,6 @@ export class ProjectRepository implements IProjectRepository{
             return Result.fail<Project[]>(error.message)
         }
     }
-
 
     async update(project: Project): Promise<Result<Project>> {
         try {
@@ -247,9 +246,22 @@ export class ProjectRepository implements IProjectRepository{
 
     async softDelete(id: string): Promise<Result<void>> {
         try {
-            await prisma.project.update({where:{id}, data:{deletedAt: new Date()}
+
+            const membershipCount = await prisma.membership.count({
+                where:{
+                    projectId: id,
+                    leftAt: null
+                }
+            });
+            if(membershipCount>0){
+                return Result.fail<void>("Não é possivel excluir projeto com usuário associados");
+            }
+            await prisma.project.update({
+                where:{id},
+                data:{deletedAt: new Date()}
         });
-        return Result.ok<void>()
+        return Result.ok<void>();
+
         } catch (error:any) {
             return Result.fail<void>(error.message);
         }
