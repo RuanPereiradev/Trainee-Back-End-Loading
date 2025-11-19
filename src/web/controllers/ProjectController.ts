@@ -11,6 +11,7 @@ import { ApiResponse } from "../Wrappers/ApiResponse";
 import { ProjectStatusType } from "@prisma/client";
 import { SectorRepository } from "../../repositories/prisma/SectorRepository";
 import { FindProjectBySectorUsecase } from "../../useCases/project/FindProjectBySectorUseCase";
+import { RestoreProjectUseCase } from "../../useCases/project/RestoreProjectUseCase";
 // import { FindProjectBySectorUsecase } from "../../useCases/project/FindProjectBySectorUseCase";
 
 export class ProjectController{
@@ -145,8 +146,7 @@ export class ProjectController{
         }
     }
 
-    async deleteProject(request: FastifyRequest, reply: FastifyReply){
-        
+    async deleteProject(request: FastifyRequest, reply: FastifyReply){        
         try{
            const {id} = request.params as {id: string};
            
@@ -158,13 +158,31 @@ export class ProjectController{
 
             return reply.status(response.success ? 200:400).send(response);
 
-
         }catch(error){
             console.error(error);
             const response = this.responseFilter.handleResponse(
                 ApiResponse.fail(["Erro ao buscar Projeto por id"])
             )
                 return reply.status(500).send(response);
+        }
+    }
+    
+    async restore(request: FastifyRequest, reply: FastifyReply){
+        try {
+            const {id} = request.params as {id: string};
+
+            const useCase = new RestoreProjectUseCase(this.projectRepository);
+
+            const result = await useCase.execute({id});
+
+            const response = this.responseFilter.handleResponse(result);
+
+            return reply.status(response.success? 200:400).send(response);
+        } catch (error: any) {
+            const response = this.responseFilter.handleResponse(
+                ApiResponse.fail(["Erro ao retornar usuários por id"])
+            )
+            return reply.status(500).send(response)
         }
     }
 }

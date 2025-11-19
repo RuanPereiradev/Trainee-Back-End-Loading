@@ -31,7 +31,12 @@ export class User extends AuditableEntity{
 
     get role() { return this._role; }
 
-    get password (){return this._password}
+    get password (){ return this._password }
+
+
+    softDelete(){
+        this._deletedAt = new Date();
+    }
 
     changeName(newName:string): Result<void>{
         if(!newName.trim()){

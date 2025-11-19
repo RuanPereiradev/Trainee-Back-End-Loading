@@ -8,5 +8,7 @@ export interface IUserRepository{
     findAll(): Promise<Result<User[]>>;
     save(user: User): Promise<Result<User>>;
     update(user:User): Promise<Result<User>>;
-    hardDelete(id: string): Promise<Result<void>>;
+    softDelete(id: string): Promise<Result<void>>;
+    restore(id: string): Promise<Result<void>>
+    findByIdAny(id: string): Promise<Result<User>>
 }

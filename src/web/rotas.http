@@ -1,22 +1,23 @@
 ## Testes de rotas UserRoutes {
-# # Criar usuário
+
+## Criar usuário
 # POST http://localhost:3000/users
 # Content-Type: application/json
 
 # {
-#   "name": "aiaiai topzin",
-#   "email": "tastandonovamente.topzin@example.com",
+#   "name": "Arlindo cruz Filho do Mato",
+#   "email": "arlindo.cruz@example.com",
 #   "password": "senha12356786",
 #   "role": "MEMBRO"
 # }
 
-# #cria usuário
-# GET http://localhost:3000/users
+## User Restore 
+# PATCH  http://localhost:3000/users/eb4dd2cf-8aa2-4b37-8b86-1a6da9b03525/restore
 
 # Retorna Usuário por id
-# GET http://localhost:3000/users/4a903605-f604-4518-8e5a-51431a987992
+# GET http://localhost:3000/users/eb4dd2cf-8aa2-4b37-8b86-1a6da9b03525
 
-#Metodo update user
+## Metodo update user
 # PUT http://localhost:3000/users/4a903605-f604-4518-8e5a-51431a987992
 # Content-Type: application/json
 
@@ -27,11 +28,10 @@
 #   "role": "MEMBRO"
 # }
 
+## Metodo Delete User
 # DELETE http://localhost:3000/users/4a903605-f604-4518-8e5a-51431a987992
 
-# }
-
-### Criar novo setor
+# ## Criar novo setor
 # POST http://localhost:3000/sectors
 # Content-Type: application/json
 
@@ -46,6 +46,7 @@
 ## Retorna os setores por id
 # DELETE  http://localhost:3000/sectors/9
 
+## Atualizar setor por id
 # PUT http://localhost:3000/sectors/1
 # Content-Type: application/json
 
@@ -55,41 +56,40 @@
 # }
 
 
-# ### Criar um projeto
+## Criar um projeto
 # POST http://localhost:3000/projects
 # Content-Type: application/json
 
 # {
-#   "name": "Sistema de Gestão Interna",
-#   "sectorId": 3,
+#   "name": "FIFA 26",
+#   "sectorId": 1,
 #   "status": "PLANEJADO",
-#   "description": "Projeto para gerenciar os processos internos da empresa",
-#   "goals": "Automatizar tarefas e melhorar produtividade"
+#   "description": "Game de esporte",
+#   "goals": "Vender em todos os paises"
 # }
 
-# GET http://localhost:3000/projects
+## Get Project by id
+# GET http://localhost:3000/projects/3ba16688-6047-4a0f-9360-d37451422713
+
+#Delete Project
+# DELETE http://localhost:3000/projects/3ba16688-6047-4a0f-9360-d37451422713
+
+## Restore Project
+# PACH http://localhost:3000/projects/projectId/restore
+
+## Get Project By Sector
+# GET http://localhost:3000/projects/sector/1
+
+## Criar Membership (Join Project)
+# POST http://localhost:3000/memberships/rejoin
 # Content-Type: application/json
 
 # {
-#   "name": "xereca",
-#   "sectorId": 1,
-#   "status": "EM_ANDAMENTO",
-#   "description": "aiaiai.",
-#   "goals": " oioioi"
+#   "userId": "bae6096c-380b-454a-8365-1910fabe05e4",
+#   "projectId": "e6d30fce-276d-4677-9e5c-701e2aa343d1"
 # }
 
-# GET http://localhost:3000/projects/sector/1
+# Membership por id
+# GET http://localhost:3000/memberships/9ed6a92b-daa4-429c-9e5d-b9a72c38f2dc
 
-#  GET http://localhost:3000/projects/e6d30fce-276d-4677-9e5c-701e2aa343d1
-### Criar Membership (Join Project)
-
-POST http://localhost:3000/memberships/rejoin
-Content-Type: application/json
-
-{
-  "userId": "bae6096c-380b-454a-8365-1910fabe05e4",
-  "projectId": "e6d30fce-276d-4677-9e5c-701e2aa343d1"
-}
-
-# GET http://localhost:3000/memberships/afa82774-ed64-40d8-9580-5621db47a085
-
+# }

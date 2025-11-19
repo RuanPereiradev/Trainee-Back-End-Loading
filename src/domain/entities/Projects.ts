@@ -37,6 +37,10 @@ import { ProjectStatusType } from "@prisma/client";
       return Result.ok<Project>(new Project(name.trim(),sector, status, goals, description?.trim(), id));
     }
 
+    softDelete(){
+      this._deletedAt = new Date();
+    }
+
     changeName(newName: string): Result<void> {
       if (!newName.trim()) {
         return Result.fail("O nome não pode ser vazio");

@@ -1,166 +1,197 @@
-# 🧭 Plano Técnico — Implementação dos Requisitos Faltantes (TeamFlow)
+# Plano Técnico Definitivo — Implementação Completa das RFs
 
-## 🏗️ Visão Geral das Fases
+## 🔵 ETAPA 1 — Criar Soft Delete Universal
 
-| Fase | Etapa | Objetivo Principal | Status Esperado |
-|------|--------|--------------------|----------------|
-| **1** | Integração Fastify e Base do Servidor | Criar `server.ts`, `app.ts`, rotas básicas | Sistema rodando em HTTP local |
-| **2** | Controllers e Rotas de Usuário | Expor os casos de uso existentes via API | CRUD básico de usuários disponível |
-| **3** | Autenticação e Segurança | Implementar login, JWT, bcrypt, autorização | Segurança e login funcionais |
-| **4** | Setores e Projetos | Criar e gerenciar setores e projetos | CRUD completo funcionando |
-| **5** | Vínculo de Membros e Permissões | Lógica de papéis e vínculos a projetos | Permissões reais implementadas |
-| **6** | Documentação, Testes e Deploy | Swagger, Jest e Docker | Projeto pronto para entrega |
+### 📌 O que implementar
+Adicionar `deletedAt: Date | null` nas entidades:
 
----
+- User
+- Sector
+- Project
 
-##  FASE 1 — Configuração do Servidor Fastify(parcial)
+E ajustar:
 
- **Objetivo:** Subir o servidor e preparar estrutura para as rotas.
+- Repositórios → nunca retornar itens com `deletedAt ≠ null`
+- Listagens → sempre filtrar por `deletedAt: null`
 
-### **Tarefas**
-- [ ] Criar `src/app.ts` (configura e registra rotas, middlewares e plugins)
-- [ ] Criar `src/server.ts` (ponto de entrada da aplicação)
-- [ ] Configurar CORS, JSON, e variáveis de ambiente
-- [ ] Conectar o Prisma ao app (em `lib/prisma.ts`)
-- [ ] Criar rota inicial de teste `/ping`
+### 🎯 RF resolvidas
+- RF-A05 — Desativar usuário  
+- RF-B01 / RF-B02 — Soft delete em setor e projeto  
+- RN-05 — Exclusão lógica obrigatória  
 
- **Requisitos Cobertos:** Nenhum RF diretamente, mas prepara a base para todos os outros.
+### 🧠 Por que começa por aqui?
+Porque todo o sistema depende disso:  
+CRUD, memberships, login, permissões, filtros.
 
----
-
-## 🧑‍💻 FASE 2 — Controllers e Rotas de Usuário(feito)
-
- **Objetivo:** Expor os *use cases* já criados (`CreateUser`, `FindAllUser`, `FindUserById`) via rotas Fastify.
-
-### **Tarefas**
-- [ ] Criar `UserController.ts` com métodos:
-  - `createUser(req, reply)`
-  - `findAll(req, reply)`
-  - `findById(req, reply)`
-- [ ] Criar `userRoutes.ts` com endpoints:
-  - `POST /users`
-  - `GET /users`
-  - `GET /users/:id`
-- [ ] Registrar `userRoutes` no `app.ts`
-
- **Requisitos Implementados:**
-- RF-A03 (parcial — cadastro de usuários)(feito)
-- RF-A05 (listar usuários)(feito)
-
-📘 **Saída esperada:**  
-Rotas de usuário acessíveis via Postman/Insomnia.
+### 🛠️ Exemplo técnico
+```ts
+async list() {
+  return prisma.user.findMany({
+    where: { deletedAt: null }
+  });
+}
+```
 
 ---
 
-##  FASE 3 — Autenticação e Segurança
+## 🔵 ETAPA 2 — Restrições de Exclusão
 
- **Objetivo:** Implementar login, hash de senha e controle de acesso por JWT.
+### 📌 O que implementar
+- Impedir excluir Setor com Projetos ativos
+- Impedir excluir Projeto com Membership ativa (`leftAt = null`)
 
-### **Tarefas**
-- [ ] Instalar `bcrypt` e `jsonwebtoken`
-- [ ] Criar `AuthService.ts`:
-  - `hashPassword`, `comparePassword`, `generateToken`, `verifyToken`
-- [ ] Criar `AuthUseCase.ts` (login)
-- [ ] Criar `AuthController.ts` e `authRoutes.ts`
-- [ ] Criar middleware `auth.ts` (verifica JWT)
-- [ ] Criar middleware `authorizeRole.ts` (valida role mínima)
+### 🎯 RF resolvidas
+- RN-06
 
- **Requisitos Implementados:**
-- RF-A01 — Login
-- RF-A02 — Geração de JWT
-- RF-A04 — Controle de papéis
-- RF-A07 — Bloqueio de usuários inativos
+### 🛠️ Exemplo
+```ts
+const projectCount = await prisma.project.count({
+  where: { sectorId, deletedAt: null }
+});
 
- **Saída esperada:**  
-Usuário faz login, recebe JWT, e só acessa rotas protegidas se autenticado.
+if (projectCount > 0)
+  throw new Error("Não é possível excluir setor com projetos ativos");
+```
 
 ---
 
-##  FASE 4 — Módulo de Setores e Projetos
+## 🔵 ETAPA 3 — Paginação e Filtros
 
- **Objetivo:** Adicionar entidades e lógica de `Sectors` e `Projects`.
+### 📌 O que implementar
+- `?page=X&pageSize=Y`
+- Filtros: `name`, `status`, `sectorId`
 
-### **Tarefas**
-- [ ] Criar entidades `Sectors` e `Project`
-- [ ] Criar repositórios `SectorRepository` e `ProjectRepository`
-- [ ] Criar use cases:
-  - `CreateSectorUseCase`, `FindAllSectorUseCase`, `UpdateSectorUseCase`, `DeleteSectorUseCase`
-  - `CreateProjectUseCase`, `FindAllProjectUseCase`, `UpdateProjectUseCase`, `DeleteProjectUseCase`
-- [ ] Criar controllers e rotas para ambos
+### 🎯 RF resolvidas
+- RF-B08
 
- **Requisitos Implementados:**
-- RF-B01 — CRUD de Setores (Feito)
-- RF-B02 — CRUD de Projetos
-- RF-C01 — Descrição e metas de Projeto
-- RF-C02 — Status de Projeto (`enum`)
-
- **Saída esperada:**  
-CRUD completo de Setor e Projeto funcionando via API.
-
----
-
-##  FASE 5 — Vínculos de Membros e Permissões
-
-**Objetivo:** Relacionar usuários a projetos e aplicar regras de permissão (Roles).
-
-### **Tarefas**
-- [ ] Criar entidade `ProjectMember` (tabela intermediária)
-- [ ] Criar `ProjectMemberRepository` e `AddMemberToProjectUseCase`
-- [ ] Implementar regras:
-  - Coordenador só gerencia seus projetos
-  - Membro só visualiza
-  - Diretor tem acesso total
-- [ ] Integrar validação no middleware de autorização
-
- **Requisitos Implementados:**
-- RF-B03 — Vínculo Membro ↔ Projeto
-- RF-B05 — Acesso de Coordenador
-- RF-B06 — Acesso de Diretor
-- RF-B07 — Acesso de Membro
-- RF-B09 — Restrições de hierarquia
-
- **Saída esperada:**  
-Permissões de acesso e vínculos ativos entre usuários e projetos.
+### 🛠️ Exemplo
+```ts
+const projects = await prisma.project.findMany({
+  skip: page * pageSize,
+  take: pageSize,
+  where: {
+    name: { contains: filterName ?? undefined }
+  }
+});
+```
 
 ---
 
-##  FASE 6 — Documentação, Testes e Deploy
+## 🔵 ETAPA 4 — Login e JWT
 
-**Objetivo:** Garantir qualidade, documentação e entrega.
+### 📌 O que implementar
+- POST /auth/login
+- POST /auth/register (somente diretoria)
+- Hash de senha com bcrypt
+- Token JWT contendo `userId` e `role`
 
-### **Tarefas**
-- [ ] Instalar e configurar Swagger (`@fastify/swagger` e `@fastify/swagger-ui`)
-- [ ] Criar documentação automática das rotas
-- [ ] Criar testes Jest para:
-  - Auth
-  - User
-  - Project
-- [ ] Criar `Dockerfile` e `docker-compose.yml`
-- [ ] Configurar scripts de build (`npm run dev`, `npm run test`)
+### 🎯 RF resolvidas
+- RF-A01
+- RF-A02
+- RF-A07
 
- **Requisitos Implementados:**
-- RNF-05 — Documentação
-- RNF-06 — Testabilidade
-- RNF-07 — Manutenibilidade
-
- **Saída esperada:**  
-API documentada e testada, pronta para deploy.
-
----
-
-##  Linha do Tempo Sugerida (para o projeto TeamFlow)
-
-| Semana | Fase | Foco |
-|---------|------|------|
-| **1** | Fase 1 e 2 | Fastify + Rotas de Usuário |
-| **2** | Fase 3 | Autenticação JWT + Middleware |
-| **3** | Fase 4 | CRUD de Setor e Projeto |
-| **4** | Fase 5 | Membros e Permissões |
-| **5** | Fase 6 | Testes, Swagger e Docker |
+### 🛠️ Exemplo
+```ts
+const token = jwt.sign(
+  { userId: user.id, role: user.role },
+  process.env.JWT_SECRET,
+  { expiresIn: "1d" }
+);
+```
 
 ---
 
-##  Conclusão
+## 🔵 ETAPA 5 — Middleware de Autenticação
 
-Após a finalização das *use cases*, o projeto TeamFlow está pronto para avançar à etapa de integração com o **Fastify**.  
-Seguindo este plano técnico, todas as funcionalidades previstas nos **Requisitos Funcionais (RF)** e **Requisitos Não Funcionais (RNF)** serão cobertas de forma progressiva, garantindo **segurança, organização e escalabilidade**.
+### 📌 O que implementar
+- Middleware verifyToken
+- Aplicar middleware nas rotas protegidas
+
+### 🎯 RF resolvidas
+- RF-A02
+
+---
+
+## 🔵 ETAPA 6 — Middleware de Autorização (Roles)
+
+### 📌 O que implementar
+- requireRole("DIRETOR")
+- requireRoleOrSelf
+- requireProjectCoordinator
+
+### 🎯 RF resolvidas
+- RF-A03  
+- RF-A04  
+- RF-B05  
+- RF-B06  
+- RF-B07  
+- RF-B09  
+
+---
+
+## 🔵 ETAPA 7 — Regras dos Coordenadores
+
+### 📌 O que implementar
+Checar membership antes de permitir:
+
+- editar projeto  
+- adicionar membro  
+- remover membro  
+
+### 🎯 RF resolvidas
+- RF-B05  
+- RN-09  
+
+---
+
+## 🔵 ETAPA 8 — Atualização do Próprio Perfil
+
+### 📌 O que implementar
+Atualizar:
+
+- nome  
+- avatar  
+- senha  
+
+### 🎯 RF resolvidas
+- RF-A06
+
+---
+
+## 🔵 ETAPA 9 — Listar Projetos do Próprio Usuário
+
+### 📌 O que implementar
+- GET /me/projects  
+
+### 🎯 RF resolvidas
+- RF-B07
+
+---
+
+## 🔵 ETAPA 10 — Atividades do Projeto
+
+### 📌 O que implementar
+Adicionar no Projeto:
+
+- descrição  
+- metas  
+- status (enum)  
+
+### 🎯 RF resolvidas
+- RF-C01  
+- RF-C02  
+
+---
+
+# 🟢 Resumo Final — Ordem Perfeita
+
+1. Soft delete  
+2. Restrições de exclusão  
+3. Paginação e filtros  
+4. Login + JWT + bcrypt  
+5. Middleware de autenticação  
+6. Middleware de autorização  
+7. Regras de coordenador  
+8. Atualização de perfil  
+9. Projetos do usuário  
+10. Campos/metas/status do projeto  

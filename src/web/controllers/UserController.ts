@@ -8,6 +8,7 @@ import { DeleteUserUseCase } from "../../useCases/user/DeleteUserUseCase";
 import { ApiResponseValidationFilter } from "../Filters/ApiResponseValidationFilter";
 import { ApiResponse } from "../Wrappers/ApiResponse";
 import { RoleType } from "@prisma/client";
+import { RestoreUserUseCase } from "../../useCases/user/RestoreUserUseCase";
 
 export class UserController{
     private userRepository: UserRepository;
@@ -92,6 +93,28 @@ export class UserController{
         }
     }
 
+    async findByIdAny(request: FastifyRequest, reply: FastifyReply){
+        try {
+            const {id} = request.params as{
+                id: string;
+            }
+
+            const useCase = new FindUserByIdUseCase(this.userRepository);
+
+            const result = await useCase.execute({id});
+
+            const response = this.responseFilter.handleResponse(result);
+
+            return reply.status(response.success? 200:400).send(response)
+        } catch (error) {
+            console.error(error);
+            const response = this.responseFilter.handleResponse(
+                ApiResponse.fail(["Erro ao retornar usuario por id"])
+            )
+            return reply.status(500).send(response)
+        }
+    }
+
     async updateUser(request: FastifyRequest, reply: FastifyReply) {
         try {
             const { id } = request.params as { id: string };
@@ -115,7 +138,7 @@ export class UserController{
         }
     }
 
-    async deleteUser (request: FastifyRequest, reply: FastifyReply){
+    async softDelete (request: FastifyRequest, reply: FastifyReply){
         try{
             const {id} = request.params as {id: string};
 
@@ -127,7 +150,6 @@ export class UserController{
         
             return reply.status(response.success? 200:400).send(response);
 
-
         }catch(error){
             console.error(error);
             const response = this.responseFilter.handleResponse(
@@ -136,5 +158,28 @@ export class UserController{
             return reply.status(500).send(response)
         }
     }
+
+    async restore(request: FastifyRequest, reply: FastifyReply){
+        try {
+            const {id} =  request.params as {id: string};
+
+            const useCase = new RestoreUserUseCase(this.userRepository);
+
+            const result = await useCase.execute({id});
+
+            const response = this.responseFilter.handleResponse(result);
+
+            return reply.status(response.success? 200:400).send(response);
+
+        } catch (error: any) {
+            console.error(error);
+            const response = this.responseFilter.handleResponse(
+                ApiResponse.fail(["Erro ao retornar usuários por id"])
+            )
+            return reply.status(500).send(response)
+        }
+    }
+   
+
 
 }

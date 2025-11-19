@@ -9,6 +9,7 @@ import { Password } from "../../domain/value-objects/Password";
 const prisma = new PrismaClient();
 
 export class UserRepository implements IUserRepository {
+ 
 
 // async  findByProjectId(projectId: string): Promise<Result<User[]>> {
 //     try {
@@ -39,8 +40,10 @@ export class UserRepository implements IUserRepository {
         created.name,
         new Email(created.email),
         new Password(created.password),
-        created.role
+        created.role,
+        created.id
       );
+      
       return Result.ok<User>(newUser);
     }catch(error: any){
       return Result.fail<User>(error.message)
@@ -50,18 +53,21 @@ export class UserRepository implements IUserRepository {
   //buscar por id
   async findById(id: string): Promise<Result<User>> {
       try{
-        const found = await prisma.user.findUnique({ 
+        const found = await prisma.user.findFirst({ 
           where: {id}
          });
          if(!found){
-          return Result.fail<User>("User not found")
+          return Result.fail<User>("User not found or user deleted")
+         }
+         if(found.deletedAt !==null ){
+            return Result.fail<User>("user deleted")
          }
          const user = new User(
           found.name,
           new Email(found.email),
           new Password(found.password),
           found.role,
-          found.id
+          found.id,
          );
          return Result.ok<User>(user);
       }catch(error: any){
@@ -69,10 +75,37 @@ export class UserRepository implements IUserRepository {
       }
     }
 
+  async findByIdAny(id: string): Promise<Result<User>> {
+    try {
+      const found = await prisma.user.findUnique({
+        where:{id}
+      });
+      if(!found){
+        return Result.fail<User>("User not found")
+      }
+        const user = new User(
+          found.name,
+          new Email(found.email),
+          new Password(found.password),
+          found.role,
+          found.id,
+         );   
+         if(found.deletedAt){
+          user.softDelete();
+         (user as any)._deletedAt = found.deletedAt;
+         }
+         return Result.ok<User>(user);
+
+        } catch (error: any) {
+          return Result.fail<User>(error.message)
+      }
+    }
+
     //buscar todos
    async findAll(): Promise<Result<User[]>> {
     try{
-      const users = await prisma.user.findMany();
+      const users = await prisma.user.findMany({
+      });
 
       const userEntity = users.map(
         (u) =>
@@ -94,8 +127,8 @@ export class UserRepository implements IUserRepository {
   // 🔍 Busca por e-mail
   async findByEmail(email: string): Promise<Result<User>> {
     try {
-      const found = await prisma.user.findUnique({
-        where:{ email },
+      const found = await prisma.user.findFirst({
+        where:{ email, deletedAt: null},
       });
       if(!found){
         return Result.fail<User>("User not found");
@@ -139,13 +172,27 @@ export class UserRepository implements IUserRepository {
     }
   } 
 
-  async hardDelete(id: string): Promise<Result<void>> {
+  async softDelete(id: string): Promise<Result<void>> {
     try{
-      await prisma.user.delete({where:{id}});
+      await prisma.user.update({where:{id}, data:{deletedAt: new Date()}
+    });
       return Result.ok<void>();
 
     }catch(error: any){
       return Result.fail<void>(error.message);
     }
   }
+
+   async restore(id: string): Promise<Result<void>> {
+    try {
+      await prisma.user.update({
+        where: {id}, data: {deletedAt: null}
+      });
+      return Result.ok<void>()
+    } catch (error: any) {
+      return Result.fail<void>(error.message)
+    }
+  }
+
+
 }

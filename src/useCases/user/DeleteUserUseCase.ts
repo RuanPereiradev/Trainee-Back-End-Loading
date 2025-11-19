@@ -17,7 +17,7 @@ export class DeleteUserUseCase{
             }
 
             const existingUser = userResult.getValue();
-            await this.userRepository.hardDelete(existingUser.id);
+            await this.userRepository.softDelete(existingUser.id);
             return Result.ok<void>();
 
         }catch(error: any){

@@ -10,4 +10,8 @@ export interface IProjectRepository{
     save(project: Project): Promise<Result<Project>>;
     delete(id: string): Promise<Result<void>>;
     update(project: Project): Promise<Result<Project>>;
+    findByIdAny(id: string): Promise<Result<Project>>;
+    softDelete(id: string): Promise<Result<void>>;
+    restore(id: string): Promise<Result<void>>;
+    
 }

@@ -15,6 +15,7 @@ model User {
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
   role        RoleType
+  deletedAt   DateTime?
   membership  Membership[]
 }
 
@@ -34,6 +35,7 @@ model Sector {
   description String?
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
+  deletedAt   DateTime?
   projects    Project[]
 }
 
@@ -45,6 +47,7 @@ model Project {
   status      ProjectStatusType
   createdAt   DateTime          @default(now())
   updatedAt   DateTime          @updatedAt
+  deletedAt   DateTime?
   sectorId    Int               
   membership  Membership[]
   sector      Sector            @relation(fields: [sectorId], references: [id])

@@ -9,7 +9,7 @@ interface DeleteProjectRequest {
 export class DeleteProjectUseCase {
   constructor(private projectRepo: IProjectRepository) {}
 
-  async execute(request: DeleteProjectRequest): Promise<Result<Project>> {
+  async execute(request: DeleteProjectRequest): Promise<Result<void>> {
     try {
         
       const { id } = request;
@@ -17,25 +17,25 @@ export class DeleteProjectUseCase {
       const projectResult = await this.projectRepo.findById(id);
 
       if (projectResult.isFailure) {
-        return Result.fail<Project>(projectResult.getError());
+        return Result.fail<void>(projectResult.getError());
       }
 
       const project = projectResult.getValue();
 
       
-      const deleteResult = await this.projectRepo.delete(id);
+      const deleteResult = await this.projectRepo.softDelete(project.id);
 
       if (deleteResult.isFailure) {
-        return Result.fail<Project>(deleteResult.getError());
+        return Result.fail<void>(deleteResult.getError());
       }
 
-      return Result.ok<Project>(project);
+      return Result.ok<void>();
 
     } catch (error) {
       if (error instanceof Error) {
-        return Result.fail<Project>(error.message);
+        return Result.fail<void>(error.message);
       }
-      return Result.fail<Project>("Erro desconhecido ao deletar projeto");
+      return Result.fail<void>("Erro desconhecido ao deletar projeto");
     }
   }
 }
