@@ -12,6 +12,7 @@ import { ProjectStatusType } from "@prisma/client";
 import { SectorRepository } from "../../repositories/prisma/SectorRepository";
 import { FindProjectBySectorUsecase } from "../../useCases/project/FindProjectBySectorUseCase";
 import { RestoreProjectUseCase } from "../../useCases/project/RestoreProjectUseCase";
+import { ListProjectsPaginatedUseCase } from "../../useCases/project/ListProjectsPaginationUseCase";
 // import { FindProjectBySectorUsecase } from "../../useCases/project/FindProjectBySectorUseCase";
 
 export class ProjectController{
@@ -122,6 +123,29 @@ export class ProjectController{
         }
     }
 
+    async listPagineted(request: FastifyRequest, reply: FastifyReply){
+        try {
+            const {page = 1, pageSize = 10} = request.query as any;
+
+            const useCase = new ListProjectsPaginatedUseCase(this.projectRepository);
+
+            const result = await useCase.execute({
+                page: Number(page),
+                pageSize: Number(pageSize)
+            });
+
+            const response = this.responseFilter.handleResponse(result);
+
+            return reply.status(response.success ? 200:400).send(response);
+
+        } catch (error:any) {
+            console.error(error);
+            const response = this.responseFilter.handleResponse(
+                ApiResponse.fail(["Erro ao buscar todos os projetos"])
+            )
+            return reply.status(500).send(response)
+        }
+    }
     async updateProject(request: FastifyRequest, reply: FastifyReply){
 
         try{

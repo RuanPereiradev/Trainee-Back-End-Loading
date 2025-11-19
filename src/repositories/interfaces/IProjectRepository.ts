@@ -1,5 +1,6 @@
 import { Project } from "../../domain/entities/Projects";
 import { Result } from "../../env/Result";
+import { PaginationResult } from "../../web/Wrappers/Pagination";
 
 export interface IProjectRepository{
     findById(id: string): Promise<Result<Project>>;
@@ -13,5 +14,5 @@ export interface IProjectRepository{
     findByIdAny(id: string): Promise<Result<Project>>;
     softDelete(id: string): Promise<Result<void>>;
     restore(id: string): Promise<Result<void>>;
-    
+    listPaginated(page: number, pageSize:number): Promise<PaginationResult<Project>>
 }

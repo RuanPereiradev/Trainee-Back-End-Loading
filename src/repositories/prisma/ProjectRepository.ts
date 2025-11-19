@@ -3,6 +3,7 @@ import { Project } from "../../domain/entities/Projects";
 import { Result } from "../../env/Result";
 import { IProjectRepository } from "../interfaces/IProjectRepository";
 import { Sectors } from "../../domain/entities/Sectors";
+import { PaginationResult } from "../../web/Wrappers/Pagination";
 
 const prisma = new PrismaClient();
 
@@ -195,6 +196,47 @@ export class ProjectRepository implements IProjectRepository{
         } catch (error: any) {
             return Result.fail<Project[]>(error.message)
         }
+    }
+
+    async listPaginated(page: number, pageSize: number): Promise<PaginationResult<Project>> {
+        const skip = (page-1) * pageSize;
+
+        const [items, total] = await Promise.all([
+            prisma.project.findMany({
+                where:{deletedAt:null},
+                skip,
+                take:pageSize,
+                include:{sector: true}
+            }),
+
+            prisma.project.count({
+                where:{deletedAt:null}
+            })
+        ]);
+
+        const projects = items.map(p=>{
+            const sector = new Sectors(
+                p.sector.name,
+                p.sector.description ?? "",
+                p.sector.id
+            );
+
+            return new Project(
+                p.name,
+                sector,
+                p.status,
+                p.goals,
+                p.description,
+                p.id
+            );
+        });
+        return {
+            data: projects,
+            total,
+            page,
+            pageSize,
+            totalPages: Math.ceil(total/pageSize)
+        };
     }
 
     async update(project: Project): Promise<Result<Project>> {

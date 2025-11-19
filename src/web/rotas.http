@@ -59,20 +59,20 @@
 # }
 
 
-## Criar um projeto
+# Criar um projeto
 # POST http://localhost:3000/projects
 # Content-Type: application/json
 
 # {
-#   "name": "FIFA 26",
+#   "name": "Far Cry 4",
 #   "sectorId": 1,
 #   "status": "PLANEJADO",
-#   "description": "Game de esporte",
+#   "description": "Jogo de Jogo",
 #   "goals": "Vender em todos os paises"
 # }
 
 ## Get Project by id
-# GET http://localhost:3000/projects
+GET http://localhost:3000/projects/pagination?page=1&pageSize=4
 
 #Delete Project
 # DELETE http://localhost:3000/projects/02d084ca-e5db-4f99-adba-6251f7b4ffdb
