@@ -8,5 +8,6 @@ export async function SectorRoutes(app:FastifyInstance) {
     app.get("/sectors", (request, reply) => sectorController.findAll(request, reply));
     app.get("/sectors/:id", (request, reply) => sectorController.findSectorById(request, reply));
     app.put("/sectors/:id", (request, reply) => sectorController.updateSector(request, reply));
+    app.patch("/sectors/:id", (request, reply) => sectorController.restore(request, reply));
     app.delete("/sectors/:id", (request, reply) => sectorController.deleteSector(request, reply));
 }

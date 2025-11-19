@@ -33,6 +33,10 @@ export class Sectors extends AuditableEntity{
         return this._deletedAt;
     }
 
+    softDelete(){
+        this._deletedAt = new Date();
+    }
+    
     changeName(newName: string): void{
         if(!newName.trim()){
             throw new Error("O novo nome do setor nao pode ser vazio");

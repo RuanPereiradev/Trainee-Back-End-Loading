@@ -36,15 +36,18 @@
 # Content-Type: application/json
 
 # {
-#   "name": "JOGOS",
-#   "description": "Setor responsável pelos projetos de JOGOS"
+#   "name": "ENEGENHARIA",
+#   "description": "Setor responsável pelos projetos de ENGENHARIA"
 # }
 
-## Retorna todos os setores
-# GET http://localhost:3000/sectors
+## Retorna todos os setores ou por id
+# GET http://localhost:3000/sectors/2
 
 ## Retorna os setores por id
-# DELETE  http://localhost:3000/sectors/9
+# DELETE  http://localhost:3000/sectors/2
+
+##Restore sectors
+# PATCH   http://localhost:3000/sectors/2
 
 ## Atualizar setor por id
 # PUT http://localhost:3000/sectors/1

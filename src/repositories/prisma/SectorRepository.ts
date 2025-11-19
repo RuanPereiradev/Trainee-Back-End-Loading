@@ -1,4 +1,3 @@
-import { Project } from "../../domain/entities/Projects";
 import { Sectors } from "../../domain/entities/Sectors";
 import { Result } from "../../env/Result";
 import { ISectorRepository } from "../interfaces/ISectorRepository";
@@ -7,7 +6,31 @@ import { Prisma, PrismaClient, Sector } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export class SectorRepository implements ISectorRepository{
+
+    async findByIdAny(id: number): Promise<Result<Sectors>> {
+        try {
+          const found = await prisma.sector.findUnique({
+            where:{id},
+          });
+          if(!found){
+            return Result.fail<Sectors>("Sector not found")
+          }
+          const sector = new Sectors(
+            found.name, 
+            found.description ?? "",
+            found.id,
+          );
+          if(found.deletedAt){
+            sector.softDelete();
+            (sector as any)._deletedAt = found.deletedAt;
+          }
+          return Result.ok<Sectors>(sector);
+        } catch (error:any) {
+            return Result.fail<Sectors>(error.message);
+        }
+    }
     
+
     async findByName(name: string): Promise<Result<Sectors | null>> {
         try {
             const found = await prisma.sector.findUnique({
@@ -27,11 +50,14 @@ export class SectorRepository implements ISectorRepository{
 
    async findById(id: number): Promise<Result<Sectors>> {
         try {
-            const found = await prisma.sector.findUnique({
+            const found = await prisma.sector.findFirst({
                 where:{id},
             });
             if(!found){
                 return Result.fail<Sectors>("Sector not found");
+            }
+            if(found.deletedAt !== null){
+                return Result.fail<Sectors>("sector deleted")
             }
             const sector = new Sectors(
                 found.name,
@@ -47,7 +73,6 @@ export class SectorRepository implements ISectorRepository{
     async findAll(): Promise<Result<Sectors[]>> {
         try {
           const sector = await prisma.sector.findMany();
-
           const sectorEntity = sector.map(
             (u) => 
              new Sectors(
@@ -66,8 +91,8 @@ export class SectorRepository implements ISectorRepository{
 
     async delete(id: number): Promise<Result<void>> {
         try {
-
-          await prisma.sector.delete({where:{id}});
+          await prisma.sector.update({where:{id}, data:{deletedAt: new Date()}
+        });
           return Result.ok<void>();
 
         } catch (error: any) {
@@ -111,5 +136,15 @@ export class SectorRepository implements ISectorRepository{
         }
     }
 
+    async restore(id: number): Promise<Result<void>> {
+        try {
+            await prisma.sector.update({
+                where:{id}, data:{deletedAt:null}
+            });
+            return Result.ok<void>();
+        } catch (error:any) {
+            return Result.fail<void>(error.message);
+        }
+    }
     
 }

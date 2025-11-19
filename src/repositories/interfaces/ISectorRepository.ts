@@ -9,4 +9,8 @@ export interface ISectorRepository{
     save(sector: Sectors): Promise<Result<Sectors>>;
     delete(id: number): Promise<Result<void>>;
     update(sector: Sectors): Promise<Result<Sectors>>;
+    findByIdAny(id: number): Promise<Result<Sectors>>;
+    restore(id: number): Promise<Result<void>>
+
+    
 }

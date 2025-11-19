@@ -8,6 +8,7 @@ import { FindSectorByNameUseCase } from "../../useCases/sector/FindSectorByNameU
 import { UpdateSetorUseCase } from "../../useCases/sector/UpdateSectorUseCase";
 import { FindAllSectorUseCase } from "../../useCases/sector/FindAllSectorUseCase";
 import { DeleteSectorUseCase } from "../../useCases/sector/DeleteSectorUseCase";
+import { RestoreSectorUseCase } from "../../useCases/sector/RestoreSectorUseCase";
 
 export class SectorController{
     private sectorRepository: SectorRepository;
@@ -146,6 +147,28 @@ export class SectorController{
                 ApiResponse.fail(["Erro ao retornar os usuários por id"])
             )
             return reply.status(500).send(response);
+        }
+    }
+    async restore(request: FastifyRequest, reply: FastifyReply){
+        try {
+            const {id} = request.params as {id:string};
+
+            const numberId = Number(id);
+
+            const useCase = new RestoreSectorUseCase(this.sectorRepository);
+
+            const result = await useCase.execute({id: numberId});
+
+            const response = this.responseFilter.handleResponse(result);
+
+            return reply.status(response.success? 200:400).send(response);
+
+        } catch (error:any) {
+            console.error(error);
+            const response = this.responseFilter.handleResponse(
+                ApiResponse.fail(["Erro ao retornar setor por id"])
+            )
+            return reply.status(500).send(response)
         }
     }
 }
