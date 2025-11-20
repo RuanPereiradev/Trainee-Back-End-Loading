@@ -1,26 +1,43 @@
-## Testes de rotas UserRoutes {
+### Testes de rotas UserRoutes
 
-## Criar usuário
+### Criar usuário
 # POST http://localhost:3000/users
+# Content-Type: application/json
+# Authorization: Bearer SEU_TOKEN_AQUI
+#
+# {
+#   "name": "Ruan Lindo José",
+#   "email": "negoruan616161.cruz@example.com",
+#   "password": "senhatopzin123",
+#   "role": "DIRETOR"
+# }
+
+### Login
+# POST http://localhost:3000/login/auth
 # Content-Type: application/json
 
 # {
-#   "name": "xerox xerolayne",
-#   "email": "xerox.cruz@example.com",
-#   "password": "senha12356786",
-#   "role": "MEMBRO"
+#   "email": "euzebio.cruz@example.com",
+#   "password": "senhatopzin123"
 # }
 
-## User Restore 
-# PATCH  http://localhost:3000/users/eb4dd2cf-8aa2-4b37-8b86-1a6da9b03525/restore
+## Listar todos os usuários
+GET http://localhost:3000/users
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0YzVjODRmZi1mNWUyLTRhMjctOTU2My0wM2E5Yzk3YzM3NzQiLCJyb2xlIjoiRElSRVRPUiIsImlhdCI6MTc2MzY3OTA1MywiZXhwIjoxNzYzNzY1NDUzfQ.Cp56WKWuFgueNGOkxq6e4TeJjbpjiout-KduwxBdFlA
+### Restore User
+# PATCH http://localhost:3000/users/eb4dd2cf-8aa2-4b37-8b86-1a6da9b03525/restore
 
-# Retorna Usuário por id
+### Paginação
 # GET http://localhost:3000/users/pagination?page=1&pageSize=4
 
-## Metodo update user
+### Retorna por ID
+# GET http://localhost:3000/users/4c5c84ff-f5e2-4a27-9563-03a9c97c3774
+# Authorization: Bearer SEU_TOKEN_AQUI
+
+### Update de usuário
 # PUT http://localhost:3000/users/4a903605-f604-4518-8e5a-51431a987992
 # Content-Type: application/json
-
+#
 # {
 #   "name": "Ruan Pereira updated",
 #   "email": "ruan.top@example.com",
@@ -28,71 +45,6 @@
 #   "role": "MEMBRO"
 # }
 
-## Metodo Delete User
+### Delete User
 # DELETE http://localhost:3000/users/4a903605-f604-4518-8e5a-51431a987992
 
-# ## Criar novo setor
-# POST http://localhost:3000/sectors
-# Content-Type: application/json
-
-# {
-#   "name": "DESENVOLVIMENTO",
-#   "description": "Setor responsável pelos projetos de SOFTWARE"
-# }
-
-## Retorna todos os setores ou por id
-# GET http://localhost:3000/sectors
-
-## Retorna os setores por id
-# DELETE  http://localhost:3000/sectors/1
-
-##Restore sectors
-# PATCH   http://localhost:3000/sectors/2
-
-## Atualizar setor por id
-# PUT http://localhost:3000/sectors/1
-# Content-Type: application/json
-
-# {
-#   "name": "TESTES de quinta feira",
-#   "description": "Setor responsavel teste quinta"
-# }
-
-
-# Criar um projeto
-# POST http://localhost:3000/projects
-# Content-Type: application/json
-
-# {
-#   "name": "Far Cry 4",
-#   "sectorId": 1,
-#   "status": "PLANEJADO",
-#   "description": "Jogo de Jogo",
-#   "goals": "Vender em todos os paises"
-# }
-
-## Get Project by id
-# GET http://localhost:3000/projects/pagination?page=1&pageSize=4
-
-#Delete Project
-# DELETE http://localhost:3000/projects/02d084ca-e5db-4f99-adba-6251f7b4ffdb
-
-## Restore Project
-# PACH http://localhost:3000/projects/projectId/restore
-
-## Get Project By Sector
-# GET http://localhost:3000/projects/sector/1
-
-# Criar Membership (Join Project)
-# POST http://localhost:3000/memberships/join
-# Content-Type: application/json
-
-# {
-#   "userId": "03b55595-158c-42ec-b1dd-51ea48477e04",
-#   "projectId": "02d084ca-e5db-4f99-adba-6251f7b4ffdb"
-# }
-
-# Membership por id
-GET http://localhost:3000/memberships/pagination?page=1&pageSize=1
-
-# }

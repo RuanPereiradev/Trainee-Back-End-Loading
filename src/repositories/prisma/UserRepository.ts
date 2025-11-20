@@ -163,7 +163,8 @@ export class UserRepository implements IUserRepository {
         found.name,
         new Email(found.email),
         new Password(found.password),
-        found.role
+        found.role,
+        found.id
       );
       return Result.ok<User>(user);
     }catch(error:any){
@@ -174,7 +175,7 @@ export class UserRepository implements IUserRepository {
   async update(user: User): Promise<Result<User>> {
     try{
       const update =  await prisma.user.update({
-        where: {id: user.id},
+        where: {id: user.id, deletedAt: null},
         data: {
           name: user.name,
           email: user.email.value,
@@ -188,7 +189,8 @@ export class UserRepository implements IUserRepository {
         update.name,
         new Email(update.email),
         new Password(update.password),
-        update.role
+        update.role,
+        update.id
       );
 
       return Result.ok<User>(userEntity)

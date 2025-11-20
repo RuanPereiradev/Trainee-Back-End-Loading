@@ -4,6 +4,7 @@ import { Result } from "../../env/Result";
 import { IUserRepository } from "../../repositories/interfaces/IUserRepository";
 import { User } from "../../domain/entities/User";
 import { RoleType } from "@prisma/client";
+import bcrypt from "bcryptjs";
 
 interface CreateUserRequest{
     name: string;
@@ -24,7 +25,8 @@ export class CreateUserUseCase{
             
             //cria email e password
             const email = new Email(request.email);
-            const password = new Password(request.password);
+            const hashedPassword = await bcrypt.hash(request.password, 10)
+            const password = new Password(hashedPassword);
 
             const user = new User(request.name, email, password, request.role)
 

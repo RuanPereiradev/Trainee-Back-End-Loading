@@ -10,6 +10,7 @@ import { ApiResponse } from "../Wrappers/ApiResponse";
 import { RoleType } from "@prisma/client";
 import { RestoreUserUseCase } from "../../useCases/user/RestoreUserUseCase";
 import { ListUserPaginatedUseCase } from "../../useCases/user/ListUserPaginationUseCase";
+import { LoginUserUseCase } from "../../useCases/user/LoginUserUseCase.ts";
 
 export class UserController{
     private userRepository: UserRepository;
@@ -135,6 +136,29 @@ export class UserController{
                 ApiResponse.fail(["Erro ao retornar usuario por id"])
             )
             return reply.status(500).send(response)
+        }
+    }
+    async userLogin(request: FastifyRequest, reply: FastifyReply){
+        try{
+        const {email, password} = request.body as {
+            email: string,
+            password: string;
+        }
+        
+        const useCase = new LoginUserUseCase(this.userRepository);
+
+        const result = await useCase.execute({email, password});
+
+        const response = this.responseFilter.handleResponse(result);
+
+        return reply.status(response.success ? 200:400).send(response);
+        }catch(error){
+            console.error(error);
+            const response = this.responseFilter.handleResponse(
+                ApiResponse.fail(["Erro ao login"])
+            )
+            return reply.status(500).send(response)
+    
         }
     }
 
