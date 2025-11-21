@@ -1,18 +1,18 @@
 ### Testes de rotas UserRoutes
 
-### Criar usuário
+## Criar usuário
 # POST http://localhost:3000/users
 # Content-Type: application/json
-# Authorization: Bearer SEU_TOKEN_AQUI
-#
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0YzVjODRmZi1mNWUyLTRhMjctOTU2My0wM2E5Yzk3YzM3NzQiLCJyb2xlIjoiRElSRVRPUiIsImlhdCI6MTc2MzczNTc0OCwiZXhwIjoxNzYzODIyMTQ4fQ.bF3TtTLFORsXebV6m6oBDOreKozk8NM9DKYUxGuPa4E
+
 # {
-#   "name": "Ruan Lindo José",
-#   "email": "negoruan616161.cruz@example.com",
+#   "name": "joaquin Casandro",
+#   "email": "joaca.cruz@example.com",
 #   "password": "senhatopzin123",
-#   "role": "DIRETOR"
+#   "role": "COORDENADOR"
 # }
 
-### Login
+## Login
 # POST http://localhost:3000/login/auth
 # Content-Type: application/json
 
@@ -22,8 +22,9 @@
 # }
 
 ## Listar todos os usuários
-GET http://localhost:3000/users
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0YzVjODRmZi1mNWUyLTRhMjctOTU2My0wM2E5Yzk3YzM3NzQiLCJyb2xlIjoiRElSRVRPUiIsImlhdCI6MTc2MzY3OTA1MywiZXhwIjoxNzYzNzY1NDUzfQ.Cp56WKWuFgueNGOkxq6e4TeJjbpjiout-KduwxBdFlA
+# GET http://localhost:3000/users
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0YzVjODRmZi1mNWUyLTRhMjctOTU2My0wM2E5Yzk3YzM3NzQiLCJyb2xlIjoiRElSRVRPUiIsImlhdCI6MTc2MzY3OTA1MywiZXhwIjoxNzYzNzY1NDUzfQ.Cp56WKWuFgueNGOkxq6e4TeJjbpjiout-KduwxBdFlA
+
 ### Restore User
 # PATCH http://localhost:3000/users/eb4dd2cf-8aa2-4b37-8b86-1a6da9b03525/restore
 
@@ -48,3 +49,12 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0YzVjO
 ### Delete User
 # DELETE http://localhost:3000/users/4a903605-f604-4518-8e5a-51431a987992
 
+### Criar Membership (Join Project)
+POST http://localhost:3000/memberships/join
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0YzVjODRmZi1mNWUyLTRhMjctOTU2My0wM2E5Yzk3YzM3NzQiLCJyb2xlIjoiRElSRVRPUiIsImlhdCI6MTc2MzczNjA0MCwiZXhwIjoxNzYzODIyNDQwfQ.RmqJ0rBGHe033R-j82nKac2A1qvhsx2D2ani5o9KoKg
+
+{
+  "userId": "f1d0a559-a349-4fd3-b4d6-29b472ca26ce",
+  "projectId": "02d084ca-e5db-4f99-adba-6251f7b4ffdb"
+}

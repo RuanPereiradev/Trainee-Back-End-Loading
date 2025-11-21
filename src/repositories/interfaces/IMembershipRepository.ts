@@ -12,4 +12,6 @@ export interface IMembershipRepository {
     listByUser(userId: string): Promise<Membership[]>;
     leaveProject(id: string): Promise<Result<Membership>>;
     listPaginated(page: number, pageSize:number): Promise<PaginationResult<Membership>>;
+    findByDirectorProject(projectId: string): Promise<Result<Membership | null>>;
+    findByCoordenadorProject(projectId: string): Promise<Result<Membership | null>>;
 }

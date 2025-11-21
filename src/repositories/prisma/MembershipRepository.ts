@@ -24,7 +24,7 @@ export class MembershipRepository implements IMembershipRepository {
         this.sectorRepository = new SectorRepository();
         this.userRepository = new UserRepository()
     }
-    
+
     async  update(membership: Membership): Promise<Result<Membership>> {
         try {
             const update = await prisma.membership.update({
@@ -175,7 +175,7 @@ export class MembershipRepository implements IMembershipRepository {
                 created.user.role
             );
             const project = new Project(
-                created.project.id,
+                created.project.name,
                 sector,
                 created.project.status,
                 created.project.goals,
@@ -296,6 +296,127 @@ export class MembershipRepository implements IMembershipRepository {
             return Result.fail<Membership>(error.message)
         }
     }
+
+    async findByDirectorProject(projectId: string): Promise<Result<Membership | null>> {
+        try {
+            const found = await prisma.membership.findFirst({
+                where: {
+                    projectId,
+                    leftAt: null,
+                    user:{
+                        role: "DIRETOR"
+                    }
+                },
+                include:{
+                    user:true,
+                    project:true
+                }
+            });
+
+            if(!found){
+                return Result.ok(null)
+            }
+
+            const sectorResult = await this.sectorRepository.findById(found.project.sectorId);
+            if(sectorResult.isFailure){
+                return Result.fail("Setor do projeto não encontrado");
+            }
+            const sector = sectorResult.getValue();
+
+            const user = new User(
+                found.user.name,
+                new Email(found.user.email),
+                new Password(found.user.password),
+                found.user.role,
+                found.user.id
+            );
+
+            const project = new Project(
+                found.project.name,
+                sector,
+                found.project.status,
+                found.project.goals,
+                found.project.description,
+                found.project.id
+            );
+
+            const membership = new Membership(
+                user,
+                project,
+                found.id, 
+                found.joinedAt
+            );
+
+            if(found.leftAt){
+                (membership as any)._leftAt = found.leftAt
+            }
+
+            return Result.ok(membership)
+            
+        } catch (error:any) {
+            return Result.fail(error.message)
+        }
+    }
+    async findByCoordenadorProject(projectId: string): Promise<Result<Membership | null>> {
+        try {
+            const found = await prisma.membership.findFirst({
+                where:{
+                    projectId,
+                    leftAt: null,
+                    user:{
+                        role:"COORDENADOR"
+                    }
+                },
+                include:{
+                    user:true,
+                    project:true
+                }
+            });
+
+            if(!found){
+                return Result.ok(null)
+            }
+
+            const sectorResult = await this.sectorRepository.findById(found.project.sectorId);
+            if(sectorResult.isFailure){
+                return Result.fail("Setor do projeto não encontrado");
+            }
+            const sector = sectorResult.getValue();
+
+            const user = new User(
+                found.user.name,
+                new Email(found.user.email),
+                new Password(found.user.password),
+                found.user.role,
+                found.user.id
+            )
+
+            const project = new Project(
+                found.project.name,
+                sector,
+                found.project.status,
+                found.project.goals,
+                found.project.description,
+                found.project.id
+            );
+
+            const membership = new Membership(
+                user,
+                project,
+                found.id, 
+                found.joinedAt
+            );
+
+            if(found.leftAt){
+               ( membership as any)._leftAt = found.leftAt
+            }
+
+            return Result.ok(membership)
+        } catch (error: any) {
+            return Result.fail(error.message)
+        }
+    }
+    
     async listByProject(projectId: string): Promise<Result<Membership[]>> {
         try {
             const found = await prisma.membership.findMany({

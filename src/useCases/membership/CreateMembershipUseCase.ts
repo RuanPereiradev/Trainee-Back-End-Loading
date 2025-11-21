@@ -50,6 +50,27 @@ export class CreateMembershipUseCase {
                 return Result.fail<Membership>("Usuário já participa do projeto");
             }
 
+            //verificação se existe diretor
+            const directorResult = await this.membershipRepository.findByDirectorProject(projectId);
+            if(directorResult.isFailure){
+                return Result.fail<Membership>("Erro ao verificar diretor existente");
+            }
+            const existingDirector = directorResult.getValue();
+
+            if(user.role === "DIRETOR" && existingDirector){
+                return Result.fail<Membership>("Já existe um diretor neste projeto");
+            }
+
+            const coordenadorResult = await this.membershipRepository.findByCoordenadorProject(projectId);
+            if(coordenadorResult.isFailure){
+                return Result.fail<Membership>("Erro ao verificar coordanador existente")
+            }
+
+            const existingCoordenador = coordenadorResult.getValue();
+            if(user.role === "COORDENADOR" && existingCoordenador){
+                return Result.fail<Membership>("Já existe um coordenador neste projeto")
+            }
+
             const membership = new Membership(user, project);
 
             const saveResult = await this.membershipRepository.create(membership);

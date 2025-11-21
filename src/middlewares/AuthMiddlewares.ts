@@ -11,7 +11,7 @@ export async function authMiddleware(request: FastifyRequest, reply:FastifyReply
 
     const parts = authHeader.split(" ");
     if (parts.length !== 2) {
-        return reply.status(401).send({ error: "Token mal formatted" });
+        return reply.status(401).send({ error: "Token not formatted" });
     }
 
     const [, token] = parts;
