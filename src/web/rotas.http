@@ -1,23 +1,23 @@
 ### Testes de rotas UserRoutes
 
-## Criar usuário
+# Criar usuário
 # POST http://localhost:3000/users
 # Content-Type: application/json
 # Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0YzVjODRmZi1mNWUyLTRhMjctOTU2My0wM2E5Yzk3YzM3NzQiLCJyb2xlIjoiRElSRVRPUiIsImlhdCI6MTc2MzczNTc0OCwiZXhwIjoxNzYzODIyMTQ4fQ.bF3TtTLFORsXebV6m6oBDOreKozk8NM9DKYUxGuPa4E
 
 # {
-#   "name": "joaquin Casandro",
-#   "email": "joaca.cruz@example.com",
+#   "name": "Teste Testizinho",
+#   "email": "teste.cruz@example.com",
 #   "password": "senhatopzin123",
-#   "role": "COORDENADOR"
+#   "role": "MEMBRO"
 # }
 
-## Login
+# Login
 # POST http://localhost:3000/login/auth
 # Content-Type: application/json
 
 # {
-#   "email": "euzebio.cruz@example.com",
+#   "email": "teste.cruz@example.com",
 #   "password": "senhatopzin123"
 # }
 
@@ -50,11 +50,14 @@
 # DELETE http://localhost:3000/users/4a903605-f604-4518-8e5a-51431a987992
 
 ### Criar Membership (Join Project)
-POST http://localhost:3000/memberships/join
-Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0YzVjODRmZi1mNWUyLTRhMjctOTU2My0wM2E5Yzk3YzM3NzQiLCJyb2xlIjoiRElSRVRPUiIsImlhdCI6MTc2MzczNjA0MCwiZXhwIjoxNzYzODIyNDQwfQ.RmqJ0rBGHe033R-j82nKac2A1qvhsx2D2ani5o9KoKg
+# POST http://localhost:3000/memberships/join
+# Content-Type: application/json
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0YzVjODRmZi1mNWUyLTRhMjctOTU2My0wM2E5Yzk3YzM3NzQiLCJyb2xlIjoiRElSRVRPUiIsImlhdCI6MTc2MzczNjA0MCwiZXhwIjoxNzYzODIyNDQwfQ.RmqJ0rBGHe033R-j82nKac2A1qvhsx2D2ani5o9KoKg
 
-{
-  "userId": "f1d0a559-a349-4fd3-b4d6-29b472ca26ce",
-  "projectId": "02d084ca-e5db-4f99-adba-6251f7b4ffdb"
-}
+# {
+#   "userId": "f1d0a559-a349-4fd3-b4d6-29b472ca26ce",
+#   "projectId": "02d084ca-e5db-4f99-adba-6251f7b4ffdb"
+# }
+
+GET http://localhost:3000/memberships
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJmYWEyOTIyYy1jY2FmLTQzMDgtYTViNi0wOTY0MTE0YTIyZmUiLCJyb2xlIjoiTUVNQlJPIiwiaWF0IjoxNzYzNzUwNjEwLCJleHAiOjE3NjM4MzcwMTB9.woIGC_-9X_uiIttpvjDow8SyhKyvYfam5lmZXgMj1qY

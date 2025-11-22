@@ -59,7 +59,7 @@ export class CreateProjectUseCase{
             const projectOrError = Project.create(request.name, sector,request.status,request.description, request.goals)
             const project = projectOrError.getValue();
 
-           const saveResult = await this.projectRepo.save(project);
+            const saveResult = await this.projectRepo.save(project);
 
             return Result.ok<Project>(saveResult.getValue());
             
