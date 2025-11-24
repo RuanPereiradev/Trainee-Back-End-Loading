@@ -46,6 +46,13 @@
 #   "role": "MEMBRO"
 # }
 
+PUT http://localhost:3000/user/me
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJmYWEyOTIyYy1jY2FmLTQzMDgtYTViNi0wOTY0MTE0YTIyZmUiLCJyb2xlIjoiTUVNQlJPIiwiaWF0IjoxNzYzOTk4Mzg1LCJleHAiOjE3NjQwODQ3ODV9.KF0dVDxLMj24uE4Q5_WBBJFonq5uVmboZuyK9XcZwCA
+{
+    "name": "New Name"
+}
+
 ### Delete User
 # DELETE http://localhost:3000/users/4a903605-f604-4518-8e5a-51431a987992
 
@@ -59,5 +66,5 @@
 #   "projectId": "02d084ca-e5db-4f99-adba-6251f7b4ffdb"
 # }
 
-GET http://localhost:3000/memberships
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJmYWEyOTIyYy1jY2FmLTQzMDgtYTViNi0wOTY0MTE0YTIyZmUiLCJyb2xlIjoiTUVNQlJPIiwiaWF0IjoxNzYzNzUwNjEwLCJleHAiOjE3NjM4MzcwMTB9.woIGC_-9X_uiIttpvjDow8SyhKyvYfam5lmZXgMj1qY
+# GET http://localhost:3000/memberships
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJmYWEyOTIyYy1jY2FmLTQzMDgtYTViNi0wOTY0MTE0YTIyZmUiLCJyb2xlIjoiTUVNQlJPIiwiaWF0IjoxNzYzNzUwNjEwLCJleHAiOjE3NjM4MzcwMTB9.woIGC_-9X_uiIttpvjDow8SyhKyvYfam5lmZXgMj1qY

@@ -11,6 +11,7 @@ import { RoleType } from "@prisma/client";
 import { RestoreUserUseCase } from "../../useCases/user/RestoreUserUseCase";
 import { ListUserPaginatedUseCase } from "../../useCases/user/ListUserPaginationUseCase";
 import { LoginUserUseCase } from "../../useCases/user/LoginUserUseCase.ts";
+import { UpdateSelfUseCase } from "../../useCases/sector/UpdateSelfUseCase";
 
 export class UserController{
     private userRepository: UserRepository;
@@ -177,6 +178,34 @@ export class UserController{
             return reply.status(response.success? 200:400).send(response);
 
         } catch (error) {
+            console.error(error);
+            const response = this.responseFilter.handleResponse(
+                ApiResponse.fail(["Erro ao atualizar os usuários por id"])
+            )
+            return reply.status(500).send(response)
+        }
+    }
+
+    async updateSelf(request: FastifyRequest, reply: FastifyReply){
+        try {
+            const loggedUserId = (request as any).user.userId;
+
+            const {name, email, password} = request.body as any
+
+            const useCase = new UpdateSelfUseCase(this.userRepository);
+
+            const result = await useCase.execute({
+                id: loggedUserId,
+                name,
+                email,
+                password,
+            });
+
+            const response = this.responseFilter.handleResponse(result);
+
+            return reply.status(response.success? 200:400).send(response);
+
+        } catch (error: any) {
             console.error(error);
             const response = this.responseFilter.handleResponse(
                 ApiResponse.fail(["Erro ao atualizar os usuários por id"])

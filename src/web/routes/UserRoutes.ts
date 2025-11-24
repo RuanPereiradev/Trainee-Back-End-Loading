@@ -11,6 +11,7 @@ export async function userRoutes(app: FastifyInstance) {
   app.get("/users",{preHandler: [authMiddleware, requireDirector]}, (request, reply) => userController.findAll(request, reply));
   app.get("/users/pagination",{preHandler: [authMiddleware, requireDirector]}, (request, reply) => userController.listPagineted(request, reply));
   app.get("/users/:id",{preHandler: [authMiddleware, requireDirector]}, (request, reply) => userController.findById(request, reply));
+  app.put("/user/me", {preHandler: [authMiddleware]}, (request, reply) => userController.updateSelf(request,reply));
   app.put("/users/:id",{preHandler: [authMiddleware, requireDirector]}, (request, reply) => userController.updateUser(request, reply));
   app.delete("/users/:id",{preHandler: [authMiddleware, requireDirector]},  (request, reply) => userController.softDelete(request, reply));
   app.patch("/users/:id/restore", {preHandler: [authMiddleware, requireDirector]}, (request, reply) => userController.restore(request, reply));
