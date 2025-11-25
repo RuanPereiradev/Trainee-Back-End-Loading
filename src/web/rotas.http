@@ -21,8 +21,8 @@
 #   "password": "senhatopzin123"
 # }
 
-# GET http://localhost:3000/memberships
-# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0YzVjODRmZi1mNWUyLTRhMjctOTU2My0wM2E5Yzk3YzM3NzQiLCJyb2xlIjoiRElSRVRPUiIsImlhdCI6MTc2NDA3MTI1NCwiZXhwIjoxNzY0MTU3NjU0fQ.TImHX10OmQMyidALLOebqqYJ8Mexw2lnzaTfqiDsfiQ
+GET http://localhost:3000/memberships/f73b2b4e-29e9-4bb1-ba86-80dc3de3e1c1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0YzVjODRmZi1mNWUyLTRhMjctOTU2My0wM2E5Yzk3YzM3NzQiLCJyb2xlIjoiRElSRVRPUiIsImlhdCI6MTc2NDA3MTI1NCwiZXhwIjoxNzY0MTU3NjU0fQ.TImHX10OmQMyidALLOebqqYJ8Mexw2lnzaTfqiDsfiQ
 
 ## Listar todos os usuários
 # GET http://localhost:3000/users

@@ -66,8 +66,10 @@ export class MembershipRepository implements IMembershipRepository {
                     u.project.name,
                     sector,
                     u.project.status,
+                    u.project.goals,
                     u.project.description,
-                    u.project.id
+                    u.project.id,
+
                 );
                 return new Membership(
                     user,
