@@ -430,62 +430,10 @@ export class MembershipRepository implements IMembershipRepository {
                 return Result.fail<Membership[]>("nenhuma membership encontrada")
             }
 
-            const memberships: Membership[] = [];
-            
-            for (const m of found){
-
-            const sectorResult = await this.sectorRepository.findById(m.project.sectorId);
-            if (sectorResult.isFailure) {
-                return Result.fail("Setor do projeto não encontrado");
-            }
-            const sector = sectorResult.getValue();
-
-            const user = new User(
-                m.user.name,
-                new Email(m.user.email),
-                new Password(m.user.password),
-                m.user.role,
-                m.user.id
-            );
-
-            const project = new Project(
-                m.project.name,
-                sector, 
-                m.project.status,
-                m.project.goals,
-                m.project.description,
-                m.project.id
-            );
-
-            const membership = new Membership(
-                user,
-                project,
-                m.id,
-                m.joinedAt
-            );
-
-            memberships.push(membership);
-        }
-
-        return Result.ok(memberships);
-        
-        } catch (error: any) {
-            return Result.fail(error.message)    
-        }
-    }
-    async listByUser(userId: string): Promise<Result<Membership[]>>{
-        try {
-            const found = await prisma.membership.findMany({
-                where: {userId},
-                include:{user: true,project: true}
-            });
-            if(!found||found.length === 0){
-                return Result.fail<Membership[]>("Nenhuma membership encontrada")
-            }
-
-            const memberships = await Promise.all(
+          const memberships = await Promise.all(
                 found.map(async(m) => {
-             const sectorResult = await this.sectorRepository.findById(m.project.sectorId);
+                const sectorResult = await this.sectorRepository.findById(m.project.sectorId);
+                
                 if(sectorResult.isFailure){
                     throw new Error("Setor do projeto não encontrado");
                 }
@@ -516,6 +464,58 @@ export class MembershipRepository implements IMembershipRepository {
             );
         })
     );
+
+        return Result.ok(memberships);
+        
+        } catch (error: any) {
+            return Result.fail(error.message)    
+        }
+    }
+    async listByUser(userId: string): Promise<Result<Membership[]>>{
+        try {
+            const found = await prisma.membership.findMany({
+                where: {userId},
+                include:{user: true,project: true}
+            });
+            
+            if(!found||found.length === 0){
+                return Result.fail<Membership[]>("Nenhuma membership encontrada")
+            }
+
+            const memberships = await Promise.all(
+                found.map(async(m) => {
+                const sectorResult = await this.sectorRepository.findById(m.project.sectorId);
+
+                if(sectorResult.isFailure){
+                    throw new Error("Setor do projeto não encontrado");
+                }
+
+                const sector = sectorResult.getValue();
+
+                const user = new User(
+                    m.user.name,
+                    new Email(m.user.email),
+                    new Password(m.user.password),
+                    m.user.role,
+                    m.user.id
+                );
+                const project = new Project(
+                    m.project.name,
+                    sector, 
+                    m.project.status,
+                    m.project.goals,
+                    m.project.description,
+                    m.project.id
+                );
+
+                return new Membership(
+                    user,
+                    project,
+                    m.id,
+                    m.joinedAt
+                );
+            })
+        );
         return Result.ok(memberships);
 
         } catch (error:any) {
