@@ -15,6 +15,7 @@ import { LeaveProjectUseCase } from "../../useCases/membership/LeaveProjectUseCa
 import { RejoinProjectUseCase } from "../../useCases/membership/RejoinProjectUseCase";
 import { FindByIdMembershipUseCase } from "../../useCases/membership/FindByIdMembershipUseCase";
 import { ListMembershipPaginationUseCase } from "../../useCases/membership/ListMembershipPaginationUseCase";
+import { GetProjectSelfUseCase } from "../../useCases/membership/GetProjectSelfUseCase";
 
 export class MembershipController {
 
@@ -79,6 +80,25 @@ export class MembershipController {
                 ApiResponse.fail(["Erro ao retornar relacionamento"])
             )
             return reply.status(500).send(response)
+        }
+    }
+
+    async findSelfProject(request: FastifyRequest, reply: FastifyReply){
+        try {
+            const loggedUserId = (request as any).user.userId;
+
+            const useCase = new GetProjectSelfUseCase(this.membershipRepository);
+
+            const result = await useCase.execute({id: loggedUserId});
+
+            const response = this.responseFilter.handleResponse(result);
+            
+            return reply.status(response.success? 200:400).send(response);
+        } catch (error:any) {
+            console.error(error);
+            const response = this.responseFilter.handleResponse(
+                ApiResponse.fail(["Erro ao retornar os proprios projetos associados"])
+            )
         }
     }
 

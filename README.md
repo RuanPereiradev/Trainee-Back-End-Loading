@@ -35,8 +35,8 @@ Este documento descreve os requisitos funcionais, não funcionais e as regras de
 - **RF-A03:** Usuários com perfil Diretor podem cadastrar novos usuários e definir seus acessos (Role). -> ok
 - **RF-A04:** Controle de acesso baseado em papéis: **Diretor**, **Coordenador**, **Membro**. -> parcial
 - **RF-A05:** Diretores podem listar, atualizar e desativar (soft delete) contas de usuários. -> ok
-- **RF-A06:** Usuário pode atualizar seu próprio perfil (nome, senha, avatar). -> falta
-- **RF-A07:** Usuários desativados não conseguem autenticar. -> falta
+- **RF-A06:** Usuário pode atualizar seu próprio perfil (nome, senha, avatar). -> ok
+- **RF-A07:** Usuários desativados não conseguem autenticar. -> ok
 
 ### RF-B: Gestão de Setores, Projetos e Membros
 
@@ -73,7 +73,7 @@ Este documento descreve os requisitos funcionais, não funcionais e as regras de
 - **RN-01 (Papéis):**
   - **Diretor:** Acesso total ao sistema; pode criar/editar/desativar (soft delete) Setores, Projetos e Usuários; pode definir/alterar Roles globais -> ok.
   - **Coordenador:** Pode gerenciar Projetos dos quais participa (editar dados do projeto, gerenciar membros do projeto); não pode alterar Roles dos usuários nem excluir Setores.
-  - **Membro:** Pode visualizar Projetos dos quais participa; não pode alterar estrutura nem Role. -> falta(criar uma usecase, parecido com o metodo de verificar projetos por setores, nesse caso preciso ver projetos por membership. -> PLANO: pegar o id membership, verificar se aquele id esta associado ao usuário que esta autenticado, possivelmente ate mesmo pelo token)
+  - **Membro:** Pode visualizar Projetos dos quais participa; não pode alterar estrutura nem Role. -> OK(criar uma usecase, parecido com o metodo de verificar projetos por setores, nesse caso preciso ver projetos por membership. -> PLANO: pegar o id membership, verificar se aquele id esta associado ao usuário que esta autenticado, possivelmente ate mesmo pelo token)
 - **RN-02 (Escopo de Permissões):** A Role é global (nível de empresa/sistema) e não muda por Projeto.  -> verificar
 - **RN-03 (Unicidade):** E-mail do usuário é único no sistema. Nome do Setor é único. Nome do Projeto é único dentro do Setor. -> ok
 - **RN-04 (Vínculos):** Um Projeto deve pertencer a um Setor obrigatório. Um Membro pode estar em vários Projetos. -> verificar

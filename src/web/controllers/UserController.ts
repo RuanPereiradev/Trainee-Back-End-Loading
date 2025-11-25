@@ -11,7 +11,7 @@ import { RoleType } from "@prisma/client";
 import { RestoreUserUseCase } from "../../useCases/user/RestoreUserUseCase";
 import { ListUserPaginatedUseCase } from "../../useCases/user/ListUserPaginationUseCase";
 import { LoginUserUseCase } from "../../useCases/user/LoginUserUseCase.ts";
-import { UpdateSelfUseCase } from "../../useCases/sector/UpdateSelfUseCase";
+import { UpdateSelfUseCase } from "../../useCases/user/UpdateSelfUseCase";
 
 export class UserController{
     private userRepository: UserRepository;

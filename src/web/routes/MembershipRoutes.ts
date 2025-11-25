@@ -12,11 +12,12 @@ const membershipRepository = new MembershipRepository();
 export async function membershipRoutes(app: FastifyInstance) {
 
     const membershipController = new MembershipController();
-    app.post("/memberships/join",{preHandler: [authMiddleware,requireCoordenadorOrDirector]}, (request, reply) =>  membershipController.joinProject(request, reply));
+    app.post("/memberships/join",{preHandler: [authMiddleware]}, (request, reply) =>  membershipController.joinProject(request, reply));
     app.get("/memberships/pagination", (request, reply) => membershipController.listPagineted(request, reply));
     app.get("/memberships/project/:projectId", (request, reply) => membershipController.listByProject(request, reply));
     app.get("/memberships/:id", (request, reply) => membershipController.findByIdMembership(request, reply));
     app.get("/memberships", {preHandler: [authMiddleware,requireCoordenadorOrDirector]},(request,reply) => membershipController.findAllMembership(request, reply));
+    app.get("/memberships/me", {preHandler: [authMiddleware, requireCoordenadorOrDirector]},(request,reply) => membershipController.findSelfProject(request, reply));
     app.post("/memberships/leave", (request, reply) =>  membershipController.leaveProject(request, reply));
     app.post("/memberships/rejoin",(request, reply) =>  membershipController.rejoinProject(request, reply));
 

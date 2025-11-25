@@ -9,7 +9,7 @@ export interface IMembershipRepository {
     update(membership: Membership): Promise<Result<Membership>>
     findByUserAndProject(userId: string, projectId: string): Promise<Result<Membership | null>>;
     listByProject(projectId: string): Promise<Result<Membership[]>>;
-    listByUser(userId: string): Promise<Membership[]>;
+    listByUser(userId: string): Promise<Result<Membership[]>>;
     leaveProject(id: string): Promise<Result<Membership>>;
     listPaginated(page: number, pageSize:number): Promise<PaginationResult<Membership>>;
     findByDirectorProject(projectId: string): Promise<Result<Membership | null>>;
