@@ -55,17 +55,34 @@ import { ProjectStatusType } from "@prisma/client";
       }
       this._status = newStatus;
       return Result.ok(); 
-  }
-
-    changeDescription(newDescription: string): void {
-      this._description = newDescription.trim();
     }
 
-    changeSector(newSector: Sectors): void {
-      this._sector = newSector;
-    }
-    changeGoals(newGoal: string): void {
-      this._goals = newGoal;
+    changeDescription(newDescription: string): Result<void> {
+    if (!newDescription.trim()) {
+    return Result.fail("A descrição não pode ser vazia");
     }
 
-  }
+    this._description = newDescription.trim();
+    return Result.ok();
+    }
+
+
+   changeSector(newSector: Sectors): Result<void> {
+    if (!newSector) {
+    return Result.fail("O setor não pode ser vazio");
+    }
+
+    this._sector = newSector;
+    return Result.ok();
+    }
+
+    changeGoals(newGoal: string): Result<void> {
+    if (!newGoal.trim()) {
+    return Result.fail("Os objetivos não podem ser vazios");
+    }
+
+    this._goals = newGoal.trim();
+    return Result.ok();
+    }
+
+}

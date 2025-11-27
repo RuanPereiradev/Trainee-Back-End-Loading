@@ -3,13 +3,13 @@
 # Criar usuário
 # POST http://localhost:3000/users
 # Content-Type: application/json
-# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0YzVjODRmZi1mNWUyLTRhMjctOTU2My0wM2E5Yzk3YzM3NzQiLCJyb2xlIjoiRElSRVRPUiIsImlhdCI6MTc2NDA3MTI1NCwiZXhwIjoxNzY0MTU3NjU0fQ.TImHX10OmQMyidALLOebqqYJ8Mexw2lnzaTfqiDsfiQ
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0YzVjODRmZi1mNWUyLTRhMjctOTU2My0wM2E5Yzk3YzM3NzQiLCJyb2xlIjoiRElSRVRPUiIsImlhdCI6MTc2NDE3NzY2MSwiZXhwIjoxNzY0MjY0MDYxfQ.WC0kRcSUmliDsFwhXJ8aJsgc1YsQ1qGpzzH6N5xqlIs
 
 # {
-#   "name": "Membership teste",
-#   "email": "testemembership.cruz@example.com",
+#   "name": "Coordenador teste",
+#   "email": "coordenador.cruz@example.com",
 #   "password": "senhatopzin123",
-#   "role": "MEMBRO"
+#   "role": "COORDENADOR"
 # }
 
 # Login
@@ -17,12 +17,12 @@
 # Content-Type: application/json
 
 # {
-#   "email": "testemembership.cruz@example.com",
+#   "email": "coordenador.cruz@example.com",
 #   "password": "senhatopzin123"
 # }
 
-GET http://localhost:3000/memberships/f73b2b4e-29e9-4bb1-ba86-80dc3de3e1c1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0YzVjODRmZi1mNWUyLTRhMjctOTU2My0wM2E5Yzk3YzM3NzQiLCJyb2xlIjoiRElSRVRPUiIsImlhdCI6MTc2NDA3MTI1NCwiZXhwIjoxNzY0MTU3NjU0fQ.TImHX10OmQMyidALLOebqqYJ8Mexw2lnzaTfqiDsfiQ
+# GET http://localhost:3000/memberships/f73b2b4e-29e9-4bb1-ba86-80dc3de3e1c1
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0YzVjODRmZi1mNWUyLTRhMjctOTU2My0wM2E5Yzk3YzM3NzQiLCJyb2xlIjoiRElSRVRPUiIsImlhdCI6MTc2NDA3MTI1NCwiZXhwIjoxNzY0MTU3NjU0fQ.TImHX10OmQMyidALLOebqqYJ8Mexw2lnzaTfqiDsfiQ
 
 ## Listar todos os usuários
 # GET http://localhost:3000/users
@@ -63,12 +63,14 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0YzVjO
 ### Criar Membership (Join Project)
 # POST http://localhost:3000/memberships/join
 # Content-Type: application/json
-# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0YzVjODRmZi1mNWUyLTRhMjctOTU2My0wM2E5Yzk3YzM3NzQiLCJyb2xlIjoiRElSRVRPUiIsImlhdCI6MTc2NDA3MTQyMSwiZXhwIjoxNzY0MTU3ODIxfQ.Pj-cjikPzZ4bHXd7STFePHt8BH7rGnMstEj6tT2Un1w
-
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0YzVjODRmZi1mNWUyLTRhMjctOTU2My0wM2E5Yzk3YzM3NzQiLCJyb2xlIjoiRElSRVRPUiIsImlhdCI6MTc2NDIwMjc2MCwiZXhwIjoxNzY0Mjg5MTYwfQ.tV0ZetOEmgMfri3bb_Q5HwOgc_q29e37YHogsc2LGio
 # {
-#   "userId": "3b4d6add-2513-41a6-ac18-38cad35afc6f",
-#   "projectId": "28e38ea4-bde7-45b2-950d-3d375021a11d"
+#   "userId": "e7261645-c402-4994-b758-96600a03d172",
+#   "projectId": "298d471d-2a3f-43eb-b5d3-c730112e75d1"
 # }
 
 # GET http://localhost:3000/memberships
-# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJmYWEyOTIyYy1jY2FmLTQzMDgtYTViNi0wOTY0MTE0YTIyZmUiLCJyb2xlIjoiTUVNQlJPIiwiaWF0IjoxNzYzNzUwNjEwLCJleHAiOjE3NjM4MzcwMTB9.woIGC_-9X_uiIttpvjDow8SyhKyvYfam5lmZXgMj1qY
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0YzVjODRmZi1mNWUyLTRhMjctOTU2My0wM2E5Yzk3YzM3NzQiLCJyb2xlIjoiRElSRVRPUiIsImlhdCI6MTc2NDIwMjc2MCwiZXhwIjoxNzY0Mjg5MTYwfQ.tV0ZetOEmgMfri3bb_Q5HwOgc_q29e37YHogsc2LGio
+### Adicionar membro corretamente
+POST http://localhost:3000/projects/298d471d-2a3f-43eb-b5d3-c730112e75d1/coordenador/e7261645-c402-4994-b758-96600a03d172/add/79f9a614-7c05-4db5-b129-ce7fc1d8e834
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlNzI2MTY0NS1jNDAyLTQ5OTQtYjc1OC05NjYwMGEwM2QxNzIiLCJyb2xlIjoiQ09PUkRFTkFET1IiLCJpYXQiOjE3NjQyMDMxNzMsImV4cCI6MTc2NDI4OTU3M30.l18BwtxFNGfAwZgdPCAvaqN9rnA8i5J6gwkCBdnMSbc

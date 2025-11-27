@@ -1,7 +1,6 @@
 import { FastifyInstance } from "fastify";
 import { MembershipController } from "../controllers/MembershipController";
 import { MembershipRepository } from "../../repositories/prisma/MembershipRepository";
-import { request } from "http";
 import { authMiddleware } from "../../middlewares/AuthMiddlewares";
 import { requireDirector } from "../../middlewares/RequireDirectorMiddleware";
 import { requireCoordenador } from "../../middlewares/RequireCoordenadorMiddleware";

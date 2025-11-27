@@ -144,6 +144,7 @@ export class MembershipRepository implements IMembershipRepository {
     leaveProject(id: string): Promise<Result<Membership>> {
         throw new Error("Method not implemented.");
     }
+    //cria
     async create(membership: Membership): Promise<Result<Membership>> {
         try {
             const created = await prisma.membership.create({
@@ -199,6 +200,7 @@ export class MembershipRepository implements IMembershipRepository {
 
         }
     }
+    //busca por id
     async findById(id: string): Promise<Result<Membership | null>> {
         try {
             const found = await prisma.membership.findUnique({
@@ -244,6 +246,7 @@ export class MembershipRepository implements IMembershipRepository {
         }
     }
 
+    //verifica se o usuário já esta no projeto
     async findByUserAndProject(userId: string, projectId: string): Promise<Result<Membership | null>> {
         try {
             const found = await prisma.membership.findFirst({
@@ -299,6 +302,7 @@ export class MembershipRepository implements IMembershipRepository {
         }
     }
 
+    //verifica se tem diretor
     async findByDirectorProject(projectId: string): Promise<Result<Membership | null>> {
         try {
             const found = await prisma.membership.findFirst({
@@ -359,6 +363,8 @@ export class MembershipRepository implements IMembershipRepository {
             return Result.fail(error.message)
         }
     }
+
+    //verifica se tem coordenador
     async findByCoordenadorProject(projectId: string): Promise<Result<Membership | null>> {
         try {
             const found = await prisma.membership.findFirst({
@@ -419,6 +425,7 @@ export class MembershipRepository implements IMembershipRepository {
         }
     }
     
+    //lista usuarios que estao no projeto
     async listByProject(projectId: string): Promise<Result<Membership[]>> {
         try {
             const found = await prisma.membership.findMany({
@@ -471,13 +478,15 @@ export class MembershipRepository implements IMembershipRepository {
             return Result.fail(error.message)    
         }
     }
+
+    //lista projetos asssociados a um usuário
     async listByUser(userId: string): Promise<Result<Membership[]>>{
         try {
             const found = await prisma.membership.findMany({
                 where: {userId},
                 include:{user: true,project: true}
             });
-            
+
             if(!found||found.length === 0){
                 return Result.fail<Membership[]>("Nenhuma membership encontrada")
             }
