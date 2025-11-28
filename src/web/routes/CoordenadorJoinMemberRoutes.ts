@@ -16,5 +16,13 @@ export async function CoordenadorJoinMemberRoutes(app: FastifyInstance){
     
     const coordenadorEditProjectController = new CoordenadorEditProject()
     // app.patch("/projects/:projectId/coordenador/:userId", {preHandler:[authMiddleware]}, (request, reply) => coordenadorEditProjectController.(request, reply))
-    app.post("/projects/:projectId/coordenador/:coordenadorId/add/:userIdToAdd",{ preHandler: [authMiddleware] },(request, reply) => coordenadorEditProjectController.addMember(request, reply));
+    app.post("/projects/:projectId/coordenador/:coordenadorId/add/:userIdToAdd",
+        {
+          schema:{
+            tags:['Coordenador'],
+            description: 'Get Pagination Sectors',
+          },
+          preHandler: [authMiddleware]
+        },
+        (request, reply) => coordenadorEditProjectController.addMember(request, reply));
 }
