@@ -7,7 +7,7 @@ import { IUserRepository } from "../../repositories/interfaces/IUserRepository";
 import { profileEnd } from "console";
 
 interface CoordenadorJoinProjectRequest{
-    coordenadorId: string
+    coordenadorId: string;
     userIdToAdd: string;
     projectId: string;
 }   

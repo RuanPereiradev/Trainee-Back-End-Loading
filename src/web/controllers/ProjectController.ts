@@ -156,7 +156,7 @@ export class ProjectController{
 
             const result = await useCase.execute({id,name,sector,status,description, goals})
 
-             const response = this.responseFilter.handleResponse(result);
+            const response = this.responseFilter.handleResponse(result);
 
             return reply.status(response.success ? 200:400).send(response);
 

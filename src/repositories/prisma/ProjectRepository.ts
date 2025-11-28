@@ -267,6 +267,7 @@ export class ProjectRepository implements IProjectRepository{
             update.name,
             sectorEntity,
             update.status,
+            update.goals,
             update.description,
             update.id
         )

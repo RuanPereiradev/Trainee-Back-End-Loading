@@ -20,9 +20,19 @@ export async function CoordenadorJoinMemberRoutes(app: FastifyInstance){
         {
           schema:{
             tags:['Coordenador'],
-            description: 'Get Pagination Sectors',
+            description: 'Coordenador add member',
           },
           preHandler: [authMiddleware]
         },
         (request, reply) => coordenadorEditProjectController.addMember(request, reply));
+
+    app.put("/project/:projectId/coordenador/:coordenadorId/edit/:projectIdToEdit",
+        {  
+        schema:{
+            tags:['Coordenador'],
+            description: 'Coordenador add member',
+          },
+          preHandler: [authMiddleware]
+        },
+        (request, reply) => coordenadorEditProjectController.EditProject(request, reply));
 }

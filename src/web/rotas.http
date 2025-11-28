@@ -17,7 +17,7 @@
 # Content-Type: application/json
 
 # {
-#   "email": "coordenador.cruz@example.com",
+#   "email": "teste.cruz@example.com",
 #   "password": "senhatopzin123"
 # }
 
@@ -60,18 +60,30 @@
 # DELETE http://localhost:3000/users/8f97dc4c-254d-40d3-9c9f-346a363d1e7b
 # Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0YzVjODRmZi1mNWUyLTRhMjctOTU2My0wM2E5Yzk3YzM3NzQiLCJyb2xlIjoiRElSRVRPUiIsImlhdCI6MTc2NDAwMTAwMywiZXhwIjoxNzY0MDg3NDAzfQ.hd5RBKVvhggSeWp7gXIf1EWBJW35JViHMS51kEBoluo
 
-### Criar Membership (Join Project)
+# Criar Membership (Join Project)
 # POST http://localhost:3000/memberships/join
 # Content-Type: application/json
-# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0YzVjODRmZi1mNWUyLTRhMjctOTU2My0wM2E5Yzk3YzM3NzQiLCJyb2xlIjoiRElSRVRPUiIsImlhdCI6MTc2NDIwMjc2MCwiZXhwIjoxNzY0Mjg5MTYwfQ.tV0ZetOEmgMfri3bb_Q5HwOgc_q29e37YHogsc2LGio
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0YzVjODRmZi1mNWUyLTRhMjctOTU2My0wM2E5Yzk3YzM3NzQiLCJyb2xlIjoiRElSRVRPUiIsImlhdCI6MTc2NDM3MTcwMiwiZXhwIjoxNzY0NDU4MTAyfQ.hT0H5AVNFEe7Ei_78ww3CgGIuPq15vhJftX6Mh_4Qxg
+
 # {
-#   "userId": "e7261645-c402-4994-b758-96600a03d172",
-#   "projectId": "298d471d-2a3f-43eb-b5d3-c730112e75d1"
+#   "userId": "faa2922c-ccaf-4308-a5b6-0964114a22fe",
+#   "projectId": "4c3f9985-13e1-467e-97db-7ceb88dccc26"
 # }
 
 # GET http://localhost:3000/memberships
-# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0YzVjODRmZi1mNWUyLTRhMjctOTU2My0wM2E5Yzk3YzM3NzQiLCJyb2xlIjoiRElSRVRPUiIsImlhdCI6MTc2NDIwMjc2MCwiZXhwIjoxNzY0Mjg5MTYwfQ.tV0ZetOEmgMfri3bb_Q5HwOgc_q29e37YHogsc2LGio
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0YzVjODRmZi1mNWUyLTRhMjctOTU2My0wM2E5Yzk3YzM3NzQiLCJyb2xlIjoiRElSRVRPUiIsImlhdCI6MTc2NDM3MTcwMiwiZXhwIjoxNzY0NDU4MTAyfQ.hT0H5AVNFEe7Ei_78ww3CgGIuPq15vhJftX6Mh_4Qxg
 
-## Adicionar membro corretamente
+# ## Adicionar membro corretamente
 # POST http://localhost:3000/projects/298d471d-2a3f-43eb-b5d3-c730112e75d1/coordenador/e7261645-c402-4994-b758-96600a03d172/add/79f9a614-7c05-4db5-b129-ce7fc1d8e834
 # Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlNzI2MTY0NS1jNDAyLTQ5OTQtYjc1OC05NjYwMGEwM2QxNzIiLCJyb2xlIjoiQ09PUkRFTkFET1IiLCJpYXQiOjE3NjQyMDMxNzMsImV4cCI6MTc2NDI4OTU3M30.l18BwtxFNGfAwZgdPCAvaqN9rnA8i5J6gwkCBdnMSbc
+
+# PUT http://localhost:3000/project/4c3f9985-13e1-467e-97db-7ceb88dccc26/coordenador/faa2922c-ccaf-4308-a5b6-0964114a22fe/edit/4c3f9985-13e1-467e-97db-7ceb88dccc26
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJmYWEyOTIyYy1jY2FmLTQzMDgtYTViNi0wOTY0MTE0YTIyZmUiLCJyb2xlIjoiTUVNQlJPIiwiaWF0IjoxNzY0MzczNTQ4LCJleHAiOjE3NjQ0NTk5NDh9.uOB8FTOq4KzpHUElqvHxbH_v_T-5GYooXkCgHxMY4Z8
+# Content-Type: application/json
+
+# {
+#   "name": "Novo nome editado do projeto",
+#   "status": "PLANEJADO",
+#   "description": "Descrição atualizada 2 do projeto",
+#   "goals": "Metas atualizadas 2 do projeto"
+# }
