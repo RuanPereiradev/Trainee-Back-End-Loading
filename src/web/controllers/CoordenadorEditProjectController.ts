@@ -7,6 +7,7 @@ import { ApiResponseValidationFilter } from "../Filters/ApiResponseValidationFil
 import { CoordenadorJoinProjectUseCase } from "../../useCases/coordenadorUseCases/CoordenadorJoinProjectUseCase";
 import { ApiResponse } from "../Wrappers/ApiResponse";
 import { CoordenadorEditProjectUseCase } from "../../useCases/coordenadorUseCases/CoordenadorEditProjectUseCase";
+import { CoordenadorRemoveMembroUseCase } from "../../useCases/coordenadorUseCases/CoordenadorRemoveMembro";
 
 export class CoordenadorEditProject{
 
@@ -68,6 +69,30 @@ export class CoordenadorEditProject{
             console.error(error);
             const response = this.responseFilter.handleResponse(
                 ApiResponse.fail(["Erro ao atualizar projeto"])
+            )
+            return reply.status(500).send(response);
+        }
+    }
+
+    async removeMember(request: FastifyRequest, reply: FastifyReply){
+        try {
+            const {coordenadorId, projectId, userIdToRemove} = request.params as
+            {
+                coordenadorId: string,
+                projectId: string,
+                userIdToRemove: string,
+            }
+
+            const useCase = new CoordenadorRemoveMembroUseCase(this.membershipRepository, this.projectRepository, this.userRepository)
+            const result = await useCase.execute({coordenadorId, projectId, userIdToRemove})
+
+            const response = this.responseFilter.handleResponse(result)
+
+            return reply.status(response.success ? 200: 400).send(response)
+        } catch (error:any) {
+            console.error(error);
+            const response = this.responseFilter.handleResponse(
+                ApiResponse.fail(["Erro tirar usuario"])
             )
             return reply.status(500).send(response);
         }

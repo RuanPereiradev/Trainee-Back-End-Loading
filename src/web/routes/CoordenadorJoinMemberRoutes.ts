@@ -37,4 +37,16 @@ export async function CoordenadorJoinMemberRoutes(app: FastifyInstance){
           preHandler: [authMiddleware]
         },
         (request, reply) => coordenadorEditProjectController.EditProject(request, reply));
+
+  app.delete("/project/:projectId/coordenador/:coordenadorId/remove/:userIdToRemove",
+        {  
+        schema:{
+            tags:['Coordenador'],
+            security: [{ bearerAuth: [] }],
+            description: 'Coordenador remove member',
+          },
+          preHandler: [authMiddleware]
+        },
+        (request, reply) => coordenadorEditProjectController.removeMember(request, reply));
 }
+

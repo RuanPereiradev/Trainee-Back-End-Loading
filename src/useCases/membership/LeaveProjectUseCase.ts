@@ -60,5 +60,5 @@ export class LeaveProjectUseCase {
             return Result.fail<void>(error.message)
         }
     }  
-    }
+}
 

@@ -33,7 +33,7 @@ Este documento descreve os requisitos funcionais, não funcionais e as regras de
 - **RF-A01:** Permitir login por e-mail e senha. -> ok
 - **RF-A02:** Após login, gerar token de autenticação (JWT) para chamadas subsequentes. -> ok
 - **RF-A03:** Usuários com perfil Diretor podem cadastrar novos usuários e definir seus acessos (Role). -> ok
-- **RF-A04:** Controle de acesso baseado em papéis: **Diretor**, **Coordenador**, **Membro**. -> parcial
+- **RF-A04:** Controle de acesso baseado em papéis: **Diretor**, **Coordenador**, **Membro**. -> ok
 - **RF-A05:** Diretores podem listar, atualizar e desativar (soft delete) contas de usuários. -> ok
 - **RF-A06:** Usuário pode atualizar seu próprio perfil (nome, senha, avatar). -> ok
 - **RF-A07:** Usuários desativados não conseguem autenticar. -> ok
