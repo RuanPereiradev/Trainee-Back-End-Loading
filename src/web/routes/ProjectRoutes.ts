@@ -13,6 +13,7 @@ export async function projectRoutes(app:FastifyInstance) {
     {
       schema:{
         tags:['Projects'],
+         security: [{ bearerAuth: [] }],
         description: 'Create Projects',
       },
       preHandler: [authMiddleware, requireDirector]
@@ -22,6 +23,7 @@ export async function projectRoutes(app:FastifyInstance) {
     {
       schema:{
         tags:['Projects'],
+         security: [{ bearerAuth: [] }],
         description: 'Create Projects',
       },
       preHandler: [authMiddleware]
@@ -32,6 +34,7 @@ export async function projectRoutes(app:FastifyInstance) {
     {
       schema:{
         tags:['Projects'],
+         security: [{ bearerAuth: [] }],
         description: 'Get Projects',
       },
       preHandler: [authMiddleware]
@@ -41,6 +44,7 @@ export async function projectRoutes(app:FastifyInstance) {
     {
       schema:{
         tags:['Projects'],
+         security: [{ bearerAuth: [] }],
         description: 'Get pagination Projects',
       },
       preHandler: [authMiddleware]
@@ -51,6 +55,7 @@ export async function projectRoutes(app:FastifyInstance) {
     {
       schema:{
         tags:['Projects'],
+         security: [{ bearerAuth: [] }],
         description: 'GetBySector Projects',
       },
       preHandler: [authMiddleware]
@@ -61,6 +66,7 @@ export async function projectRoutes(app:FastifyInstance) {
     {
       schema:{
         tags:['Projects'],
+         security: [{ bearerAuth: [] }],
         description: 'Update Projects',
       },
       preHandler: [authMiddleware]
@@ -71,6 +77,7 @@ export async function projectRoutes(app:FastifyInstance) {
     {
       schema:{
         tags:['Projects'],
+         security: [{ bearerAuth: [] }],
         description: 'Delete Projects',
       },
       preHandler: [authMiddleware]
@@ -81,6 +88,7 @@ export async function projectRoutes(app:FastifyInstance) {
     {
       schema:{
         tags:['Projects'],
+         security: [{ bearerAuth: [] }],
         description: 'Restore Projects',
       },
       preHandler: [authMiddleware]

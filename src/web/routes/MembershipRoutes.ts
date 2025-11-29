@@ -15,6 +15,7 @@ export async function membershipRoutes(app: FastifyInstance) {
     {
       schema:{
         tags:['Membership'],
+        security: [{ bearerAuth: [] }],
         description: 'Join Projects',
       },
       preHandler: [authMiddleware, requireDirector]
@@ -25,6 +26,7 @@ export async function membershipRoutes(app: FastifyInstance) {
     {
       schema:{
         tags:['Membership'],
+        security: [{ bearerAuth: [] }],
         description: 'Get Pagination Sectors',
       },
       preHandler: [authMiddleware, requireDirector]
@@ -35,6 +37,7 @@ export async function membershipRoutes(app: FastifyInstance) {
     {
       schema:{
         tags:['Membership'],
+        security: [{ bearerAuth: [] }],
         description: 'Get Memberhsip by Projects',
       },
       preHandler: [authMiddleware, requireDirector]
@@ -43,6 +46,7 @@ export async function membershipRoutes(app: FastifyInstance) {
     app.get("/memberships/:id",{
       schema:{
         tags:['Membership'],
+        security: [{ bearerAuth: [] }],
         description: 'Get Pagination Sectors',
       },
       preHandler: [authMiddleware, requireDirector]
@@ -52,6 +56,7 @@ export async function membershipRoutes(app: FastifyInstance) {
     {
       schema:{
         tags:['Membership'],
+        security: [{ bearerAuth: [] }],
         description: 'Get Pagination Sectors',
       },
       preHandler: [authMiddleware, requireDirector]
@@ -62,6 +67,7 @@ export async function membershipRoutes(app: FastifyInstance) {
     {
       schema:{
         tags:['Membership'],
+        security: [{ bearerAuth: [] }],
         description: 'Get Pagination Sectors',
       },
       preHandler: [authMiddleware, requireDirector]
@@ -72,6 +78,7 @@ export async function membershipRoutes(app: FastifyInstance) {
     {
       schema:{
         tags:['Membership'],
+         security: [{ bearerAuth: [] }],
         description: 'Get Pagination Sectors',
       },
       preHandler: [authMiddleware, requireDirector]
@@ -82,6 +89,7 @@ export async function membershipRoutes(app: FastifyInstance) {
     {
       schema:{
         tags:['Membership'],
+         security: [{ bearerAuth: [] }],
         description: 'Get Pagination Sectors',
       },
       preHandler: [authMiddleware, requireDirector]

@@ -10,6 +10,7 @@ export async function SectorRoutes(app:FastifyInstance) {
     {
       schema:{
         tags:['Sector'],
+         security: [{ bearerAuth: [] }],
         description: 'Get Sectors',
       },
       preHandler: [authMiddleware, requireDirector]
@@ -20,6 +21,7 @@ export async function SectorRoutes(app:FastifyInstance) {
     {
       schema:{
         tags:['Sector'],
+         security: [{ bearerAuth: [] }],
         description: 'Get Sectors',
       },
       preHandler: [authMiddleware, requireDirector]
@@ -30,6 +32,7 @@ export async function SectorRoutes(app:FastifyInstance) {
     {
       schema:{
         tags:['Sector'],
+         security: [{ bearerAuth: [] }],
         description: 'GetById Sectors',
       },
       preHandler: [authMiddleware, requireDirector]
@@ -40,6 +43,7 @@ export async function SectorRoutes(app:FastifyInstance) {
     {
       schema:{
         tags:['Sector'],
+         security: [{ bearerAuth: [] }],
         description: 'Update Sectors',
       },
       preHandler: [authMiddleware, requireDirector]
@@ -50,6 +54,7 @@ export async function SectorRoutes(app:FastifyInstance) {
     {
       schema:{
         tags:['Sector'],
+         security: [{ bearerAuth: [] }],
         description: 'Restore Sectors',
       },
       preHandler: [authMiddleware, requireDirector]
@@ -60,6 +65,7 @@ export async function SectorRoutes(app:FastifyInstance) {
     {
       schema:{
         tags:['Sector'],
+         security: [{ bearerAuth: [] }],
         description: 'Delete Sectors',
       },
       preHandler: [authMiddleware, requireDirector]

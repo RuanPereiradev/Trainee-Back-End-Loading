@@ -11,6 +11,7 @@ app.post("/users",
     {
       schema:{
         tags:['Users'],
+         security: [{ bearerAuth: [] }],
         description:'Create a new user',
         body: z.object({
           name: z.string().min(1).describe("Nome do usuário"),
@@ -27,6 +28,7 @@ app.post("/login/auth",
     {
       schema:{
         tags:["Users"], 
+         security: [{ bearerAuth: [] }],
         description:'Login User', 
         body: z.object({
           email: z.email().describe("email do usuario"),
@@ -40,6 +42,7 @@ app.post("/login/auth",
     {
       schema:{
         tags:['Users'],
+         security: [{ bearerAuth: [] }],
         description: 'Get Users',
       },
       preHandler: [authMiddleware, requireDirector]
@@ -50,6 +53,7 @@ app.post("/login/auth",
     {
       schema:{
         tags:['Users'],
+         security: [{ bearerAuth: [] }],
         description: 'Get Pagination Users',
       },
       preHandler: [authMiddleware, requireDirector]
@@ -60,6 +64,7 @@ app.post("/login/auth",
     {
       schema:{
         tags:['Users'],
+         security: [{ bearerAuth: [] }],
         description: 'Get Users',
       },
       preHandler: [authMiddleware, requireDirector]
@@ -70,6 +75,7 @@ app.post("/login/auth",
     {
       schema:{
         tags:['Users'],
+         security: [{ bearerAuth: [] }],
         description:'Edit-Me',
         body: z.object({
           name: z.string().min(1).describe("Nome do usuário"),
@@ -86,6 +92,7 @@ app.post("/login/auth",
     {
       schema:{
         tags:['Users'],
+         security: [{ bearerAuth: [] }],
         description:'Edit user',
         body: z.object({
           name: z.string().min(1).describe("Nome do usuário"),
@@ -102,6 +109,7 @@ app.post("/login/auth",
     {
       schema:{
         tags:['Users'],
+         security: [{ bearerAuth: [] }],
         description: 'Delete Users',
       },
       preHandler: [authMiddleware, requireDirector]
@@ -112,6 +120,7 @@ app.post("/login/auth",
     {
       schema:{
         tags:['Users'],
+         security: [{ bearerAuth: [] }],
         description: 'Restore Users',
       },
       preHandler: [authMiddleware, requireDirector]

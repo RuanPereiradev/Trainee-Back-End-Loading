@@ -20,6 +20,7 @@ export async function CoordenadorJoinMemberRoutes(app: FastifyInstance){
         {
           schema:{
             tags:['Coordenador'],
+            security: [{ bearerAuth: [] }],
             description: 'Coordenador add member',
           },
           preHandler: [authMiddleware]
@@ -30,6 +31,7 @@ export async function CoordenadorJoinMemberRoutes(app: FastifyInstance){
         {  
         schema:{
             tags:['Coordenador'],
+            security: [{ bearerAuth: [] }],
             description: 'Coordenador add member',
           },
           preHandler: [authMiddleware]
