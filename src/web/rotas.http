@@ -17,7 +17,7 @@
 # Content-Type: application/json
 
 # {
-#   "email": "maria.cruz@example.com",
+#   "email": "euzebio.cruz@example.com",
 #   "password": "senhatopzin123"
 # }
 
@@ -61,17 +61,17 @@
 # Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0YzVjODRmZi1mNWUyLTRhMjctOTU2My0wM2E5Yzk3YzM3NzQiLCJyb2xlIjoiRElSRVRPUiIsImlhdCI6MTc2NDAwMTAwMywiZXhwIjoxNzY0MDg3NDAzfQ.hd5RBKVvhggSeWp7gXIf1EWBJW35JViHMS51kEBoluo
 
 # Criar Membership (Join Project)
-# POST http://localhost:3000/memberships/join
-# Content-Type: application/json
-# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0YzVjODRmZi1mNWUyLTRhMjctOTU2My0wM2E5Yzk3YzM3NzQiLCJyb2xlIjoiRElSRVRPUiIsImlhdCI6MTc2NDM3MTcwMiwiZXhwIjoxNzY0NDU4MTAyfQ.hT0H5AVNFEe7Ei_78ww3CgGIuPq15vhJftX6Mh_4Qxg
+POST http://localhost:3000/memberships/join
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0YzVjODRmZi1mNWUyLTRhMjctOTU2My0wM2E5Yzk3YzM3NzQiLCJyb2xlIjoiRElSRVRPUiIsImlhdCI6MTc2NDQyNDcyMCwiZXhwIjoxNzY0NTExMTIwfQ.KzriiJKxjOiKcU6yYVRel-CoaeRyF2cslhajV6jReaw
 
-# {
-#   "userId": "faa2922c-ccaf-4308-a5b6-0964114a22fe",
-#   "projectId": "4c3f9985-13e1-467e-97db-7ceb88dccc26"
-# }
+{
+  "userId": "79f9a614-7c05-4db5-b129-ce7fc1d8e834",
+  "projectId": "80242abc-8ba1-4ac7-b81a-76839e2b3fdd"
+}
 
-GET http://localhost:3000/memberships
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJmNzdkZjc0Ny03OTE0LTRjODEtODRlZS02NjI5ZjgyOTQ2NzYiLCJyb2xlIjoiQ09PUkRFTkFET1IiLCJpYXQiOjE3NjQzODcxODEsImV4cCI6MTc2NDQ3MzU4MX0.ok-8OWOEaDOrIqhmA__jt-TPDQZubrT756o1epOUfWk
+# GET http://localhost:3000/memberships
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJmNzdkZjc0Ny03OTE0LTRjODEtODRlZS02NjI5ZjgyOTQ2NzYiLCJyb2xlIjoiQ09PUkRFTkFET1IiLCJpYXQiOjE3NjQzODcxODEsImV4cCI6MTc2NDQ3MzU4MX0.ok-8OWOEaDOrIqhmA__jt-TPDQZubrT756o1epOUfWk
 # ## Adicionar membro corretamente
 # POST http://localhost:3000/projects/298d471d-2a3f-43eb-b5d3-c730112e75d1/coordenador/e7261645-c402-4994-b758-96600a03d172/add/79f9a614-7c05-4db5-b129-ce7fc1d8e834
 # Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlNzI2MTY0NS1jNDAyLTQ5OTQtYjc1OC05NjYwMGEwM2QxNzIiLCJyb2xlIjoiQ09PUkRFTkFET1IiLCJpYXQiOjE3NjQyMDMxNzMsImV4cCI6MTc2NDI4OTU3M30.l18BwtxFNGfAwZgdPCAvaqN9rnA8i5J6gwkCBdnMSbc

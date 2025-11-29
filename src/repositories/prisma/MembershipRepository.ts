@@ -151,13 +151,8 @@ export class MembershipRepository implements IMembershipRepository {
                 data:{
                     id: membership.id,
                     joinedAt: membership.joinedAt,
-                    leftAt: membership.leftAt,
-                    user:{
-                        connect:{id: membership.user.id}
-                    },
-                    project:{
-                        connect:{id: membership.project.id}
-                    },
+                    userId: membership.user.id,
+                    projectId: membership.project.id
                 },
                 include:{
                     user: true,
@@ -175,7 +170,8 @@ export class MembershipRepository implements IMembershipRepository {
                 created.user.name,
                 new Email(created.user.email),
                 new Password(created.user.password),
-                created.user.role
+                created.user.role,
+                created.user.id
             );
             const project = new Project(
                 created.project.name,

@@ -61,7 +61,7 @@ Este documento descreve os requisitos funcionais, não funcionais e as regras de
 
 - **RNF-01 (Segurança):** Senhas armazenadas com hash forte (ex.: bcrypt).-> ok
 - **RNF-02 (Segurança):** Autenticação via JWT e expiração configurável. -> ok
-- **RNF-04 (Desempenho):** Listagens e filtros respondem em até 2 segundos em condições normais. -> verificar
+- **RNF-04 (Desempenho):** Listagens e filtros respondem em até 2 segundos em condições normais. -> ok
 - **RNF-05 (Documentação):** API documentada de forma sucinta. -> falta
 - **RNF-06 (Testabilidade):** Testes Unitários para autenticação, autorização e CRUDs principais. -> parcial
 - **RNF-07 (Manutenibilidade):** Código seguindo boas práticas (camadas, validações). -> ok
@@ -72,9 +72,9 @@ Este documento descreve os requisitos funcionais, não funcionais e as regras de
 
 - **RN-01 (Papéis):**
   - **Diretor:** Acesso total ao sistema; pode criar/editar/desativar (soft delete) Setores, Projetos e Usuários; pode definir/alterar Roles globais -> ok.
-  - **Coordenador:** Pode gerenciar Projetos dos quais participa (editar dados do projeto, gerenciar membros do projeto); não pode alterar Roles dos usuários nem excluir Setores.
-  - **Membro:** Pode visualizar Projetos dos quais participa; não pode alterar estrutura nem Role. -> OK(criar uma usecase, parecido com o metodo de verificar projetos por setores, nesse caso preciso ver projetos por membership. -> PLANO: pegar o id membership, verificar se aquele id esta associado ao usuário que esta autenticado, possivelmente ate mesmo pelo token)
-- **RN-02 (Escopo de Permissões):** A Role é global (nível de empresa/sistema) e não muda por Projeto.  -> verificar
+  - **Coordenador:** Pode gerenciar Projetos dos quais participa (editar dados do projeto, gerenciar membros do projeto); não pode alterar Roles dos usuários nem excluir Setores. -> ok
+  - **Membro:** Pode visualizar Projetos dos quais participa; não pode alterar estrutura nem Role. -> OK(criar uma usecase, parecido com o metodo de verificar projetos por setores, nesse caso preciso ver projetos por membership. -> PLANO: pegar o id membership, verificar se aquele id esta associado ao usuário que esta autenticado, possivelmente ate mesmo pelo token)-> OK
+- **RN-02 (Escopo de Permissões):** A Role é global (nível de empresa/sistema) e não muda por Projeto.  -> ok
 - **RN-03 (Unicidade):** E-mail do usuário é único no sistema. Nome do Setor é único. Nome do Projeto é único dentro do Setor. -> ok
 - **RN-04 (Vínculos):** Um Projeto deve pertencer a um Setor obrigatório. Um Membro pode estar em vários Projetos. -> verificar
 - **RN-05 (Exclusão Lógica):** Exclusões são lógicas (soft delete) para Setores, Projetos e Usuários, com marcação de inativo e data de exclusão. -> ok
