@@ -26,7 +26,7 @@ export async function projectRoutes(app:FastifyInstance) {
          security: [{ bearerAuth: [] }],
         description: 'Create Projects',
       },
-      preHandler: [authMiddleware]
+      preHandler: [authMiddleware, requireDirector]
     },
     (request, reply) => projectController.findAll(request, reply));
 
@@ -37,7 +37,7 @@ export async function projectRoutes(app:FastifyInstance) {
          security: [{ bearerAuth: [] }],
         description: 'Get Projects',
       },
-      preHandler: [authMiddleware]
+      preHandler: [authMiddleware, requireDirector]
     },
     (request, reply) => projectController.findById(request, reply));
     app.get("/projects/pagination",
@@ -47,7 +47,7 @@ export async function projectRoutes(app:FastifyInstance) {
          security: [{ bearerAuth: [] }],
         description: 'Get pagination Projects',
       },
-      preHandler: [authMiddleware]
+      preHandler: [authMiddleware, requireDirector]
     },
     (request, reply) => projectController.listPagineted(request, reply));
 
@@ -58,7 +58,7 @@ export async function projectRoutes(app:FastifyInstance) {
          security: [{ bearerAuth: [] }],
         description: 'GetBySector Projects',
       },
-      preHandler: [authMiddleware]
+      preHandler: [authMiddleware,requireDirector]
     },
     (request, reply) => projectController.findProjectBySector(request, reply));
 
@@ -69,7 +69,7 @@ export async function projectRoutes(app:FastifyInstance) {
          security: [{ bearerAuth: [] }],
         description: 'Update Projects',
       },
-      preHandler: [authMiddleware]
+      preHandler: [authMiddleware, requireDirector]
     },
     (request, reply) => projectController.updateProject(request, reply));
 
@@ -80,7 +80,7 @@ export async function projectRoutes(app:FastifyInstance) {
          security: [{ bearerAuth: [] }],
         description: 'Delete Projects',
       },
-      preHandler: [authMiddleware]
+      preHandler: [authMiddleware, requireDirector]
     },
     (request, reply) => projectController.deleteProject(request, reply));
 
@@ -91,7 +91,7 @@ export async function projectRoutes(app:FastifyInstance) {
          security: [{ bearerAuth: [] }],
         description: 'Restore Projects',
       },
-      preHandler: [authMiddleware]
+      preHandler: [authMiddleware, requireDirector]
     },
     (request, reply) => projectController.restore(request, reply));
 

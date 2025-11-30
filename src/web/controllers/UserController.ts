@@ -10,7 +10,7 @@ import { ApiResponse } from "../Wrappers/ApiResponse";
 import { RoleType } from "@prisma/client";
 import { RestoreUserUseCase } from "../../useCases/user/RestoreUserUseCase";
 import { ListUserPaginatedUseCase } from "../../useCases/user/ListUserPaginationUseCase";
-import { LoginUserUseCase } from "../../useCases/user/LoginUserUseCase.ts";
+import { LoginUserUseCase } from "../../useCases/user/LoginUserUseCase";
 import { UpdateSelfUseCase } from "../../useCases/user/UpdateSelfUseCase";
 
 export class UserController{

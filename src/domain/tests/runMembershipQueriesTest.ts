@@ -1,67 +1,66 @@
-import { User } from "../../domain/entities/User";
-import { Project } from "../../domain/entities/Projects";
-import { Sectors } from "../../domain/entities/Sectors";
-import { Membership } from "../../domain/entities/Membership";
-import { MembershipRepository } from "../../repositories/prisma/MembershipRepository";
-import { FindMembersByProjectUseCase } from "../../useCases/membership/FindMembersByProjectUseCase";
-import { Email } from "../../domain/value-objects/Email";
-import { Password } from "../../domain/value-objects/Password";
-import { UserRole } from "../enums/UserRole";
-import { RoleType } from "../enums/RoleType";
+// import { User } from "../../domain/entities/User";
+// import { Project } from "../../domain/entities/Projects";
+// import { Sectors } from "../../domain/entities/Sectors";
+// import { Membership } from "../../domain/entities/Membership";
+// import { MembershipRepository } from "../../repositories/prisma/MembershipRepository";
+// import { FindMembersByProjectUseCase } from "../../useCases/membership/FindMembersByProjectUseCase";
+// import { Email } from "../../domain/value-objects/Email";
+// import { Password } from "../../domain/value-objects/Password";
 
-async function runFindMembersByProjectTest() {
-    const membershipRepo = new MembershipRepository();
 
-    // Criar usuários diretamente
-    const user = new User("Ruan", new Email("ruan@example.com"), new Password("12345678"), new UserRole(RoleType.DIRETOR));
-    const user2 = new User("Ana", new Email("ana@example.com"), new Password("12345678"), new UserRole(RoleType.MEMBRO));
+// async function runFindMembersByProjectTest() {
+//     const membershipRepo = new MembershipRepository();
 
-    // Criar projeto
-    const setor = new Sectors("Tecnologia", "Dev");
-  const projectResult = Project.create("Projeto Alpha", setor, "Descrição do projeto");
+//     // Criar usuários diretamente
+//     const user = new User("Ruan", new Email("ruan@example.com"), new Password("12345678"), new UserRole(RoleType.DIRETOR));
+//     const user2 = new User("Ana", new Email("ana@example.com"), new Password("12345678"), new UserRole(RoleType.MEMBRO));
 
-  if (projectResult.isFailure) {
-    console.error("❌ Erro ao criar projeto:", projectResult.getError());
-    return;
-  }
+//     // Criar projeto
+//     const setor = new Sectors("Tecnologia", "Dev");
+//   const projectResult = Project.create("Projeto Alpha", setor, "Descrição do projeto");
 
-const project = projectResult.getValue();
-    // Criar memberships
-    const membership1 = new Membership(user, project);
-    const membership2 = new Membership(user2, project);
+//   if (projectResult.isFailure) {
+//     console.error("❌ Erro ao criar projeto:", projectResult.getError());
+//     return;
+//   }
 
-    await membershipRepo.save(membership1);
-    await membershipRepo.save(membership2);
+// const project = projectResult.getValue();
+//     // Criar memberships
+//     const membership1 = new Membership(user, project);
+//     const membership2 = new Membership(user2, project);
 
-    // Logs antes de alterações
-    console.log("🔹 Membros antes de alterações:");
-    (await membershipRepo.findAll()).getValue().forEach(m => {
-        console.log(`- ${m.user.name} | Projeto: ${m.project.name} | saiu? ${m.leftAt !== null}`);
-    });
+//     await membershipRepo.save(membership1);
+//     await membershipRepo.save(membership2);
 
-    // Teste FindMembersByProjectUseCase
-    const findMembers = new FindMembersByProjectUseCase(membershipRepo);
-    const membersResult = await findMembers.execute({ projectId: project.id });
+//     // Logs antes de alterações
+//     console.log("🔹 Membros antes de alterações:");
+//     (await membershipRepo.findAll()).getValue().forEach(m => {
+//         console.log(`- ${m.user.name} | Projeto: ${m.project.name} | saiu? ${m.leftAt !== null}`);
+//     });
 
-    if (membersResult.isSuccess) {
-        console.log("✅ Membros ativos do projeto:", membersResult.getValue().map(m => m.user.name));
-    }
+//     // Teste FindMembersByProjectUseCase
+//     const findMembers = new FindMembersByProjectUseCase(membershipRepo);
+//     const membersResult = await findMembers.execute({ projectId: project.id });
 
-    // Simular usuário saindo do projeto
-    membership1.leaveProject();
-    await membershipRepo.update(membership1); // importante atualizar o repositório
+//     if (membersResult.isSuccess) {
+//         console.log("✅ Membros ativos do projeto:", membersResult.getValue().map(m => m.user.name));
+//     }
 
-    // Logs depois da saída
-    console.log("🔹 Membros após saída de Ruan:");
-    (await membershipRepo.findAll()).getValue().forEach(m => {
-        console.log(`- ${m.user.name} | Projeto: ${m.project.name} | saiu? ${m.leftAt !== null}`);
-    });
+//     // Simular usuário saindo do projeto
+//     membership1.leaveProject();
+//     await membershipRepo.update(membership1); // importante atualizar o repositório
 
-    // Reexecutar consulta após saída
-    const membersAfterLeaveResult = await findMembers.execute({ projectId: project.id });
-    if (membersAfterLeaveResult.isSuccess) {
-        console.log("✅ Membros ativos após saída:", membersAfterLeaveResult.getValue().map(m => m.user.name));
-    }
-}
+//     // Logs depois da saída
+//     console.log("🔹 Membros após saída de Ruan:");
+//     (await membershipRepo.findAll()).getValue().forEach(m => {
+//         console.log(`- ${m.user.name} | Projeto: ${m.project.name} | saiu? ${m.leftAt !== null}`);
+//     });
 
-runFindMembersByProjectTest();
+//     // Reexecutar consulta após saída
+//     const membersAfterLeaveResult = await findMembers.execute({ projectId: project.id });
+//     if (membersAfterLeaveResult.isSuccess) {
+//         console.log("✅ Membros ativos após saída:", membersAfterLeaveResult.getValue().map(m => m.user.name));
+//     }
+// }
+
+// runFindMembersByProjectTest();

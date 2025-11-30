@@ -7,6 +7,7 @@ import { UserController } from "../controllers/UserController";
 import { ProjectController } from "../controllers/ProjectController";
 import { authMiddleware } from "../../middlewares/AuthMiddlewares";
 import { CoordenadorEditProject } from "../controllers/CoordenadorEditProjectController";
+import { requireCoordenadorOrDirector } from "../../middlewares/RequireCoordenadorOrDIretorMiddleware";
 
 const membershipRepository = new MembershipRepository();
 const userRepository = new UserRepository();
@@ -14,8 +15,8 @@ const projectRepository =  new ProjectRepository();
 
 export async function CoordenadorJoinMemberRoutes(app: FastifyInstance){
     
-    const coordenadorEditProjectController = new CoordenadorEditProject()
-    // app.patch("/projects/:projectId/coordenador/:userId", {preHandler:[authMiddleware]}, (request, reply) => coordenadorEditProjectController.(request, reply))
+    const coordenadorEditProjectController = new CoordenadorEditProject();
+    
     app.post("/projects/:projectId/coordenador/:coordenadorId/add/:userIdToAdd",
         {
           schema:{
@@ -23,7 +24,7 @@ export async function CoordenadorJoinMemberRoutes(app: FastifyInstance){
             security: [{ bearerAuth: [] }],
             description: 'Coordenador add member',
           },
-          preHandler: [authMiddleware]
+          preHandler: [authMiddleware, requireCoordenadorOrDirector]
         },
         (request, reply) => coordenadorEditProjectController.addMember(request, reply));
 
@@ -34,7 +35,7 @@ export async function CoordenadorJoinMemberRoutes(app: FastifyInstance){
             security: [{ bearerAuth: [] }],
             description: 'Coordenador add member',
           },
-          preHandler: [authMiddleware]
+          preHandler: [authMiddleware, requireCoordenadorOrDirector]
         },
         (request, reply) => coordenadorEditProjectController.EditProject(request, reply));
 
@@ -45,7 +46,7 @@ export async function CoordenadorJoinMemberRoutes(app: FastifyInstance){
             security: [{ bearerAuth: [] }],
             description: 'Coordenador remove member',
           },
-          preHandler: [authMiddleware]
+          preHandler: [authMiddleware, requireCoordenadorOrDirector]
         },
         (request, reply) => coordenadorEditProjectController.removeMember(request, reply));
 }
