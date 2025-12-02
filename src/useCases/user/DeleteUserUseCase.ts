@@ -12,7 +12,7 @@ export class DeleteUserUseCase{
         try{
             const userResult = await this.userRepository.findById(request.id);
 
-            if(!userResult){
+            if(userResult.isFailure){
                 return Result.fail<void>("Usuário não encontrado");
             }
 

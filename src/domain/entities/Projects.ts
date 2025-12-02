@@ -14,7 +14,7 @@ import { ProjectStatusType } from "@prisma/client";
 
     constructor(name: string,  sector: Sectors,status: ProjectStatusType, goals: string, description: string, id?: string) {
       super();
-      this._id = id ?? uuidv4();
+      this._id = id ?? crypto.randomUUID();
       this._name = name;
       this._sector = sector;
       this._description = description;

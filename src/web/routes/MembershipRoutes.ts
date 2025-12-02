@@ -29,7 +29,7 @@ export async function membershipRoutes(app: FastifyInstance) {
         security: [{ bearerAuth: [] }],
         description: 'Get Pagination Sectors',
       },
-      preHandler: [authMiddleware, requireDirector]
+      preHandler: [authMiddleware]
     },
     (request, reply) => membershipController.listPagineted(request, reply));
 
@@ -40,7 +40,7 @@ export async function membershipRoutes(app: FastifyInstance) {
         security: [{ bearerAuth: [] }],
         description: 'Get Memberhsip by Projects',
       },
-      preHandler: [authMiddleware, requireDirector]
+      preHandler: [authMiddleware]
     },
     (request, reply) => membershipController.listByProject(request, reply));
     app.get("/memberships/:id",{
@@ -70,7 +70,7 @@ export async function membershipRoutes(app: FastifyInstance) {
         security: [{ bearerAuth: [] }],
         description: 'Get Pagination Sectors',
       },
-      preHandler: [authMiddleware, requireDirector]
+      preHandler: [authMiddleware]
     },
     (request,reply) => membershipController.findSelfProject(request, reply));
 
@@ -81,7 +81,7 @@ export async function membershipRoutes(app: FastifyInstance) {
          security: [{ bearerAuth: [] }],
         description: 'Get Pagination Sectors',
       },
-      preHandler: [authMiddleware, requireDirector]
+      preHandler: [authMiddleware]
     },
     (request, reply) =>  membershipController.leaveProject(request, reply));
 

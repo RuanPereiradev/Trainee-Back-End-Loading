@@ -5,6 +5,7 @@ import { AuditableEntity } from "../common/AuditableEntity";
 import { Result } from "../../env/Result";
 import { RoleType } from "@prisma/client";
 
+
 export class User extends AuditableEntity{
     private _id: string;
     private _name:string;
@@ -15,7 +16,7 @@ export class User extends AuditableEntity{
     constructor( name: string, email: Email, password: Password, role: RoleType, id?: string ){
         super();
         if(!name.trim()) throw new Error("O nome não pode ser vazio")
-        this._id = id ?? uuidv4();
+        this._id = id ?? crypto.randomUUID();
         this._name = name;
         this._email = email;
         this._password = password;

@@ -19,7 +19,7 @@ export class Membership extends AuditableEntity{
         if(!project){
             throw new Error("O projeto nao pode ser nulo ao criar um vinculo")
         }
-        this._id = id ?? uuidv4();
+        this._id = id ?? crypto.randomUUID();
         this._user = user;
         this._project = project;
         this._joinedAt = joinedAt ?? new Date();
