@@ -9,6 +9,8 @@ import { serializerCompiler, validatorCompiler } from "fastify-type-provider-zod
 import fastifyCors from "@fastify/cors";
 import fastifySwagger from "@fastify/swagger";
 import fastifySwaggerUi from "@fastify/swagger-ui";
+import { DocsRoutes } from "./web/routes/Docs/DocsRoutes";
+
 
 const app = Fastify({
   logger: true,
@@ -21,6 +23,7 @@ app.setSerializerCompiler(serializerCompiler);
 
 setupSwagger(app)
 
+app.register(DocsRoutes);
 
 // registra as rotas do usuário
 app.register(userRoutes);

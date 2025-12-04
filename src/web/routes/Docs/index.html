@@ -1,0 +1,1846 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TeamFlow API Documentation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --success: #4cc9f0;
+            --warning: #f72585;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --light-gray: #e9ecef;
+            --border-radius: 8px;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: #f5f7ff;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 2rem 0;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo i {
+            font-size: 2.5rem;
+        }
+
+        .logo h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+        }
+
+        .tagline {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-top: 5px;
+        }
+
+        .version-badge {
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* NOVA SEÇÃO: Quick Access */
+        .quick-access {
+            background: linear-gradient(135deg, #4cc9f0, #4361ee);
+            color: white;
+            padding: 1.5rem 0;
+            margin-bottom: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+
+        .quick-access .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .quick-links {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .quick-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .quick-link:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .quick-link.swagger {
+            background: #49cc90;
+            border-color: #49cc90;
+        }
+
+        .quick-link.swagger:hover {
+            background: #3db37d;
+        }
+
+        .quick-link.github {
+            background: #333;
+            border-color: #333;
+        }
+
+        .quick-link.github:hover {
+            background: #222;
+        }
+
+        .quick-link.health {
+            background: #f72585;
+            border-color: #f72585;
+        }
+
+        .quick-link.health:hover {
+            background: #d61a6f;
+        }
+
+        .api-status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px 15px;
+            border-radius: 20px;
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #4cc9f0;
+            animation: pulse 2s infinite;
+        }
+
+        main {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        @media (max-width: 1024px) {
+            main {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .sidebar {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+
+        .nav-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .nav-section h3 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.2rem;
+            margin-bottom: 0.8rem;
+            color: var(--secondary);
+            padding-bottom: 5px;
+            border-bottom: 2px solid var(--light-gray);
+        }
+
+        .nav-links {
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-links a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--dark);
+            padding: 8px 12px;
+            border-radius: 6px;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            background-color: var(--light-gray);
+            color: var(--primary);
+        }
+
+        .nav-links a.active {
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        .content {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .section {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .section:last-child {
+            border-bottom: none;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-header i {
+            font-size: 1.8rem;
+            color: var(--primary);
+        }
+
+        .section-header h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.8rem;
+            color: var(--secondary);
+        }
+
+        .section-description {
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .card {
+            background-color: var(--light);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--primary);
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .method {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        .method.get {
+            background-color: #61affe;
+            color: white;
+        }
+
+        .method.post {
+            background-color: #49cc90;
+            color: white;
+        }
+
+        .method.put {
+            background-color: #fca130;
+            color: white;
+        }
+
+        .method.delete {
+            background-color: #f93e3e;
+            color: white;
+        }
+
+        .method.patch {
+            background-color: #50e3c2;
+            color: white;
+        }
+
+        .endpoint {
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .permission-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+
+        .permission.diretor {
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+        }
+
+        .permission.coordenador {
+            background-color: rgba(76, 201, 240, 0.1);
+            color: #4cc9f0;
+        }
+
+        .permission.membro {
+            background-color: rgba(247, 37, 133, 0.1);
+            color: var(--warning);
+        }
+
+        .permission.authenticated {
+            background-color: rgba(108, 117, 125, 0.1);
+            color: var(--gray);
+        }
+
+        .permission.public {
+            background-color: rgba(40, 167, 69, 0.1);
+            color: #28a745;
+        }
+
+        .card-body h4 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.2rem;
+            margin-bottom: 0.8rem;
+            color: var(--dark);
+        }
+
+        .card-body p {
+            margin-bottom: 1rem;
+            color: var(--gray);
+        }
+
+        .code-block {
+            background-color: #2d3748;
+            color: #e2e8f0;
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+
+        .json-key {
+            color: #63b3ed;
+        }
+
+        .json-string {
+            color: #68d391;
+        }
+
+        .json-number {
+            color: #fbb6ce;
+        }
+
+        .json-boolean {
+            color: #f6ad55;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+
+        table th,
+        table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        table th {
+            background-color: rgba(67, 97, 238, 0.05);
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            color: var(--secondary);
+        }
+
+        table tr:hover {
+            background-color: rgba(67, 97, 238, 0.02);
+        }
+
+        .model-card {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .model-item {
+            background-color: var(--light);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            border-top: 4px solid var(--success);
+        }
+
+        .model-item h4 {
+            font-family: 'Poppins', sans-serif;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .role-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .role-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            border-top: 4px solid;
+        }
+
+        .role-card.diretor {
+            border-color: var(--primary);
+        }
+
+        .role-card.coordenador {
+            border-color: var(--success);
+        }
+
+        .role-card.membro {
+            border-color: var(--warning);
+        }
+
+        .role-card h4 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 1rem;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .role-card ul {
+            padding-left: 1.2rem;
+            color: var(--gray);
+        }
+
+        .role-card li {
+            margin-bottom: 0.5rem;
+        }
+
+        .status-codes {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .status-code {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 1rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .status-code:hover {
+            transform: translateY(-5px);
+        }
+
+        .status-code.success {
+            border-top: 4px solid #28a745;
+        }
+
+        .status-code.client-error {
+            border-top: 4px solid #fd7e14;
+        }
+
+        .status-code.server-error {
+            border-top: 4px solid #dc3545;
+        }
+
+        .status-code .code {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .status-code.success .code {
+            color: #28a745;
+        }
+
+        .status-code.client-error .code {
+            color: #fd7e14;
+        }
+
+        .status-code.server-error .code {
+            color: #dc3545;
+        }
+
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.2rem;
+        }
+
+        .contact-info {
+            text-align: right;
+        }
+
+        .contact-info a {
+            color: var(--success);
+            text-decoration: none;
+        }
+
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--primary);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            transition: var(--transition);
+            z-index: 100;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background-color: var(--secondary);
+            transform: translateY(-5px);
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+
+            .contact-info {
+                text-align: center;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo"> <i class="fas fa-users-cog"></i>
+                    <div>
+                        <h1>TeamFlow API</h1>
+                        <div class="tagline">Sistema completo para gerenciamento de equipes, setores e projetos</div>
+                    </div>
+                </div>
+                <div class="version-badge">Versão 1.0.0 • Dezembro 2024</div>
+            </div>
+        </div>
+    </header>
+    <!-- NOVA SEÇÃO: ACESSO RÁPIDO -->
+    <section class="quick-access">
+        <div class="container">
+            <div class="quick-links">
+                <a href="http://localhost:3000/swagger#" target="_blank" class="quick-link swagger"
+                    id="swagger-quick-link">
+                    <i class="fas fa-book"></i>
+                    <span>Swagger UI</span>
+                    <small style="opacity: 0.8; margin-left: 5px;">(http://localhost:3000/swagger#)</small>
+                </a>
+
+                <a href="https://github.com/RuanPereiradev/Trainee-Back-End-Loading" target="_blank"
+                    class="quick-link github">
+                    <i class="fab fa-github"></i>
+                    <span>Repositório GitHub</span>
+                </a>
+
+                <a href="/health" target="_blank" class="quick-link health">
+                    <i class="fas fa-heartbeat"></i>
+                    <span>Health Check</span>
+                </a>
+            </div>
+
+            <div class="api-status" id="api-status">
+                <div class="status-dot"></div>
+                <span>API Online</span>
+                <span style="opacity: 0.8; margin-left: 10px;">Porta: 3000</span>
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+        <main>
+            <aside class="sidebar">
+                <div class="nav-section">
+                    <h3><i class="fas fa-book"></i> Navegação</h3>
+                    <ul class="nav-links">
+                        <li><a href="#overview" class="active"><i class="fas fa-rocket"></i> Visão Geral</a></li>
+                        <li><a href="#authentication"><i class="fas fa-key"></i> Autenticação</a></li>
+                        <li><a href="#routes"><i class="fas fa-route"></i> Resumo de Rotas</a></li>
+                        <li><a href="#data-models"><i class="fas fa-database"></i> Modelos de Dados</a></li>
+                        <li><a href="#permissions"><i class="fas fa-user-tag"></i> Permissões por Papel</a></li>
+                        <li><a href="#endpoints"><i class="fas fa-code"></i> Endpoints Detalhados</a></li>
+                        <li><a href="#environment"><i class="fas fa-cogs"></i> Configuração</a></li>
+                        <li><a href="#testing"><i class="fas fa-vial"></i> Testes</a></li>
+                        <li><a href="#status-codes"><i class="fas fa-list-ol"></i> Códigos de Status</a></li>
+                        <li><a href="#examples"><i class="fas fa-play-circle"></i> Exemplos de Uso</a></li>
+                        <li><a href="#troubleshooting"><i class="fas fa-bug"></i> Troubleshooting</a></li>
+                        <li><a href="#support"><i class="fas fa-headset"></i> Suporte</a></li>
+                    </ul>
+                </div>
+
+
+                <div class="nav-section">
+                    <h3><i class="fas fa-link"></i> Links Úteis</h3>
+                    <ul class="nav-links">
+                        <li><a href="http://localhost:3000/swagger#" target="_blank"><i
+                                    class="fas fa-external-link-alt"></i> Swagger UI</a></li>
+                        <li><a href="https://github.com/RuanPereiradev/Trainee-Back-End-Loading" target="_blank"><i
+                                    class="fab fa-github"></i> Repositório GitHub</a></li>
+                    </ul>
+                </div>
+            </aside>
+
+            <div class="content">
+                <section id="overview" class="section">
+                    <div class="section-header">
+                        <i class="fas fa-rocket"></i>
+                        <h2>Visão Geral</h2>
+                    </div>
+                    <div class="section-description">
+                        TeamFlow é um sistema completo para gerenciamento de equipes, setores e projetos com controle de
+                        acesso baseado em papéis (Diretor, Coordenador, Membro). Esta API RESTful fornece todas as
+                        operações necessárias para gestão organizacional.
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <div>
+                                <span class="method get">GET</span>
+                                <span class="endpoint">URL Base: http://localhost:3000/swagger#</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <p>Acesse a documentação interativa Swagger através da URL base.</p>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <div>
+                                <span class="method post">POST</span>
+                                <span class="endpoint">/api/login/auth</span>
+                            </div>
+                            <span class="permission-badge permission public">Público</span>
+                        </div>
+                        <div class="card-body">
+                            <h4>Exemplo de login com usuário diretor</h4>
+                            <p>Use estas credenciais para testar a autenticação:</p>
+                            <div class="code-block">
+                                <span class="json-key">POST</span> http://localhost:3000/login/auth<br>
+                                <span class="json-key">Content-Type</span>: <span
+                                    class="json-string">application/json</span><br><br>
+                                {<br>
+                                &nbsp;&nbsp;<span class="json-key">"email"</span>: <span
+                                    class="json-string">"euzebio.cruz@example.com"</span>,<br>
+                                &nbsp;&nbsp;<span class="json-key">"password"</span>: <span
+                                    class="json-string">"senhatopzin123"</span><br>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="authentication" class="section">
+                    <div class="section-header">
+                        <i class="fas fa-key"></i>
+                        <h2>Autenticação</h2>
+                    </div>
+                    <div class="section-description">
+                        Todas as rotas (exceto /login/auth) requerem autenticação via Bearer Token JWT.
+                    </div>
+
+                    <div class="card">
+                        <div class="card-body">
+                            <h4>Estrutura do Token JWT</h4>
+                            <p>O token contém as informações do usuário e sua role:</p>
+                            <div class="code-block">
+                                {<br>
+                                &nbsp;&nbsp;<span class="json-key">"userId"</span>: <span
+                                    class="json-string">"string"</span>,<br>
+                                &nbsp;&nbsp;<span class="json-key">"role"</span>: <span
+                                    class="json-string">"DIRETOR|COORDENADOR|MEMBRO"</span>,<br>
+                                &nbsp;&nbsp;<span class="json-key">"iat"</span>: <span
+                                    class="json-number">number</span>,<br>
+                                &nbsp;&nbsp;<span class="json-key">"exp"</span>: <span
+                                    class="json-number">number</span><br>
+                                }
+                            </div>
+                            <p><strong>Uso em requisições:</strong> Adicione o cabeçalho
+                                <code>Authorization: Bearer &lt;seu-token-jwt&gt;</code> em todas as requisições
+                                autenticadas.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="routes" class="section">
+                    <div class="section-header">
+                        <i class="fas fa-route"></i>
+                        <h2>Resumo das Rotas</h2>
+                    </div>
+                    <div class="section-description">
+                        Tabela completa com todas as rotas disponíveis na API TeamFlow.
+                    </div>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Método</th>
+                                <th>Rota</th>
+                                <th>Descrição</th>
+                                <th>Permissão</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="method post">POST</span></td>
+                                <td><code>/api/login/auth</code></td>
+                                <td>Autenticação de usuário</td>
+                                <td><span class="permission-badge permission public">Público</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="method post">POST</span></td>
+                                <td><code>/api/users</code></td>
+                                <td>Criar novo usuário</td>
+                                <td><span class="permission-badge permission diretor">Diretor</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="method get">GET</span></td>
+                                <td><code>/api/users</code></td>
+                                <td>Listar todos os usuários</td>
+                                <td><span class="permission-badge permission diretor">Diretor</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="method get">GET</span></td>
+                                <td><code>/api/users/pagination</code></td>
+                                <td>Listar usuários com paginação</td>
+                                <td><span class="permission-badge permission diretor">Diretor</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="method get">GET</span></td>
+                                <td><code>/api/users/:id</code></td>
+                                <td>Buscar usuário por ID</td>
+                                <td><span class="permission-badge permission diretor">Diretor</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="method put">PUT</span></td>
+                                <td><code>/api/user/me</code></td>
+                                <td>Atualizar próprio perfil</td>
+                                <td><span class="permission-badge permission authenticated">Autenticado</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="method put">PUT</span></td>
+                                <td><code>/api/users/:id</code></td>
+                                <td>Atualizar usuário</td>
+                                <td><span class="permission-badge permission diretor">Diretor</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="method delete">DELETE</span></td>
+                                <td><code>/api/users/:id</code></td>
+                                <td>Desativar usuário (soft delete)</td>
+                                <td><span class="permission-badge permission diretor">Diretor</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="method patch">PATCH</span></td>
+                                <td><code>/api/users/:id/restore</code></td>
+                                <td>Restaurar usuário</td>
+                                <td><span class="permission-badge permission diretor">Diretor</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="method post">POST</span></td>
+                                <td><code>/api/sectors</code></td>
+                                <td>Criar setor</td>
+                                <td><span class="permission-badge permission diretor">Diretor</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="method get">GET</span></td>
+                                <td><code>/api/sectors</code></td>
+                                <td>Listar todos os setores</td>
+                                <td><span class="permission-badge permission diretor">Diretor</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="method get">GET</span></td>
+                                <td><code>/api/sectors/:id</code></td>
+                                <td>Buscar setor por ID</td>
+                                <td><span class="permission-badge permission diretor">Diretor</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="method put">PUT</span></td>
+                                <td><code>/api/sectors/:id</code></td>
+                                <td>Atualizar setor</td>
+                                <td><span class="permission-badge permission diretor">Diretor</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="method delete">DELETE</span></td>
+                                <td><code>/api/sectors/:id</code></td>
+                                <td>Desativar setor</td>
+                                <td><span class="permission-badge permission diretor">Diretor</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="method patch">PATCH</span></td>
+                                <td><code>/api/sectors/:id</code></td>
+                                <td>Restaurar setor</td>
+                                <td><span class="permission-badge permission diretor">Diretor</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="method post">POST</span></td>
+                                <td><code>/api/projects</code></td>
+                                <td>Criar projeto</td>
+                                <td><span class="permission-badge permission diretor">Diretor</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="method get">GET</span></td>
+                                <td><code>/api/projects</code></td>
+                                <td>Listar todos os projetos</td>
+                                <td><span class="permission-badge permission diretor">Diretor</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="method get">GET</span></td>
+                                <td><code>/api/projects/pagination</code></td>
+                                <td>Listar projetos com paginação</td>
+                                <td><span class="permission-badge permission diretor">Diretor</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="method get">GET</span></td>
+                                <td><code>/api/projects/:id</code></td>
+                                <td>Buscar projeto por ID</td>
+                                <td><span class="permission-badge permission diretor">Diretor</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="method get">GET</span></td>
+                                <td><code>/api/projects/sector/:sectorId</code></td>
+                                <td>Buscar projetos por setor</td>
+                                <td><span class="permission-badge permission diretor">Diretor</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="method put">PUT</span></td>
+                                <td><code>/api/projects/:id</code></td>
+                                <td>Atualizar projeto</td>
+                                <td><span class="permission-badge permission diretor">Diretor</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="method delete">DELETE</span></td>
+                                <td><code>/api/projects/:id</code></td>
+                                <td>Desativar projeto</td>
+                                <td><span class="permission-badge permission diretor">Diretor</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="method patch">PATCH</span></td>
+                                <td><code>/api/projects/:id/restore</code></td>
+                                <td>Restaurar projeto</td>
+                                <td><span class="permission-badge permission diretor">Diretor</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="method post">POST</span></td>
+                                <td><code>/api/memberships/join</code></td>
+                                <td>Adicionar usuário a projeto</td>
+                                <td><span class="permission-badge permission diretor">Diretor</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="method get">GET</span></td>
+                                <td><code>/api/memberships</code></td>
+                                <td>Listar todas as membership</td>
+                                <td><span class="permission-badge permission diretor">Diretor</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="method get">GET</span></td>
+                                <td><code>/api/memberships/pagination</code></td>
+                                <td>Listar membership com paginação</td>
+                                <td><span class="permission-badge permission authenticated">Autenticado</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="method get">GET</span></td>
+                                <td><code>/api/memberships/:id</code></td>
+                                <td>Buscar membership por ID</td>
+                                <td><span class="permission-badge permission diretor">Diretor</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="method get">GET</span></td>
+                                <td><code>/api/memberships/project/:projectId</code></td>
+                                <td>Buscar membros por projeto</td>
+                                <td><span class="permission-badge permission authenticated">Autenticado</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="method get">GET</span></td>
+                                <td><code>/api/memberships/me</code></td>
+                                <td>Buscar meus projetos</td>
+                                <td><span class="permission-badge permission authenticated">Autenticado</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="method post">POST</span></td>
+                                <td><code>/api/memberships/leave</code></td>
+                                <td>Sair de um projeto</td>
+                                <td><span class="permission-badge permission authenticated">Autenticado</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="method post">POST</span></td>
+                                <td><code>/api/memberships/rejoin</code></td>
+                                <td>Retornar a um projeto</td>
+                                <td><span class="permission-badge permission diretor">Diretor</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="method post">POST</span></td>
+                                <td><code>/api/projects/:projectId/coordenador/:coordenadorId/add/:userIdToAdd</code>
+                                </td>
+                                <td>Coordenador adiciona membro</td>
+                                <td><span class="permission-badge permission coordenador">Coordenador/Diretor</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><span class="method put">PUT</span></td>
+                                <td><code>/api/project/:projectId/coordenador/:coordenadorId/edit/:projectIdToEdit</code>
+                                </td>
+                                <td>Coordenador edita projeto</td>
+                                <td><span class="permission-badge permission coordenador">Coordenador/Diretor</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><span class="method delete">DELETE</span></td>
+                                <td><code>/api/project/:projectId/coordenador/:coordenadorId/remove/:userIdToRemove</code>
+                                </td>
+                                <td>Coordenador remove membro</td>
+                                <td><span class="permission-badge permission coordenador">Coordenador/Diretor</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <section id="data-models" class="section">
+                    <div class="section-header">
+                        <i class="fas fa-database"></i>
+                        <h2>Modelos de Dados</h2>
+                    </div>
+                    <div class="section-description">
+                        Estruturas de dados principais utilizadas na API TeamFlow.
+                    </div>
+
+                    <div class="model-card">
+                        <div class="model-item">
+                            <h4><i class="fas fa-user"></i> Usuário (User)</h4>
+                            <div class="code-block">
+                                {<br>
+                                &nbsp;&nbsp;<span class="json-key">id</span>: <span
+                                    class="json-string">string</span>,<br>
+                                &nbsp;&nbsp;<span class="json-key">name</span>: <span
+                                    class="json-string">string</span>,<br>
+                                &nbsp;&nbsp;<span class="json-key">email</span>: <span
+                                    class="json-string">string</span>,<br>
+                                &nbsp;&nbsp;<span class="json-key">password</span>: <span
+                                    class="json-string">string</span>, <span class="json-comment">// hashed</span><br>
+                                &nbsp;&nbsp;<span class="json-key">role</span>: <span class="json-string">"DIRETOR" |
+                                    "COORDENADOR" | "MEMBRO"</span>,<br>
+                                &nbsp;&nbsp;<span class="json-key">createdAt</span>: <span
+                                    class="json-string">Date</span>,<br>
+                                &nbsp;&nbsp;<span class="json-key">updatedAt</span>: <span
+                                    class="json-string">Date</span>,<br>
+                                &nbsp;&nbsp;<span class="json-key">deletedAt</span>: <span class="json-string">Date |
+                                    null</span><br>
+                                }
+                            </div>
+                        </div>
+
+                        <div class="model-item">
+                            <h4><i class="fas fa-building"></i> Setor (Sector)</h4>
+                            <div class="code-block">
+                                {<br>
+                                &nbsp;&nbsp;<span class="json-key">id</span>: <span
+                                    class="json-number">number</span>,<br>
+                                &nbsp;&nbsp;<span class="json-key">name</span>: <span
+                                    class="json-string">string</span>,<br>
+                                &nbsp;&nbsp;<span class="json-key">description</span>: <span
+                                    class="json-string">string</span>,<br>
+                                &nbsp;&nbsp;<span class="json-key">createdAt</span>: <span
+                                    class="json-string">Date</span>,<br>
+                                &nbsp;&nbsp;<span class="json-key">updatedAt</span>: <span
+                                    class="json-string">Date</span>,<br>
+                                &nbsp;&nbsp;<span class="json-key">deletedAt</span>: <span class="json-string">Date |
+                                    null</span><br>
+                                }
+                            </div>
+                        </div>
+
+                        <div class="model-item">
+                            <h4><i class="fas fa-project-diagram"></i> Projeto (Project)</h4>
+                            <div class="code-block">
+                                {<br>
+                                &nbsp;&nbsp;<span class="json-key">id</span>: <span
+                                    class="json-string">string</span>,<br>
+                                &nbsp;&nbsp;<span class="json-key">name</span>: <span
+                                    class="json-string">string</span>,<br>
+                                &nbsp;&nbsp;<span class="json-key">description</span>: <span
+                                    class="json-string">string</span>,<br>
+                                &nbsp;&nbsp;<span class="json-key">goals</span>: <span
+                                    class="json-string">string</span>,<br>
+                                &nbsp;&nbsp;<span class="json-key">status</span>: <span class="json-string">"PLANEJADO"
+                                    | "EM_ANDAMENTO" | "PAUSADO" | "CONCLUIDO"</span>,<br>
+                                &nbsp;&nbsp;<span class="json-key">sectorId</span>: <span
+                                    class="json-number">number</span>,<br>
+                                &nbsp;&nbsp;<span class="json-key">userId</span>: <span
+                                    class="json-string">string</span>, <span class="json-comment">// criador</span><br>
+                                &nbsp;&nbsp;<span class="json-key">createdAt</span>: <span
+                                    class="json-string">Date</span>,<br>
+                                &nbsp;&nbsp;<span class="json-key">updatedAt</span>: <span
+                                    class="json-string">Date</span>,<br>
+                                &nbsp;&nbsp;<span class="json-key">deletedAt</span>: <span class="json-string">Date |
+                                    null</span><br>
+                                }
+                            </div>
+                        </div>
+
+                        <div class="model-item">
+                            <h4><i class="fas fa-link"></i> Membership (Vínculo)</h4>
+                            <div class="code-block">
+                                {<br>
+                                &nbsp;&nbsp;<span class="json-key">id</span>: <span
+                                    class="json-string">string</span>,<br>
+                                &nbsp;&nbsp;<span class="json-key">userId</span>: <span
+                                    class="json-string">string</span>,<br>
+                                &nbsp;&nbsp;<span class="json-key">projectId</span>: <span
+                                    class="json-string">string</span>,<br>
+                                &nbsp;&nbsp;<span class="json-key">joinedAt</span>: <span
+                                    class="json-string">Date</span>,<br>
+                                &nbsp;&nbsp;<span class="json-key">leftAt</span>: <span class="json-string">Date |
+                                    null</span>,<br>
+                                &nbsp;&nbsp;<span class="json-key">createdAt</span>: <span
+                                    class="json-string">Date</span>,<br>
+                                &nbsp;&nbsp;<span class="json-key">updatedAt</span>: <span
+                                    class="json-string">Date</span><br>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="permissions" class="section">
+                    <div class="section-header">
+                        <i class="fas fa-user-tag"></i>
+                        <h2>Permissões por Papel</h2>
+                    </div>
+                    <div class="section-description">
+                        Definição de permissões para cada tipo de usuário no sistema.
+                    </div>
+
+                    <div class="role-section">
+                        <div class="role-card diretor">
+                            <h4><i class="fas fa-crown"></i> 🎯 Diretor</h4>
+                            <ul>
+                                <li>Acesso completo ao sistema</li>
+                                <li>Gerenciar usuários, setores, projetos</li>
+                                <li>Definir papéis de usuários</li>
+                                <li>Adicionar/remover membros de qualquer projeto</li>
+                                <li>Restaurar recursos desativados</li>
+                            </ul>
+                        </div>
+
+                        <div class="role-card coordenador">
+                            <h4><i class="fas fa-user-tie"></i> 📋 Coordenador</h4>
+                            <ul>
+                                <li>Gerenciar projetos dos quais participa</li>
+                                <li>Adicionar/remover membros (exceto Diretores)</li>
+                                <li>Editar dados dos projetos que coordena</li>
+                                <li>Não pode alterar papéis de usuários</li>
+                                <li>Não pode criar setores</li>
+                            </ul>
+                        </div>
+
+                        <div class="role-card membro">
+                            <h4><i class="fas fa-user"></i> 👤 Membro</h4>
+                            <ul>
+                                <li>Visualizar projetos dos quais participa</li>
+                                <li>Atualizar próprio perfil</li>
+                                <li>Sair de projetos</li>
+                                <li>Não pode gerenciar estrutura organizacional</li>
+                                <li>Não pode adicionar/remover outros membros</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="endpoints" class="section">
+                    <div class="section-header">
+                        <i class="fas fa-code"></i>
+                        <h2>Endpoints Detalhados</h2>
+                    </div>
+                    <div class="section-description">
+                        Principais endpoints com exemplos de requisição e resposta.
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <div>
+                                <span class="method post">POST</span>
+                                <span class="endpoint">/api/login/auth</span>
+                            </div>
+                            <span class="permission-badge permission public">Público</span>
+                        </div>
+                        <div class="card-body">
+                            <h4>Autenticar usuário e obter token JWT</h4>
+                            <p><strong>Body da requisição:</strong></p>
+                            <div class="code-block">
+                                {<br>
+                                &nbsp;&nbsp;<span class="json-key">"email"</span>: <span
+                                    class="json-string">"usuario@empresa.com"</span>,<br>
+                                &nbsp;&nbsp;<span class="json-key">"password"</span>: <span
+                                    class="json-string">"senha123"</span><br>
+                                }
+                            </div>
+
+                            <p><strong>Resposta (200):</strong></p>
+                            <div class="code-block">
+                                {<br>
+                                &nbsp;&nbsp;<span class="json-key">"token"</span>: <span
+                                    class="json-string">"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."</span>,<br>
+                                &nbsp;&nbsp;<span class="json-key">"user"</span>: {<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="json-key">"id"</span>: <span
+                                    class="json-string">"uuid"</span>,<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="json-key">"name"</span>: <span
+                                    class="json-string">"João Silva"</span>,<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="json-key">"email"</span>: <span
+                                    class="json-string">"joao@empresa.com"</span>,<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="json-key">"role"</span>: <span
+                                    class="json-string">"DIRETOR"</span><br>
+                                &nbsp;&nbsp;}<br>
+                                }
+                            </div>
+
+                            <p><strong>Resposta (401 - Credenciais inválidas):</strong></p>
+                            <div class="code-block">
+                                {<br>
+                                &nbsp;&nbsp;<span class="json-key">"message"</span>: <span
+                                    class="json-string">"Credenciais inválidas"</span><br>
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <div>
+                                <span class="method get">GET</span>
+                                <span class="endpoint">/api/users/pagination</span>
+                            </div>
+                            <span class="permission-badge permission diretor">Diretor</span>
+                        </div>
+                        <div class="card-body">
+                            <h4>Listar usuários com paginação</h4>
+                            <p><strong>Query Parameters:</strong></p>
+                            <div class="code-block">
+                                ?page=0&pageSize=10&role=DIRETOR&search=joao
+                            </div>
+
+                            <p><strong>Resposta:</strong></p>
+                            <div class="code-block">
+                                {<br>
+                                &nbsp;&nbsp;<span class="json-key">"data"</span>: [...],<br>
+                                &nbsp;&nbsp;<span class="json-key">"pagination"</span>: {<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="json-key">"page"</span>: <span
+                                    class="json-number">0</span>,<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="json-key">"pageSize"</span>: <span
+                                    class="json-number">10</span>,<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="json-key">"total"</span>: <span
+                                    class="json-number">45</span>,<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="json-key">"totalPages"</span>: <span
+                                    class="json-number">5</span><br>
+                                &nbsp;&nbsp;}<br>
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <div>
+                                <span class="method post">POST</span>
+                                <span class="endpoint">/api/memberships/join</span>
+                            </div>
+                            <span class="permission-badge permission diretor">Diretor</span>
+                        </div>
+                        <div class="card-body">
+                            <h4>Adicionar usuário a um projeto</h4>
+                            <p><strong>Body da requisição:</strong></p>
+                            <div class="code-block">
+                                {<br>
+                                &nbsp;&nbsp;<span class="json-key">"userId"</span>: <span
+                                    class="json-string">"user-uuid"</span>,<br>
+                                &nbsp;&nbsp;<span class="json-key">"projectId"</span>: <span
+                                    class="json-string">"project-uuid"</span><br>
+                                }
+                            </div>
+
+                            <p><strong>Regras de Negócio:</strong></p>
+                            <ul>
+                                <li>Um projeto só pode ter 1 Diretor</li>
+                                <li>Um projeto só pode ter 1 Coordenador</li>
+                                <li>Usuário não pode estar duplicado no mesmo projeto</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="environment" class="section">
+                    <div class="section-header">
+                        <i class="fas fa-cogs"></i>
+                        <h2>Configuração do Ambiente</h2>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-body">
+                            <h4>Variáveis de Ambiente (.env)</h4>
+                            <div class="code-block">
+                                <span class="json-key">DATABASE_URL</span>=<span
+                                    class="json-string">"postgresql://user:password@localhost:5432/teamflow"</span><br>
+                                <span class="json-key">JWT_SECRET</span>=<span
+                                    class="json-string">"sua-chave-secreta-aqui"</span><br>
+                                <span class="json-key">JWT_EXPIRES_IN</span>=<span class="json-string">"24h"</span><br>
+                                <span class="json-key">PORT</span>=<span class="json-number">3000</span><br>
+                                <span class="json-key">NODE_ENV</span>=<span class="json-string">"development"</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-body">
+                            <h4>Instalação e Execução</h4>
+                            <div class="code-block">
+                                <span class="json-comment"># 1. Clonar repositório</span><br>
+                                git clone &lt;repo-url&gt;<br>
+                                cd fastify-clean-arch<br><br>
+
+                                <span class="json-comment"># 2. Instalar dependências</span><br>
+                                npm install<br><br>
+
+                                <span class="json-comment"># 3. Configurar banco de dados</span><br>
+                                npx prisma migrate dev<br><br>
+
+                                <span class="json-comment"># 4. Executar em desenvolvimento</span><br>
+                                npm run dev<br><br>
+
+                                <span class="json-comment"># 5. Executar testes</span><br>
+                                npm test
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="testing" class="section">
+                    <div class="section-header">
+                        <i class="fas fa-vial"></i>
+                        <h2>Testes</h2>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-body">
+                            <h4>Tipos de Testes Implementados</h4>
+                            <ul>
+                                <li>✅ Testes unitários para Use Cases</li>
+                                <li>✅ Testes de integração para repositórios</li>
+                                <li>✅ Testes de middleware (autenticação/autorização)</li>
+                                <li>✅ Testes de validação de dados</li>
+                            </ul>
+
+                            <h4 style="margin-top: 1.5rem;">Executar Testes</h4>
+                            <div class="code-block">
+                                <span class="json-comment"># Todos os testes</span><br>
+                                npm test<br><br>
+                                <span class="json-comment"># Testes específicos</span><br>
+                                npm test -- --testPathPattern=User<br><br>
+
+                                <span class="json-comment"># Testes com cobertura</span><br>
+                                npm test -- --coverage
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="status-codes" class="section">
+                    <div class="section-header">
+                        <i class="fas fa-list-ol"></i>
+                        <h2>Códigos de Status</h2>
+                    </div>
+
+                    <div class="status-codes">
+                        <div class="status-code success">
+                            <div class="code">200</div>
+                            <div>Sucesso</div>
+                        </div>
+
+                        <div class="status-code success">
+                            <div class="code">201</div>
+                            <div>Criado com sucesso</div>
+                        </div>
+
+                        <div class="status-code client-error">
+                            <div class="code">400</div>
+                            <div>Requisição inválida</div>
+                        </div>
+
+                        <div class="status-code client-error">
+                            <div class="code">401</div>
+                            <div>Não autenticado</div>
+                        </div>
+
+                        <div class="status-code client-error">
+                            <div class="code">403</div>
+                            <div>Permissão negada</div>
+                        </div>
+
+                        <div class="status-code client-error">
+                            <div class="code">404</div>
+                            <div>Recurso não encontrado</div>
+                        </div>
+
+                        <div class="status-code client-error">
+                            <div class="code">409</div>
+                            <div>Conflito (duplicação, regra de negócio)</div>
+                        </div>
+
+                        <div class="status-code server-error">
+                            <div class="code">500</div>
+                            <div>Erro interno do servidor</div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="examples" class="section">
+                    <div class="section-header">
+                        <i class="fas fa-play-circle"></i>
+                        <h2>Exemplos de Uso</h2>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-body">
+                            <h4>1. Fluxo de Autenticação</h4>
+                            <div class="code-block">
+                                <span class="json-comment"># 1. Login</span><br>
+                                curl -X POST http://localhost:3000/api/login/auth \<br>
+                                &nbsp;&nbsp;-H <span class="json-string">"Content-Type: application/json"</span> \<br>
+                                &nbsp;&nbsp;-d <span
+                                    class="json-string">'{"email":"admin@empresa.com","password":"Senha@123"}'</span><br><br>
+
+                                <span class="json-comment"># 2. Usar token em requisições subsequentes</span><br>
+                                curl -X GET http://localhost:3000/api/users \<br>
+                                &nbsp;&nbsp;-H <span class="json-string">"Authorization: Bearer
+                                    &lt;token-jwt&gt;"</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-body">
+                            <h4>2. Criar Estrutura Organizacional</h4>
+                            <div class="code-block">
+                                <span class="json-comment"># 1. Criar setor (como Diretor)</span><br>
+                                curl -X POST http://localhost:3000/api/sectors \<br>
+                                &nbsp;&nbsp;-H <span class="json-string">"Authorization: Bearer &lt;token&gt;"</span>
+                                \<br>
+                                &nbsp;&nbsp;-d <span class="json-string">'{"name":"TI","description":"Tecnologia da
+                                    Informação"}'</span><br><br>
+
+                                <span class="json-comment"># 2. Criar projeto no setor</span><br>
+                                curl -X POST http://localhost:3000/api/projects \<br>
+                                &nbsp;&nbsp;-H <span class="json-string">"Authorization: Bearer &lt;token&gt;"</span>
+                                \<br>
+                                &nbsp;&nbsp;-d <span class="json-string">'{"name":"Sistema
+                                    Interno","sectorId":1,"status":"PLANEJADO"}'</span><br><br>
+
+                                <span class="json-comment"># 3. Adicionar membros ao projeto</span><br>
+                                curl -X POST http://localhost:3000/api/memberships/join \<br>
+                                &nbsp;&nbsp;-H <span class="json-string">"Authorization: Bearer &lt;token&gt;"</span>
+                                \<br>
+                                &nbsp;&nbsp;-d <span
+                                    class="json-string">'{"userId":"uuid-usuario","projectId":"uuid-projeto"}'</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="troubleshooting" class="section">
+                    <div class="section-header">
+                        <i class="fas fa-bug"></i>
+                        <h2>Troubleshooting</h2>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-body">
+                            <h4>Problemas Comuns</h4>
+                            <table>
+                                <tr>
+                                    <th>Problema</th>
+                                    <th>Solução</th>
+                                </tr>
+                                <tr>
+                                    <td>Erro de conexão com banco de dados</td>
+                                    <td>Verificar DATABASE_URL no .env. Confirmar se PostgreSQL está rodando.</td>
+                                </tr>
+                                <tr>
+                                    <td>Erro "Token inválido"</td>
+                                    <td>Verificar se token não expirou. Confirmar se JWT_SECRET está configurado.</td>
+                                </tr>
+                                <tr>
+                                    <td>Erro de permissão</td>
+                                    <td>Verificar role do usuário no token. Confirmar se usuário tem acesso ao recurso.
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Erro de validação</td>
+                                    <td>Verificar schema Zod nas rotas. Confirmar tipos e formatos dos dados.</td>
+                                </tr>
+                            </table>
+
+                            <h4 style="margin-top: 1.5rem;">Logs</h4>
+                            <div class="code-block">
+                                <span class="json-comment"># Modo desenvolvimento (logs detalhados)</span><br>
+                                npm run dev<br><br>
+
+                                <span class="json-comment"># Modo produção</span><br>
+                                npm start<br><br>
+
+                                <span class="json-comment"># Verificar logs do banco (Prisma)</span><br>
+                                npx prisma studio
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="support" class="section">
+                    <div class="section-header">
+                        <i class="fas fa-headset"></i>
+                        <h2>Suporte</h2>
+                    </div>
+
+                    <section class="section">
+                        <div class="section-header">
+                            <i class="fas fa-wrench"></i>
+                            <h2>Testar Rotas</h2>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-body">
+                                <h4>Verificar endpoints disponíveis</h4>
+
+                                <div style="display: flex; gap: 10px; margin-top: 15px;">
+                                    <button onclick="testEndpoint('/swagger#')" class="test-btn">
+                                        Testar /api-docs
+                                    </button>
+                                    <button onclick="testEndpoint('/health')" class="test-btn">
+                                        Testar /health
+                                    </button>
+                                    <button onclick="testEndpoint('/docs')" class="test-btn">
+                                        Testar /docs
+                                    </button>
+                                    <button onclick="testEndpoint('/api/login/auth')" class="test-btn">
+                                        Testar /api/login/auth
+                                    </button>
+                                </div>
+
+                                <div id="test-results"
+                                    style="margin-top: 20px; padding: 15px; border-radius: 5px; background: #f8f9fa; display: none;">
+                                    <h5>Resultados:</h5>
+                                    <div id="result-content"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <script>
+                        async function testEndpoint(endpoint)
+                        {
+                            const resultsDiv = document.getElementById('test-results');
+                            const contentDiv = document.getElementById('result-content');
+
+                            resultsDiv.style.display = 'block';
+                            contentDiv.innerHTML = `<p><i class="fas fa-spinner fa-spin"></i> Testando ${endpoint}...</p>`;
+
+                            try
+                            {
+                                const response = await fetch(endpoint, { method: 'HEAD' });
+                                if (response.ok)
+                                {
+                                    contentDiv.innerHTML = `
+                                        <p style="color: green;">
+                                            <i class="fas fa-check-circle"></i> ${endpoint} → <strong>OK</strong> (Status: ${response.status})
+                                        </p>
+                                        <p><small>Tempo de resposta: ${response.headers.get('x-response-time') || 'N/A'}</small></p>
+                                    `;
+
+                                    // Se for /api-docs, atualiza o link
+                                    if (endpoint === '/api-docs')
+                                    {
+                                        const swaggerLink = document.getElementById('swagger-link');
+                                        if (swaggerLink)
+                                        {
+                                            swaggerLink.href = '/api-docs';
+                                            swaggerLink.innerHTML = '<i class="fas fa-external-link-alt"></i> Swagger UI ✅';
+                                        }
+                                    }
+                                } else
+                                {
+                                    contentDiv.innerHTML = `
+                                        <p style="color: orange;">
+                                            <i class="fas fa-exclamation-triangle"></i> ${endpoint} → <strong>${response.status}</strong>
+                                        </p>
+                                    `;
+                                }
+                            } catch (error)
+                            {
+                                contentDiv.innerHTML = `
+                                    <p style="color: red;">
+                                        <i class="fas fa-times-circle"></i> ${endpoint} → <strong>ERRO</strong>
+                                    </p>
+                                    <p><small>${error.message}</small></p>
+                                `;
+                            }
+                        }
+
+                        // Testa automaticamente ao carregar
+                        document.addEventListener('DOMContentLoaded', function ()
+                        {
+                            setTimeout(() => testEndpoint('/api-docs'), 2000);
+                        });
+                    </script>
+
+                    <style>
+                        .test-btn {
+                            background-color: #4361ee;
+                            color: white;
+                            border: none;
+                            padding: 8px 16px;
+                            border-radius: 4px;
+                            cursor: pointer;
+                            font-size: 0.9rem;
+                        }
+
+                        .test-btn:hover {
+                            background-color: #3a0ca3;
+                        }
+                    </style>
+
+                    <div class="card">
+                        <div class="card-body">
+                            <p>Para questões sobre a API:</p>
+                            <ul>
+                                <li><a href="/swagger#" target="_blank" id="swagger-link"><i
+                                            class="fas fa-external-link-alt"></i> Swagger UI</a></li>
+                                <li><strong>Repositório:</strong> <a
+                                        href="https://github.com/RuanPereiradev/Trainee-Back-End-Loading"
+                                        target="_blank">GitHub do Projeto</a></li>
+                                <li><strong>Issues:</strong> Reportar problemas no repositório</li>
+                                <li><strong>Email:</strong> ruanpereira@alu.ufc.br</li>
+                            </ul>
+
+                            <p style="margin-top: 1.5rem;"><strong>Time de Desenvolvimento:</strong> Loading Jr - UFC
+                            </p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <i class="fas fa-users-cog"></i>
+                    <span>TeamFlow API</span>
+                </div>
+                <div class="contact-info">
+                    <p><i class="fas fa-code-branch"></i> Versão 1.0.0 • Última Atualização: Dezembro 2024</p>
+                    <p><i class="fas fa-users"></i> Desenvolvido por Loading Jr - UFC</p>
+                    <p><i class="fas fa-envelope"></i> <a
+                            href="mailto:ruanpereira@alu.ufc.br">ruanpereira@alu.ufc.br</a></p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div id="backToTop" class="back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <script>
+
+        // Testa se o Swagger está disponível
+        document.addEventListener('DOMContentLoaded', function ()
+        {
+            const swaggerLink = document.getElementById('swagger-link');
+            if (!swaggerLink) return;
+
+            // Remove qualquer link quebrado
+            swaggerLink.removeAttribute('href');
+
+            // Testa se /api-docs existe
+            fetch('/api-docs', { method: 'HEAD' })
+                .then(response =>
+                {
+                    if (response.ok)
+                    {
+                        // Swagger encontrado em /api-docs
+                        swaggerLink.href = '/api-docs';
+                        swaggerLink.title = 'Swagger UI - Documentação interativa';
+                        console.log('✅ Swagger encontrado em /api-docs');
+                    } else
+                    {
+                        // Tenta /docs (pode ser outro lugar)
+                        return fetch('/docs', { method: 'HEAD' });
+                    }
+                })
+                .then(response =>
+                {
+                    if (response && response.ok)
+                    {
+                        swaggerLink.href = '/docs';
+                        swaggerLink.title = 'Swagger UI - Documentação interativa';
+                        console.log('✅ Swagger encontrado em /docs');
+                    }
+                })
+                .catch(error =>
+                {
+                    console.log('❌ Swagger não encontrado:', error);
+                    swaggerLink.onclick = function (e)
+                    {
+                        e.preventDefault();
+                        alert('Swagger UI não está disponível.\nTente acessar /api-docs ou /docs manualmente.');
+                    };
+                });
+        });
+
+        // Adiciona confirmação antes de abrir
+        document.addEventListener('click', function (e)
+        {
+            if (e.target.id === 'swagger-link' || e.target.closest('#swagger-link'))
+            {
+                e.preventDefault();
+                const link = e.target.id === 'swagger-link' ? e.target : e.target.closest('#swagger-link');
+                if (link.href)
+                {
+                    const confirmOpen = confirm('Abrir Swagger UI em nova aba?');
+                    if (confirmOpen)
+                    {
+                        window.open(link.href, '_blank');
+                    }
+                } else
+                {
+                    alert('Swagger UI não configurado. Verifique a URL do Swagger.');
+                }
+            }
+        });
+
+        // Back to top button
+        const backToTop = document.getElementById('backToTop');
+
+        window.addEventListener('scroll', () =>
+        {
+            if (window.pageYOffset > 300)
+            {
+                backToTop.classList.add('show');
+            } else
+            {
+                backToTop.classList.remove('show');
+            }
+        });
+
+        backToTop.addEventListener('click', () =>
+        {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('.nav-links a').forEach(anchor =>
+        {
+            anchor.addEventListener('click', function (e)
+            {
+                e.preventDefault();
+
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+
+                if (targetElement)
+                {
+                    // Update active link
+                    document.querySelectorAll('.nav-links a').forEach(link =>
+                    {
+                        link.classList.remove('active');
+                    });
+                    this.classList.add('active');
+
+                    // Scroll to target
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 20,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Update active link on scroll
+        window.addEventListener('scroll', () =>
+        {
+            const sections = document.querySelectorAll('.section');
+            const navLinks = document.querySelectorAll('.nav-links a');
+
+            let currentSection = '';
+
+            sections.forEach(section =>
+            {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+
+                if (window.pageYOffset >= sectionTop - 100)
+                {
+                    currentSection = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link =>
+            {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${currentSection}`)
+                {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
