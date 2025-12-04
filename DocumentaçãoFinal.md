@@ -457,9 +457,12 @@ npm install
 npx prisma migrate dev
 
 # 4. Executar em desenvolvimento
-npm run dev
+npx ts-node src/server.ts
 
-# 5. Executar testes
+#5. Acesse a documentação 
+http://localhost:3000/docs
+
+# 6. Executar testes
 npm test
 ```
 ```yml
