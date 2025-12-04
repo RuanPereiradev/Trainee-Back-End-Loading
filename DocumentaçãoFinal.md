@@ -448,7 +448,7 @@ Instalação e Execução
 ```bash
 # 1. Clonar repositório
 git clone <repo-url>
-cd TeamFlow
+cd fastify-clean-arch
 
 # 2. Instalar dependências
 npm install
@@ -514,7 +514,7 @@ npm test -- --coverage
 ```
 # 📊 Códigos de Status
 ## Código :	Descrição
--  200	:  Sucesso
+- 200	:  Sucesso
 - 201   : Criado com sucesso
 - 400	: Requisição inválida
 - 401	: Não autenticado
