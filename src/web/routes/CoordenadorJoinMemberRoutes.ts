@@ -8,6 +8,7 @@ import { ProjectController } from "../controllers/ProjectController";
 import { authMiddleware } from "../../middlewares/AuthMiddlewares";
 import { CoordenadorEditProject } from "../controllers/CoordenadorEditProjectController";
 import { requireCoordenadorOrDirector } from "../../middlewares/RequireCoordenadorOrDIretorMiddleware";
+import z from "zod";
 
 const membershipRepository = new MembershipRepository();
 const userRepository = new UserRepository();
@@ -30,10 +31,16 @@ export async function CoordenadorJoinMemberRoutes(app: FastifyInstance){
 
     app.put("/project/:projectId/coordenador/:coordenadorId/edit/:projectIdToEdit",
         {  
-        schema:{
-            tags:['Coordenador'],
+          schema: {
+            tags: ['Coordenador'],
             security: [{ bearerAuth: [] }],
             description: 'Coordenador add member',
+            body: z.object({
+              name: z.string().min(4, { message: "Nome deve ter pelo menos 4 caracteres" }).describe("Nome do projeto"),
+              status: z.enum(["PLANEJADO", "EM_ANDAMENTO", "PAUSADO", "CONCLUIDO"]).describe("Status do projeto"),
+              description: z.string().min(6, { message: "Descrição deve ter pelo menos 6 caracteres" }).describe("Descrição"),
+              goals: z.string().min(6, { message: "Metas deve ter pelo menos 6 caracteres" }).describe("Metas")
+        })
           },
           preHandler: [authMiddleware, requireCoordenadorOrDirector]
         },

@@ -59,7 +59,7 @@ export async function membershipRoutes(app: FastifyInstance) {
         security: [{ bearerAuth: [] }],
         description: 'Get Pagination Sectors',
       },
-      preHandler: [authMiddleware, requireDirector]
+      preHandler: [authMiddleware]
     },
     (request,reply) => membershipController.findAllMembership(request, reply));
 

@@ -89,3 +89,41 @@
 
 # DELETE /project/298d471d-2a3f-43eb-b5d3-c730112e75d1/coordenador/e7261645-c402-4994-b758-96600a03d172/remove/faa2922c-ccaf-4308-a5b6-0964114a22fe
 # Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJmNzdkZjc0Ny03OTE0LTRjODEtODRlZS02NjI5ZjgyOTQ2NzYiLCJyb2xlIjoiQ09PUkRFTkFET1IiLCJpYXQiOjE3NjQzODcxODEsImV4cCI6MTc2NDQ3MzU4MX0.ok-8OWOEaDOrIqhmA__jt-TPDQZubrT756o1epOUfWk
+
+
+
+# "email": "coordenador.cruz@example.com",
+# "password": "senhatopzin123"
+
+
+	
+# Response body
+# Download
+# {
+#   "_traceId": "aec212ab-2922-4073-961e-aeb1db491e15",
+#   "_success": true,
+#   "_data": {
+#     "_isActive": true,
+#     "_deletedAt": null,
+#     "_createdAt": "2025-12-04T17:27:30.776Z",
+#     "_updatedAt": "2025-12-04T17:27:30.776Z",
+#     "_id": "b0062c28-fefe-4bf6-bcf0-9799a25f9805",
+#     "_name": "New Member",
+#     "_email": {
+#       "_email": "member@example.com"
+#     },
+#     "_password": {
+#       "_password": "$2b$10$.2bwc549pWzNMvL7lFyYYOWEuW6pIVUQ2vBgDz0S/w5XvUgKZJPEC"
+#     },
+#     "_role": "MEMBRO"
+#   },
+#   "_errors": null
+# }
+
+
+# {
+#   "name": "Membership teste atualizado",
+#   "email": "testemembership.cruz@example.com",
+#   "password": "senhatopzin123",
+#   "role": "MEMBRO"
+# }
