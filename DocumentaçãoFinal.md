@@ -3,7 +3,18 @@
 
 TeamFlow é um sistema completo para gerenciamento de equipes, setores e projetos com controle de acesso baseado em papéis (Diretor, Coordenador, Membro). Esta API RESTful fornece todas as operações necessárias para gestão organizacional.
 
-- URL Base: http://localhost:3000/api (ou conforme configuração)
+- URL Base: http://localhost:3000/swagger# (ou conforme configuração)
+### Exemplo de usuario com role diretor pra login auth
+
+```json
+ POST http://localhost:3000/login/auth
+ Content-Type: application/json
+
+ {
+   "email": "euzebio.cruz@example.com",
+   "password": "senhatopzin123"
+ }
+ ```
 
 ### 🔐 Autenticação
 - Todas as rotas (exceto /login/auth) requerem autenticação via Bearer Token JWT.
@@ -19,7 +30,9 @@ Estrutura do Token:
 ```
 
 ## 📊 Resumo das Rotas
+
 ### Método	Rota	Descrição	Permissão
+
 ### POST /api/login/auth	
     - Autenticação de usuário   Público
 
