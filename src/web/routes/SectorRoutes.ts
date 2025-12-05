@@ -2,6 +2,7 @@ import { FastifyInstance } from "fastify";
 import { SectorController } from "../controllers/SectorController";
 import { authMiddleware } from "../../middlewares/AuthMiddlewares";
 import { requireDirector } from "../../middlewares/RequireDirectorMiddleware";
+import z from "zod";
 
 export async function SectorRoutes(app:FastifyInstance) {
     const sectorController = new SectorController();
@@ -12,6 +13,10 @@ export async function SectorRoutes(app:FastifyInstance) {
         tags:['Sector'],
          security: [{ bearerAuth: [] }],
         description: 'Get Sectors',
+        body: z.object({
+          name: z.string().min(2).describe("Nome do setor"),
+          description: z.string().min(6).describe("Descrição do projeto")
+        })
       },
       preHandler: [authMiddleware, requireDirector]
     },
@@ -45,6 +50,10 @@ export async function SectorRoutes(app:FastifyInstance) {
         tags:['Sector'],
          security: [{ bearerAuth: [] }],
         description: 'Update Sectors',
+        body: z.object({
+          name: z.string().min(2).describe("Novo nome do setor"),
+          description: z.string().min(6).describe("Nova descrição")
+        })
       },
       preHandler: [authMiddleware, requireDirector]
     },

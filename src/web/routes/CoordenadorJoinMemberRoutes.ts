@@ -40,7 +40,7 @@ export async function CoordenadorJoinMemberRoutes(app: FastifyInstance){
               status: z.enum(["PLANEJADO", "EM_ANDAMENTO", "PAUSADO", "CONCLUIDO"]).describe("Status do projeto"),
               description: z.string().min(6, { message: "Descrição deve ter pelo menos 6 caracteres" }).describe("Descrição"),
               goals: z.string().min(6, { message: "Metas deve ter pelo menos 6 caracteres" }).describe("Metas")
-        })
+            })
           },
           preHandler: [authMiddleware, requireCoordenadorOrDirector]
         },

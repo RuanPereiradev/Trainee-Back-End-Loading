@@ -1,11 +1,14 @@
-import { FastifyInstance } from "fastify";
+// import { FastifyInstance } from "fastify";
 import { ProjectController } from "../controllers/ProjectController";
 import { authMiddleware } from "../../middlewares/AuthMiddlewares";
 import { requireCoordenador } from "../../middlewares/RequireCoordenadorMiddleware";
 import { requireDirector } from "../../middlewares/RequireDirectorMiddleware";
 import { requireCoordenadorOrDirector } from "../../middlewares/RequireCoordenadorOrDIretorMiddleware";
+import z from "zod";
+import { FastifyTypedInstance } from "../../config/swagger/FastifyTypedInstance";
 
-export async function projectRoutes(app:FastifyInstance) {
+
+export async function projectRoutes(app:FastifyTypedInstance) {
     
     const projectController = new ProjectController();
 
@@ -15,6 +18,13 @@ export async function projectRoutes(app:FastifyInstance) {
         tags:['Projects'],
          security: [{ bearerAuth: [] }],
         description: 'Create Projects',
+        body: z.object({
+          name: z.string().min(1).describe("Nome do usuário"),
+          sectorId: z.number().describe("id do setor"),
+          status: z.enum(["PLANEJADO" , "EM_ANDAMENTO" , "PAUSADO" , "CONCLUIDO"]),
+          description: z.string().min(6).describe("Descrição"),
+          goals: z.string().min(6).describe("Metas")
+        })
       },
       preHandler: [authMiddleware, requireDirector]
     },
@@ -68,6 +78,13 @@ export async function projectRoutes(app:FastifyInstance) {
         tags:['Projects'],
          security: [{ bearerAuth: [] }],
         description: 'Update Projects',
+        body: z.object({
+          name: z.string().min(1).describe("Nome do usuário"),
+          sectorId: z.number().describe("id do setor"),
+          status: z.enum(["PLANEJADO" , "EM_ANDAMENTO" , "PAUSADO" , "CONCLUIDO"]),
+          description: z.string().min(6).describe("Descrição"),
+          goals: z.string().min(6).describe("Metas")
+        })
       },
       preHandler: [authMiddleware, requireDirector]
     },

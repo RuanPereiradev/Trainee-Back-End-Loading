@@ -657,7 +657,7 @@
                         <div class="tagline">Sistema completo para gerenciamento de equipes, setores e projetos</div>
                     </div>
                 </div>
-                <div class="version-badge">Versão 1.0.0 • Dezembro 2024</div>
+                <div class="version-badge">Versão 1.5 • Dezembro 2025</div>
             </div>
         </div>
     </header>
@@ -734,7 +734,23 @@
                     <div class="section-description">
                         TeamFlow é um sistema completo para gerenciamento de equipes, setores e projetos com controle de
                         acesso baseado em papéis (Diretor, Coordenador, Membro). Esta API RESTful fornece todas as
-                        operações necessárias para gestão organizacional.
+                        operações necessárias para gestão organizacional. O projeto usa as seguintes tecnologias: 
+                        . Fastify
+                        . TypeScript
+                        . Prisma
+                        . PostgreSQL
+                        . Docker/Docker Compose
+                        . JWT
+                        . Bcrypt
+                        . Jest
+                        . Swagger (OpenAPI)
+                        . Insomnia/Postman
+                        . Git/GitHub
+                        . ESLint/Prettier
+                        . Zod
+
+                        <br>
+                        Além disso, utilizei como arquitetura de desenvolvimento o Clean Archtecture, adotando padrões de resposta para api: Result Patern, além de classe de auditoria que pode ser vista em AuditableEntity
                     </div>
 
                     <div class="card">
@@ -829,193 +845,193 @@
                         <tbody>
                             <tr>
                                 <td><span class="method post">POST</span></td>
-                                <td><code>/api/login/auth</code></td>
+                                <td><code>/login/auth</code></td>
                                 <td>Autenticação de usuário</td>
                                 <td><span class="permission-badge permission public">Público</span></td>
                             </tr>
                             <tr>
                                 <td><span class="method post">POST</span></td>
-                                <td><code>/api/users</code></td>
+                                <td><code>/users</code></td>
                                 <td>Criar novo usuário</td>
                                 <td><span class="permission-badge permission diretor">Diretor</span></td>
                             </tr>
                             <tr>
                                 <td><span class="method get">GET</span></td>
-                                <td><code>/api/users</code></td>
+                                <td><code>/users</code></td>
                                 <td>Listar todos os usuários</td>
                                 <td><span class="permission-badge permission diretor">Diretor</span></td>
                             </tr>
                             <tr>
                                 <td><span class="method get">GET</span></td>
-                                <td><code>/api/users/pagination</code></td>
+                                <td><code>/users/pagination</code></td>
                                 <td>Listar usuários com paginação</td>
                                 <td><span class="permission-badge permission diretor">Diretor</span></td>
                             </tr>
                             <tr>
                                 <td><span class="method get">GET</span></td>
-                                <td><code>/api/users/:id</code></td>
+                                <td><code>/users/:id</code></td>
                                 <td>Buscar usuário por ID</td>
                                 <td><span class="permission-badge permission diretor">Diretor</span></td>
                             </tr>
                             <tr>
                                 <td><span class="method put">PUT</span></td>
-                                <td><code>/api/user/me</code></td>
+                                <td><code>/user/me</code></td>
                                 <td>Atualizar próprio perfil</td>
                                 <td><span class="permission-badge permission authenticated">Autenticado</span></td>
                             </tr>
                             <tr>
                                 <td><span class="method put">PUT</span></td>
-                                <td><code>/api/users/:id</code></td>
+                                <td><code>/users/:id</code></td>
                                 <td>Atualizar usuário</td>
                                 <td><span class="permission-badge permission diretor">Diretor</span></td>
                             </tr>
                             <tr>
                                 <td><span class="method delete">DELETE</span></td>
-                                <td><code>/api/users/:id</code></td>
+                                <td><code>/users/:id</code></td>
                                 <td>Desativar usuário (soft delete)</td>
                                 <td><span class="permission-badge permission diretor">Diretor</span></td>
                             </tr>
                             <tr>
                                 <td><span class="method patch">PATCH</span></td>
-                                <td><code>/api/users/:id/restore</code></td>
+                                <td><code>/users/:id/restore</code></td>
                                 <td>Restaurar usuário</td>
                                 <td><span class="permission-badge permission diretor">Diretor</span></td>
                             </tr>
                             <tr>
                                 <td><span class="method post">POST</span></td>
-                                <td><code>/api/sectors</code></td>
+                                <td><code>/sectors</code></td>
                                 <td>Criar setor</td>
                                 <td><span class="permission-badge permission diretor">Diretor</span></td>
                             </tr>
                             <tr>
                                 <td><span class="method get">GET</span></td>
-                                <td><code>/api/sectors</code></td>
+                                <td><code>/sectors</code></td>
                                 <td>Listar todos os setores</td>
                                 <td><span class="permission-badge permission diretor">Diretor</span></td>
                             </tr>
                             <tr>
                                 <td><span class="method get">GET</span></td>
-                                <td><code>/api/sectors/:id</code></td>
+                                <td><code>/sectors/:id</code></td>
                                 <td>Buscar setor por ID</td>
                                 <td><span class="permission-badge permission diretor">Diretor</span></td>
                             </tr>
                             <tr>
                                 <td><span class="method put">PUT</span></td>
-                                <td><code>/api/sectors/:id</code></td>
+                                <td><code>/sectors/:id</code></td>
                                 <td>Atualizar setor</td>
                                 <td><span class="permission-badge permission diretor">Diretor</span></td>
                             </tr>
                             <tr>
                                 <td><span class="method delete">DELETE</span></td>
-                                <td><code>/api/sectors/:id</code></td>
+                                <td><code>/sectors/:id</code></td>
                                 <td>Desativar setor</td>
                                 <td><span class="permission-badge permission diretor">Diretor</span></td>
                             </tr>
                             <tr>
                                 <td><span class="method patch">PATCH</span></td>
-                                <td><code>/api/sectors/:id</code></td>
+                                <td><code>/sectors/:id</code></td>
                                 <td>Restaurar setor</td>
                                 <td><span class="permission-badge permission diretor">Diretor</span></td>
                             </tr>
                             <tr>
                                 <td><span class="method post">POST</span></td>
-                                <td><code>/api/projects</code></td>
+                                <td><code>/projects</code></td>
                                 <td>Criar projeto</td>
                                 <td><span class="permission-badge permission diretor">Diretor</span></td>
                             </tr>
                             <tr>
                                 <td><span class="method get">GET</span></td>
-                                <td><code>/api/projects</code></td>
+                                <td><code>/projects</code></td>
                                 <td>Listar todos os projetos</td>
                                 <td><span class="permission-badge permission diretor">Diretor</span></td>
                             </tr>
                             <tr>
                                 <td><span class="method get">GET</span></td>
-                                <td><code>/api/projects/pagination</code></td>
+                                <td><code>/projects/pagination</code></td>
                                 <td>Listar projetos com paginação</td>
                                 <td><span class="permission-badge permission diretor">Diretor</span></td>
                             </tr>
                             <tr>
                                 <td><span class="method get">GET</span></td>
-                                <td><code>/api/projects/:id</code></td>
+                                <td><code>/projects/:id</code></td>
                                 <td>Buscar projeto por ID</td>
                                 <td><span class="permission-badge permission diretor">Diretor</span></td>
                             </tr>
                             <tr>
                                 <td><span class="method get">GET</span></td>
-                                <td><code>/api/projects/sector/:sectorId</code></td>
+                                <td><code>/projects/sector/:sectorId</code></td>
                                 <td>Buscar projetos por setor</td>
                                 <td><span class="permission-badge permission diretor">Diretor</span></td>
                             </tr>
                             <tr>
                                 <td><span class="method put">PUT</span></td>
-                                <td><code>/api/projects/:id</code></td>
+                                <td><code>/projects/:id</code></td>
                                 <td>Atualizar projeto</td>
                                 <td><span class="permission-badge permission diretor">Diretor</span></td>
                             </tr>
                             <tr>
                                 <td><span class="method delete">DELETE</span></td>
-                                <td><code>/api/projects/:id</code></td>
+                                <td><code>/projects/:id</code></td>
                                 <td>Desativar projeto</td>
                                 <td><span class="permission-badge permission diretor">Diretor</span></td>
                             </tr>
                             <tr>
                                 <td><span class="method patch">PATCH</span></td>
-                                <td><code>/api/projects/:id/restore</code></td>
+                                <td><code>/projects/:id/restore</code></td>
                                 <td>Restaurar projeto</td>
                                 <td><span class="permission-badge permission diretor">Diretor</span></td>
                             </tr>
                             <tr>
                                 <td><span class="method post">POST</span></td>
-                                <td><code>/api/memberships/join</code></td>
+                                <td><code>/memberships/join</code></td>
                                 <td>Adicionar usuário a projeto</td>
                                 <td><span class="permission-badge permission diretor">Diretor</span></td>
                             </tr>
                             <tr>
                                 <td><span class="method get">GET</span></td>
-                                <td><code>/api/memberships</code></td>
+                                <td><code>/memberships</code></td>
                                 <td>Listar todas as membership</td>
                                 <td><span class="permission-badge permission diretor">Diretor</span></td>
                             </tr>
                             <tr>
                                 <td><span class="method get">GET</span></td>
-                                <td><code>/api/memberships/pagination</code></td>
+                                <td><code>/memberships/pagination</code></td>
                                 <td>Listar membership com paginação</td>
                                 <td><span class="permission-badge permission authenticated">Autenticado</span></td>
                             </tr>
                             <tr>
                                 <td><span class="method get">GET</span></td>
-                                <td><code>/api/memberships/:id</code></td>
+                                <td><code>/memberships/:id</code></td>
                                 <td>Buscar membership por ID</td>
                                 <td><span class="permission-badge permission diretor">Diretor</span></td>
                             </tr>
                             <tr>
                                 <td><span class="method get">GET</span></td>
-                                <td><code>/api/memberships/project/:projectId</code></td>
+                                <td><code>/memberships/project/:projectId</code></td>
                                 <td>Buscar membros por projeto</td>
                                 <td><span class="permission-badge permission authenticated">Autenticado</span></td>
                             </tr>
                             <tr>
                                 <td><span class="method get">GET</span></td>
-                                <td><code>/api/memberships/me</code></td>
+                                <td><code>/memberships/me</code></td>
                                 <td>Buscar meus projetos</td>
                                 <td><span class="permission-badge permission authenticated">Autenticado</span></td>
                             </tr>
                             <tr>
                                 <td><span class="method post">POST</span></td>
-                                <td><code>/api/memberships/leave</code></td>
+                                <td><code>/memberships/leave</code></td>
                                 <td>Sair de um projeto</td>
                                 <td><span class="permission-badge permission authenticated">Autenticado</span></td>
                             </tr>
                             <tr>
                                 <td><span class="method post">POST</span></td>
-                                <td><code>/api/memberships/rejoin</code></td>
+                                <td><code>/memberships/rejoin</code></td>
                                 <td>Retornar a um projeto</td>
                                 <td><span class="permission-badge permission diretor">Diretor</span></td>
                             </tr>
                             <tr>
                                 <td><span class="method post">POST</span></td>
-                                <td><code>/api/projects/:projectId/coordenador/:coordenadorId/add/:userIdToAdd</code>
+                                <td><code>/projects/:projectId/coordenador/:coordenadorId/add/:userIdToAdd</code>
                                 </td>
                                 <td>Coordenador adiciona membro</td>
                                 <td><span class="permission-badge permission coordenador">Coordenador/Diretor</span>
@@ -1023,7 +1039,7 @@
                             </tr>
                             <tr>
                                 <td><span class="method put">PUT</span></td>
-                                <td><code>/api/project/:projectId/coordenador/:coordenadorId/edit/:projectIdToEdit</code>
+                                <td><code>/project/:projectId/coordenador/:coordenadorId/edit/:projectIdToEdit</code>
                                 </td>
                                 <td>Coordenador edita projeto</td>
                                 <td><span class="permission-badge permission coordenador">Coordenador/Diretor</span>
@@ -1031,7 +1047,7 @@
                             </tr>
                             <tr>
                                 <td><span class="method delete">DELETE</span></td>
-                                <td><code>/api/project/:projectId/coordenador/:coordenadorId/remove/:userIdToRemove</code>
+                                <td><code>/project/:projectId/coordenador/:coordenadorId/remove/:userIdToRemove</code>
                                 </td>
                                 <td>Coordenador remove membro</td>
                                 <td><span class="permission-badge permission coordenador">Coordenador/Diretor</span>
@@ -1158,7 +1174,7 @@
 
                     <div class="role-section">
                         <div class="role-card diretor">
-                            <h4><i class="fas fa-crown"></i> 🎯 Diretor</h4>
+                            <h4><i class="fas fa-crown"></i>Diretor</h4>
                             <ul>
                                 <li>Acesso completo ao sistema</li>
                                 <li>Gerenciar usuários, setores, projetos</li>
@@ -1169,7 +1185,7 @@
                         </div>
 
                         <div class="role-card coordenador">
-                            <h4><i class="fas fa-user-tie"></i> 📋 Coordenador</h4>
+                            <h4><i class="fas fa-user-tie"></i>Coordenador</h4>
                             <ul>
                                 <li>Gerenciar projetos dos quais participa</li>
                                 <li>Adicionar/remover membros (exceto Diretores)</li>
@@ -1180,7 +1196,7 @@
                         </div>
 
                         <div class="role-card membro">
-                            <h4><i class="fas fa-user"></i> 👤 Membro</h4>
+                            <h4><i class="fas fa-user"></i>Membro</h4>
                             <ul>
                                 <li>Visualizar projetos dos quais participa</li>
                                 <li>Atualizar próprio perfil</li>
@@ -1205,7 +1221,7 @@
                         <div class="card-header">
                             <div>
                                 <span class="method post">POST</span>
-                                <span class="endpoint">/api/login/auth</span>
+                                <span class="endpoint">/login/auth</span>
                             </div>
                             <span class="permission-badge permission public">Público</span>
                         </div>
@@ -1253,7 +1269,7 @@
                         <div class="card-header">
                             <div>
                                 <span class="method get">GET</span>
-                                <span class="endpoint">/api/users/pagination</span>
+                                <span class="endpoint">/users/pagination</span>
                             </div>
                             <span class="permission-badge permission diretor">Diretor</span>
                         </div>
@@ -1287,7 +1303,7 @@
                         <div class="card-header">
                             <div>
                                 <span class="method post">POST</span>
-                                <span class="endpoint">/api/memberships/join</span>
+                                <span class="endpoint">/memberships/join</span>
                             </div>
                             <span class="permission-badge permission diretor">Diretor</span>
                         </div>
@@ -1324,10 +1340,10 @@
                             <h4>Variáveis de Ambiente (.env)</h4>
                             <div class="code-block">
                                 <span class="json-key">DATABASE_URL</span>=<span
-                                    class="json-string">"postgresql://user:password@localhost:5432/teamflow"</span><br>
+                                    class="json-string">"postgresql://ruan:123456@localhost:5654/agenda_db?schema=public"</span><br>
                                 <span class="json-key">JWT_SECRET</span>=<span
-                                    class="json-string">"sua-chave-secreta-aqui"</span><br>
-                                <span class="json-key">JWT_EXPIRES_IN</span>=<span class="json-string">"24h"</span><br>
+                                    class="json-string">"minhachavesegura123"</span><br>
+                                <span class="json-key">JWT_EXPIRES_IN</span>=<span class="json-string">"1h"</span><br>
                                 <span class="json-key">PORT</span>=<span class="json-number">3000</span><br>
                                 <span class="json-key">NODE_ENV</span>=<span class="json-string">"development"</span>
                             </div>
@@ -1349,7 +1365,7 @@
                                 npx prisma migrate dev<br><br>
 
                                 <span class="json-comment"># 4. Executar em desenvolvimento</span><br>
-                                npm run dev<br><br>
+                                npx ts-node src/server.ts<br><br>
 
                                 <span class="json-comment"># 5. Executar testes</span><br>
                                 npm test
@@ -1368,10 +1384,10 @@
                         <div class="card-body">
                             <h4>Tipos de Testes Implementados</h4>
                             <ul>
-                                <li>✅ Testes unitários para Use Cases</li>
-                                <li>✅ Testes de integração para repositórios</li>
-                                <li>✅ Testes de middleware (autenticação/autorização)</li>
-                                <li>✅ Testes de validação de dados</li>
+                                <li>Testes unitários para Use Cases</li>
+                                <li>Testes de integração para repositórios</li>
+                                <li>Testes de middleware (autenticação/autorização)</li>
+                                <li>Testes de validação de dados</li>
                             </ul>
 
                             <h4 style="margin-top: 1.5rem;">Executar Testes</h4>
@@ -1448,13 +1464,13 @@
                             <h4>1. Fluxo de Autenticação</h4>
                             <div class="code-block">
                                 <span class="json-comment"># 1. Login</span><br>
-                                curl -X POST http://localhost:3000/api/login/auth \<br>
+                                curl -X POST http://localhost:3000/login/auth \<br>
                                 &nbsp;&nbsp;-H <span class="json-string">"Content-Type: application/json"</span> \<br>
                                 &nbsp;&nbsp;-d <span
                                     class="json-string">'{"email":"admin@empresa.com","password":"Senha@123"}'</span><br><br>
 
                                 <span class="json-comment"># 2. Usar token em requisições subsequentes</span><br>
-                                curl -X GET http://localhost:3000/api/users \<br>
+                                curl -X GET http://localhost:3000/users \<br>
                                 &nbsp;&nbsp;-H <span class="json-string">"Authorization: Bearer
                                     &lt;token-jwt&gt;"</span>
                             </div>
@@ -1563,9 +1579,6 @@
                                     </button>
                                     <button onclick="testEndpoint('/docs')" class="test-btn">
                                         Testar /docs
-                                    </button>
-                                    <button onclick="testEndpoint('/api/login/auth')" class="test-btn">
-                                        Testar /api/login/auth
                                     </button>
                                 </div>
 
@@ -1681,8 +1694,8 @@
                     <span>TeamFlow API</span>
                 </div>
                 <div class="contact-info">
-                    <p><i class="fas fa-code-branch"></i> Versão 1.0.0 • Última Atualização: Dezembro 2024</p>
-                    <p><i class="fas fa-users"></i> Desenvolvido por Loading Jr - UFC</p>
+                    <p><i class="fas fa-code-branch"></i> Versão 1.5 • Última Atualização: Dezembro 2025</p>
+                    <p><i class="fas fa-users"></i> Desenvolvido por Ruan Pereira : Loading Jr - UFC</p>
                     <p><i class="fas fa-envelope"></i> <a
                             href="mailto:ruanpereira@alu.ufc.br">ruanpereira@alu.ufc.br</a></p>
                 </div>

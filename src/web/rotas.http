@@ -65,10 +65,10 @@
 # Content-Type: application/json
 # Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0YzVjODRmZi1mNWUyLTRhMjctOTU2My0wM2E5Yzk3YzM3NzQiLCJyb2xlIjoiRElSRVRPUiIsImlhdCI6MTc2NDQyNDcyMCwiZXhwIjoxNzY0NTExMTIwfQ.KzriiJKxjOiKcU6yYVRel-CoaeRyF2cslhajV6jReaw
 
-# {
-#   "userId": "79f9a614-7c05-4db5-b129-ce7fc1d8e834",
-#   "projectId": "80242abc-8ba1-4ac7-b81a-76839e2b3fdd"
-# }
+{
+  "userId": "79f9a614-7c05-4db5-b129-ce7fc1d8e834",
+  "projectId": "80242abc-8ba1-4ac7-b81a-76839e2b3fdd"
+}
 
 # GET http://localhost:3000/memberships
 # Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJmNzdkZjc0Ny03OTE0LTRjODEtODRlZS02NjI5ZjgyOTQ2NzYiLCJyb2xlIjoiQ09PUkRFTkFET1IiLCJpYXQiOjE3NjQzODcxODEsImV4cCI6MTc2NDQ3MzU4MX0.ok-8OWOEaDOrIqhmA__jt-TPDQZubrT756o1epOUfWk
